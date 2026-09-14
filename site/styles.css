@@ -184,7 +184,7 @@ main[id], main section[id] { scroll-margin-top: 4.75rem; }
   transition: transform .3s ease;
 }
 .cover:hover .titlepage, .cover:hover img { transform: rotate(0deg); }
-.cover img { height: auto; display: block; }
+.cover img { height: auto; display: block; background: var(--bg-sunk); }
 
 .titlepage {
   aspect-ratio: 1 / 1.414;

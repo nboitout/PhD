@@ -49,6 +49,39 @@
   });
   syncToggle();
 
+  /* ── the printed cover ─────────────────────────────────────
+
+     The page points at the photograph of the printed title page. Until that
+     file is in site/assets/, the request 404s and the typeset facsimile takes
+     its place, so a missing photograph never shows as a broken image. .png is
+     tried first and .jpg after it, which is the whole of the "just drop the
+     file in" contract.
+     ────────────────────────────────────────────────────────── */
+
+  (() => {
+    const img = document.getElementById('cover-photo');
+    const fallback = document.getElementById('cover-fallback');
+    const caption = document.getElementById('cover-caption');
+    if (!img || !fallback) return;
+
+    let triedJpg = false;
+
+    const failed = () => {
+      if (!triedJpg) {                       // one alternative extension, then give up
+        triedJpg = true;
+        img.src = './assets/cover.jpg';
+        return;
+      }
+      img.remove();
+      fallback.hidden = false;
+      if (caption) caption.textContent = 'The title page \u00b7 defended 29 November 2004';
+    };
+
+    img.addEventListener('error', failed);
+    // The script is deferred, so the image may already have settled by now.
+    if (img.complete && img.naturalWidth === 0) failed();
+  })();
+
   /* ── colours, read from the stylesheet so the panels follow the theme ── */
 
   const palette = { stale: true, v: {} };

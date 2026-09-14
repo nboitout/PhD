@@ -57,20 +57,22 @@
       <!-- ───────────────────────────────────────────────────────────────
            THE PRINTED COVER.
 
-           This is a typeset facsimile of the 2004 title page, standing in
-           until the photograph of the printed copy is added to the repo.
-           To use the photograph instead, drop it at site/assets/cover.jpg
-           and replace this whole <figure> with:
+           Drop the photograph of the printed copy at site/assets/cover.png
+           (or cover.jpg) and it appears here. Nothing else to change.
 
-             <figure class="cover">
-               <img src="./assets/cover.jpg" width="1500" height="2000"
-                    alt="The printed title page of the dissertation, Université
-                         d'Orléans, defended 29 November 2004.">
-               <figcaption>The printed copy · Université d'Orléans, 2004</figcaption>
-             </figure>
+           Until that file exists the image fails to load and main.js reveals
+           the typeset facsimile below it instead, so the page never shows a
+           broken image. Both carry the same caption slot.
            ─────────────────────────────────────────────────────────────── -->
       <figure class="cover">
-        <div class="titlepage" aria-label="The dissertation's title page, 2004">
+        <img id="cover-photo" src="./assets/cover.png"
+             alt="The printed title page of the dissertation: Thèse présentée à
+                  l'Université d'Orléans pour obtenir le grade de Docteur, discipline
+                  Sciences Économiques, par Nicolas Boitout — Modélisation de la
+                  dynamique des taux de change avec application aux marchés émergents,
+                  soutenue publiquement le 29 novembre 2004.">
+
+        <div class="titlepage" id="cover-fallback" hidden aria-label="The dissertation's title page, 2004">
           <p class="tp-univ">Université d'Orléans</p>
           <p class="tp-head">Thèse<br>présentée<br>à l'Université d'Orléans<br>pour obtenir le grade de<br>Docteur de l'Université d'Orléans</p>
           <p class="tp-disc">Discipline : <i>Sciences Économiques</i></p>
@@ -79,7 +81,8 @@
           <p class="tp-title">Modélisation de la dynamique des taux de change avec application aux marchés émergents</p>
           <p class="tp-date">Soutenue publiquement le 29 novembre 2004</p>
         </div>
-        <figcaption>The title page · defended 29 November 2004</figcaption>
+
+        <figcaption id="cover-caption">The printed copy · defended 29 November 2004</figcaption>
       </figure>
     </div>
 

@@ -42,20 +42,24 @@ whole change.
 
 ## The printed cover
 
-The title page shown top right is a **typeset facsimile**, not a photograph. It
-reproduces the wording of the 2004 title page so the page is not left with a hole
-in it, and it is marked as such in `site/index.html`.
+Save the photograph of the printed title page as **`site/assets/cover.png`**
+(`cover.jpg` also works — the page tries `.png` first, then `.jpg`). That is the
+entire change: the markup already points at it, and the stylesheet already sizes,
+frames and tilts it.
 
-To use the photograph of the printed copy instead, save it as
-`site/assets/cover.jpg` and replace the `<figure class="cover">` block with the
-`<img>` version written out in the comment directly above it. The stylesheet
-already sizes, frames and tilts `.cover img` exactly as it does the facsimile, so
-no CSS change is needed. A long edge of about 1600px is plenty; crop away the
-desk and the dark strip down the side first.
+Crop away the desk and the dark strip down the left edge first, so the frame holds
+the sheet of paper and nothing else. A long edge of roughly 1600px is plenty.
+
+Until that file exists the page shows a **typeset facsimile** of the title page
+instead — the wording of the 2004 original, set in type. It is a stand-in, not a
+photograph, and the caption says “The title page” rather than “The printed copy”
+while it is showing. The swap is done by a few lines in `site/main.js` rather than
+by an inline `onerror`, because the deployed Content-Security-Policy forbids inline
+handlers.
 
 ## Still to supply
 
-- The cover photograph, as above.
+- **The cover photograph**, as above.
 - `<!-- VOICE -->` in `site/index.html` marks the intuition section. It is written
   in the first person, drawn from the introduction of Chapter 2, and is meant to
   be edited until it sounds like you rather than like a summary of you.
