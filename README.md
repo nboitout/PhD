@@ -22,7 +22,7 @@ vercel.json       static hosting, no build, with a strict CSP
 |---|---|---|---|
 | 1 | Towards a multifractal paradigm of stochastic volatility | [multifractal-volatility.vercel.app](https://multifractal-volatility.vercel.app/) | [`Multifractal_Volatility`](https://github.com/nboitout/Multifractal_Volatility) |
 | 2 | Agent-based financial market simulation | [phd-microsimulation.vercel.app](https://phd-microsimulation.vercel.app/) | [`PhD_Microsimulation`](https://github.com/nboitout/PhD_Microsimulation) |
-| 3 | Empirical Study | [phd-empirical-study.vercel.app](https://phd-empirical-study.vercel.app/) | [`PhD_Empirical_Study`](https://github.com/nboitout/PhD_Empirical_Study) |
+| 3 | Empirical Study | [ph-d-empirical-study.vercel.app](https://ph-d-empirical-study.vercel.app/) | [`PhD_Empirical_Study`](https://github.com/nboitout/PhD_Empirical_Study) |
 | 4 | Speculative Attacks on a Fixed Exchange Rate Market: a Microsimulation | in preparation | |
 
 ## The page's shape
