@@ -6,7 +6,7 @@ d'Orléans, Sciences Économiques, defended 29 November 2004). It introduces the
 four chapters and links each one to its own interactive laboratory.
 
 Plain HTML, CSS and JavaScript. No framework, no build step, no dependencies, no
-network requests at runtime — the same constraints the two chapter sites are
+network requests at runtime — the same constraints the chapter sites are
 built under.
 
 ```
@@ -22,7 +22,7 @@ vercel.json       static hosting, no build, with a strict CSP
 |---|---|---|---|
 | 1 | Towards a multifractal paradigm of stochastic volatility | [multifractal-volatility.vercel.app](https://multifractal-volatility.vercel.app/) | [`Multifractal_Volatility`](https://github.com/nboitout/Multifractal_Volatility) |
 | 2 | Agent-based financial market simulation | [phd-microsimulation.vercel.app](https://phd-microsimulation.vercel.app/) | [`PhD_Microsimulation`](https://github.com/nboitout/PhD_Microsimulation) |
-| 3 | Empirical Study | in preparation | |
+| 3 | Empirical Study | [phd-empirical-study.vercel.app](https://phd-empirical-study.vercel.app/) | [`PhD_Empirical_Study`](https://github.com/nboitout/PhD_Empirical_Study) |
 | 4 | Speculative Attacks on a Fixed Exchange Rate Market: a Microsimulation | in preparation | |
 
 ## The page's shape
@@ -39,6 +39,9 @@ Each live chapter card carries two links to its deployed laboratory — the head
 and the “Open the …” link — and one `Source` link to its repository. If a
 laboratory moves, the two `href` values per chapter in `site/index.html` are the
 whole change.
+
+Chapters 1 and 2 have an animated panel above the card body; Chapter 3 does not,
+and is a body-only card.
 
 ## The printed cover
 
@@ -97,6 +100,10 @@ visitor sees the same opening and none of them fetch anything.
   chartist camps and a fundamentalist camp, transition rates exponential in the
   opinion index and in momentum, a floor under every share, and a market maker
   moving the price with excess demand.
+
+Chapter 3's card carries no panel: its subject is measured data, and a seeded
+illustration next to it would be the one place on this page where a drawing could
+be mistaken for a measurement.
 
 These are illustrations, not results. They use tiny populations and short
 windows, and no number can be read off them. The chapters' own figures come from

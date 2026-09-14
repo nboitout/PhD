@@ -50,7 +50,7 @@
           printed figures.
         </p>
         <p class="status-line">
-          <span class="dot"></span>Two laboratories are live. Two chapters are in preparation.
+          <span class="dot"></span>Three laboratories are live. One chapter is in preparation.
         </p>
       </div>
 
@@ -109,8 +109,7 @@
           </p>
           <ul class="card-meta">
             <li>Cascade simulator: intermittency λ², depth, σ₀, seed</li>
-            <li>GPH and local Whittle estimates of d̂(q)</li>
-            <li>Five daily series, 2016–2026, measured against the chapter</li>
+            <li>The original Alcatel study: 2,633 returns, 1991–2001, as reported</li>
             <li>The full chapter text, forty equations, four tables</li>
           </ul>
           <p class="card-cite">
@@ -154,10 +153,29 @@
       </li>
 
       <!-- CHAPTER 3 -->
-      <li class="card pending">
+      <li class="card live" style="--accent:#6b46c1">
         <div class="card-body">
-          <p class="card-num">Chapter Three <span class="pill quiet">In preparation</span></p>
-          <h2>Empirical Study</h2>
+          <p class="card-num">Chapter Three <span class="pill">Interactive</span></p>
+          <h2>
+            <a href="https://phd-empirical-study.vercel.app/">Empirical Study</a>
+          </h2>
+          <p class="card-text">
+            Chapter 1 found persistence in volatility that falls away as the power measured
+            rises, while persistence in trading volume barely moves. This runs the same
+            estimators over ten years of markets that did not exist in that sample, or did
+            not trade in that form, and draws both curves on one axis.
+          </p>
+          <ul class="card-meta">
+            <li>Five daily series, 2016–2026: equity, crypto, FX, sovereign yield, crude</li>
+            <li>GPH and local Whittle estimates of d̂(q), with a confidence band</li>
+            <li>Measured against Chapter 1's Table 1.4, never recomputed</li>
+            <li>Corrections offered only where they apply to the series</li>
+          </ul>
+          <p class="card-cite">Estimators from Chapter 1 · series imported from a daily market-data export</p>
+          <p class="card-links">
+            <a class="go" href="https://phd-empirical-study.vercel.app/">Open the study<span aria-hidden="true"> →</span></a>
+            <a class="src" href="https://github.com/nboitout/PhD_Empirical_Study">Source</a>
+          </p>
         </div>
       </li>
 
