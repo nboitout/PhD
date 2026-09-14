@@ -18,28 +18,21 @@ vercel.json       static hosting, no build, with a strict CSP
 
 ## The chapters
 
-| | Chapter | Repository |
-|---|---|---|
-| 1 | Towards a multifractal paradigm of stochastic volatility | [`Multifractal_Volatility`](https://github.com/nboitout/Multifractal_Volatility) |
-| 2 | Agent-based financial market simulation | [`PhD_Microsimulation`](https://github.com/nboitout/PhD_Microsimulation) |
-| 3 | Empirical Study | in preparation |
-| 4 | Speculative Attacks on a Fixed Exchange Rate Market: a Microsimulation | in preparation |
+| | Chapter | Laboratory | Source |
+|---|---|---|---|
+| 1 | Towards a multifractal paradigm of stochastic volatility | [multifractal-volatility.vercel.app](https://multifractal-volatility.vercel.app/) | [`Multifractal_Volatility`](https://github.com/nboitout/Multifractal_Volatility) |
+| 2 | Agent-based financial market simulation | [phd-microsimulation.vercel.app](https://phd-microsimulation.vercel.app/) | [`PhD_Microsimulation`](https://github.com/nboitout/PhD_Microsimulation) |
+| 3 | Empirical Study | in preparation | |
+| 4 | Speculative Attacks on a Fixed Exchange Rate Market: a Microsimulation | in preparation | |
 
-## Pointing the cards at the deployed laboratories
+## Where the cards point
 
-The Chapter 1 and Chapter 2 cards currently link to their repositories, because
-neither laboratory is deployed yet. Each link to replace is marked in
-`site/index.html` with
+Each live chapter card carries two links to its deployed laboratory — the heading
+and the “Open the …” link — and one `Source` link to its repository. If a
+laboratory moves, the two `href` values per chapter in `site/index.html` are the
+whole change.
 
-```html
-<!-- LIVE URL — replace this href when the lab is deployed -->
-```
-
-There are two per chapter: the heading link and the “Open the …” link. Replacing
-the four `href` values is the whole change. Leave the `Source` links pointing at
-GitHub.
-
-Two other marked places expect your own words: `<!-- BIO -->` in the About
+Two marked places in the HTML still expect your own words: `<!-- BIO -->` in the About
 section, and `<!-- CONTACT -->` in the sidebar, where an email, LinkedIn or ORCID
 link would go if you want them public.
 
