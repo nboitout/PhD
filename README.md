@@ -42,24 +42,24 @@ whole change.
 
 ## The printed cover
 
-Save the photograph of the printed title page as **`site/assets/cover.png`**
-(`cover.jpg` also works — the page tries `.png` first, then `.jpg`). That is the
-entire change: the markup already points at it, and the stylesheet already sizes,
-frames and tilts it.
+`site/assets/cover.jpg` is the photograph of the author's own printed copy. It is
+the supplied photograph, cropped only to remove the dark strip down the left edge
+of the original frame and scaled to a 1600px long edge — 1136×1600, 357 KB. The
+paper, the shadow and the angle it was shot at are left as they were. The
+full-resolution original is kept at `source/cover-original.jpeg`, outside the
+deployed directory.
 
-Crop away the desk and the dark strip down the left edge first, so the frame holds
-the sheet of paper and nothing else. A long edge of roughly 1600px is plenty.
+The photograph links to itself at full size, where the jury at the foot of the page
+is legible.
 
-Until that file exists the page shows a **typeset facsimile** of the title page
-instead — the wording of the 2004 original, set in type. It is a stand-in, not a
-photograph, and the caption says “The title page” rather than “The printed copy”
-while it is showing. The swap is done by a few lines in `site/main.js` rather than
-by an inline `onerror`, because the deployed Content-Security-Policy forbids inline
-handlers.
+Should the file ever go missing, `site/main.js` tries `cover.png` once and then
+reveals a **typeset facsimile** of the title page in its place, retitling the
+caption from “The printed copy” to “The title page” so a stand-in is never passed
+off as the real object. That swap lives in `main.js` rather than an inline
+`onerror`, because the deployed Content-Security-Policy forbids inline handlers.
 
 ## Still to supply
 
-- **The cover photograph**, as above.
 - `<!-- VOICE -->` in `site/index.html` marks the intuition section. It is written
   in the first person, drawn from the introduction of Chapter 2, and is meant to
   be edited until it sounds like you rather than like a summary of you.

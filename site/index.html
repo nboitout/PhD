@@ -57,20 +57,24 @@
       <!-- ───────────────────────────────────────────────────────────────
            THE PRINTED COVER.
 
-           Drop the photograph of the printed copy at site/assets/cover.png
-           (or cover.jpg) and it appears here. Nothing else to change.
+           The photograph of Nicolas Boitout's own printed copy, cropped only
+           to remove the dark strip down the left edge of the original frame.
+           The full-resolution original is kept at source/cover-original.jpeg
+           and is not deployed.
 
-           Until that file exists the image fails to load and main.js reveals
-           the typeset facsimile below it instead, so the page never shows a
-           broken image. Both carry the same caption slot.
+           If the file ever goes missing, main.js reveals the typeset facsimile
+           below instead of leaving a broken image, and retitles the caption.
            ─────────────────────────────────────────────────────────────── -->
       <figure class="cover">
-        <img id="cover-photo" src="./assets/cover.png"
-             alt="The printed title page of the dissertation: Thèse présentée à
-                  l'Université d'Orléans pour obtenir le grade de Docteur, discipline
-                  Sciences Économiques, par Nicolas Boitout — Modélisation de la
-                  dynamique des taux de change avec application aux marchés émergents,
-                  soutenue publiquement le 29 novembre 2004.">
+        <a href="./assets/cover.jpg" id="cover-link" title="Open the title page at full size">
+          <img id="cover-photo" src="./assets/cover.jpg" width="1136" height="1600"
+               alt="The printed title page of the dissertation: Thèse présentée à
+                    l'Université d'Orléans pour obtenir le grade de Docteur, discipline
+                    Sciences Économiques, par Nicolas Boitout — Modélisation de la
+                    dynamique des taux de change avec application aux marchés émergents,
+                    soutenue publiquement le 29 novembre 2004. The jury is listed at the foot
+                    of the page.">
+        </a>
 
         <div class="titlepage" id="cover-fallback" hidden aria-label="The dissertation's title page, 2004">
           <p class="tp-univ">Université d'Orléans</p>

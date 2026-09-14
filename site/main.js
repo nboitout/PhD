@@ -51,28 +51,29 @@
 
   /* ── the printed cover ─────────────────────────────────────
 
-     The page points at the photograph of the printed title page. Until that
-     file is in site/assets/, the request 404s and the typeset facsimile takes
-     its place, so a missing photograph never shows as a broken image. .png is
-     tried first and .jpg after it, which is the whole of the "just drop the
-     file in" contract.
+     The page shows the photograph of the printed title page. Should that file
+     ever go missing, the request 404s, .png is tried once, and the typeset
+     facsimile then takes its place, so the cover never renders as a broken
+     image and the caption stops claiming to be the printed copy.
      ────────────────────────────────────────────────────────── */
 
   (() => {
     const img = document.getElementById('cover-photo');
+    const link = document.getElementById('cover-link');
     const fallback = document.getElementById('cover-fallback');
     const caption = document.getElementById('cover-caption');
     if (!img || !fallback) return;
 
-    let triedJpg = false;
+    let triedPng = false;
 
     const failed = () => {
-      if (!triedJpg) {                       // one alternative extension, then give up
-        triedJpg = true;
-        img.src = './assets/cover.jpg';
+      if (!triedPng) {                       // one alternative extension, then give up
+        triedPng = true;
+        img.src = './assets/cover.png';
+        if (link) link.href = './assets/cover.png';
         return;
       }
-      img.remove();
+      (link || img).remove();
       fallback.hidden = false;
       if (caption) caption.textContent = 'The title page \u00b7 defended 29 November 2004';
     };

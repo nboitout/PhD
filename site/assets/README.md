@@ -1,12 +1,13 @@
-# Put the cover photograph here
+# Assets
 
-Save the photograph of the printed title page as **`cover.png`** in this folder
-(`cover.jpg` also works — the page tries `.png` first, then `.jpg`).
+`cover.jpg` is the photograph of Nicolas Boitout's own printed copy of the
+dissertation, shown at the top of the page and linked from there at full size.
 
-Nothing else needs to change. The page already points at it, sizes it, frames it
-and tilts it. Until the file exists, the page falls back to a typeset facsimile of
-the title page rather than showing a broken image.
+It is the supplied photograph, cropped only to remove the dark strip down the
+left edge of the original frame and scaled so its long edge is 1600px. The paper,
+the shadow and the angle it was shot at are untouched. The full-resolution
+original is kept at `source/cover-original.jpeg` in the repository root, outside
+the deployed directory.
 
-Before saving it, crop away the desk and the dark strip down the left edge, so the
-frame holds the sheet of paper and nothing else. A long edge of roughly 1600px is
-plenty; much larger only slows the page down.
+To replace it, overwrite `cover.jpg` (or add `cover.png`, which the page tries if
+the JPEG is missing). Nothing else needs to change.

@@ -58,6 +58,11 @@
 
 *, *::before, *::after { box-sizing: border-box; }
 
+/* The hidden attribute only sets display:none at user-agent weight, so any
+   component rule that sets its own display silently defeats it. .titlepage is
+   a flex column and did exactly that. */
+[hidden] { display: none !important; }
+
 body {
   margin: 0;
   background: var(--bg);
@@ -185,6 +190,9 @@ main[id], main section[id] { scroll-margin-top: 4.75rem; }
 }
 .cover:hover .titlepage, .cover:hover img { transform: rotate(0deg); }
 .cover img { height: auto; display: block; background: var(--bg-sunk); }
+/* The photograph links to itself at full size, where the jury is legible. */
+.cover a { display: block; line-height: 0; border-radius: 2px; }
+.cover a:focus-visible { outline: 2px solid var(--accent); outline-offset: 6px; }
 
 .titlepage {
   aspect-ratio: 1 / 1.414;
