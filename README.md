@@ -25,6 +25,14 @@ vercel.json       static hosting, no build, with a strict CSP
 | 3 | Empirical Study | in preparation | |
 | 4 | Speculative Attacks on a Fixed Exchange Rate Market: a Microsimulation | in preparation | |
 
+## The page's shape
+
+The four chapters *are* the hero: the page opens on a short title block beside
+the dissertation's title page, and the chapter cards begin within the first
+screen. Below them, **Why I approached currency crises this way** carries the
+intuition in the first person, with the live through-line panel and the
+publication details alongside. **Defence and jury** closes the page.
+
 ## Where the cards point
 
 Each live chapter card carries two links to its deployed laboratory — the heading
@@ -32,9 +40,27 @@ and the “Open the …” link — and one `Source` link to its repository. If 
 laboratory moves, the two `href` values per chapter in `site/index.html` are the
 whole change.
 
-Two marked places in the HTML still expect your own words: `<!-- BIO -->` in the About
-section, and `<!-- CONTACT -->` in the sidebar, where an email, LinkedIn or ORCID
-link would go if you want them public.
+## The printed cover
+
+The title page shown top right is a **typeset facsimile**, not a photograph. It
+reproduces the wording of the 2004 title page so the page is not left with a hole
+in it, and it is marked as such in `site/index.html`.
+
+To use the photograph of the printed copy instead, save it as
+`site/assets/cover.jpg` and replace the `<figure class="cover">` block with the
+`<img>` version written out in the comment directly above it. The stylesheet
+already sizes, frames and tilts `.cover img` exactly as it does the facsimile, so
+no CSS change is needed. A long edge of about 1600px is plenty; crop away the
+desk and the dark strip down the side first.
+
+## Still to supply
+
+- The cover photograph, as above.
+- `<!-- VOICE -->` in `site/index.html` marks the intuition section. It is written
+  in the first person, drawn from the introduction of Chapter 2, and is meant to
+  be edited until it sounds like you rather than like a summary of you.
+- `<!-- CONTACT -->` in the sidebar, where an email, LinkedIn or ORCID link would
+  go if you want them public.
 
 ## Run locally
 

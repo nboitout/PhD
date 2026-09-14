@@ -4,21 +4,21 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Nicolas Boitout — Exchange Rate Dynamics, a Doctoral Dissertation</title>
-<meta name="description" content="Modelling exchange rate dynamics, with an application to emerging markets. A 2004 doctoral dissertation in four chapters, each rebuilt as a model you can run in your browser.">
+<meta name="description" content="Four chapters on exchange rate dynamics and currency crises, from a 2004 doctoral dissertation — each one rebuilt as a model you can run in your browser.">
 <meta name="theme-color" content="#1d4e6b">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Exchange Rate Dynamics — Nicolas Boitout">
-<meta property="og:description" content="A 2004 doctoral dissertation in four chapters, each rebuilt as a model you can run in your browser.">
+<meta property="og:description" content="Four chapters on exchange rate dynamics and currency crises, each rebuilt as a model you can run in your browser.">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%231d4e6b'/%3E%3Cg fill='none' stroke='%23fcfbf8' stroke-width='1.8' stroke-linecap='round'%3E%3Cpath d='M5 22h3v-4h5v7h4v-11h4v6h6'/%3E%3C/g%3E%3Cg fill='%23d8ad69'%3E%3Crect x='5' y='26' width='1.4' height='3'/%3E%3Crect x='8' y='26' width='1.4' height='3'/%3E%3Crect x='9.6' y='26' width='1.4' height='3'/%3E%3Crect x='15' y='26' width='1.4' height='3'/%3E%3Crect x='21' y='26' width='1.4' height='3'/%3E%3Crect x='22.6' y='26' width='1.4' height='3'/%3E%3Crect x='25' y='26' width='1.4' height='3'/%3E%3C/g%3E%3C/svg%3E">
 <link rel="stylesheet" href="./styles.css">
 <script src="./main.js" defer></script>
 </head>
 <body>
-<a class="skip" href="#main">Skip to the chapters</a>
+<a class="skip" href="#chapters">Skip to the chapters</a>
 
 <header class="masthead">
-  <a class="brand" href="#main">
+  <a class="brand" href="#top">
     <svg viewBox="0 0 32 32" aria-hidden="true" width="26" height="26">
       <path d="M3 23h3.5v-5h5v8h4.5V13h4v7h6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
     </svg>
@@ -26,7 +26,7 @@
   </a>
   <nav aria-label="Sections">
     <a href="#chapters">Chapters</a>
-    <a href="#about">About</a>
+    <a href="#why">Why crises</a>
     <a href="#defence">Defence</a>
     <button type="button" id="theme" class="theme-toggle" aria-label="Switch to dark theme" title="Switch theme">
       <svg viewBox="0 0 20 20" width="17" height="17" aria-hidden="true"><path d="M16 12.2A7 7 0 0 1 7.8 4a6.4 6.4 0 1 0 8.2 8.2Z" fill="currentColor"/></svg>
@@ -34,45 +34,53 @@
   </nav>
 </header>
 
-<main id="main">
+<main id="top">
 
-  <!-- ───────────────────────── HERO ───────────────────────── -->
-  <section class="hero">
-    <div class="hero-copy">
-      <p class="eyebrow">Université d'Orléans · Sciences Économiques · 2004</p>
-      <h1>Modelling the dynamics of exchange rates</h1>
-      <p class="subtitle" lang="fr"><em>Modélisation de la dynamique des taux de change avec application aux marchés émergents</em></p>
-      <p class="lede">
-        Four chapters on how a currency price is actually made: by information that arrives
-        unevenly, by traders who disagree and change their minds, and in a trading time that
-        is itself random. Each chapter is being rebuilt as a model that runs in your browser,
-        from the equations in the original manuscript.
-      </p>
-      <p class="cta-row">
-        <a class="cta" href="#chapters">Run the models</a>
-        <a class="cta ghost" href="#about">Read the argument</a>
-      </p>
-    </div>
-
-    <figure class="hero-panel">
-      <div class="panel-head">
-        <span class="panel-title">Arrivals &amp; price · live</span>
-        <span class="panel-seed" id="hero-seed">seed 20041129</span>
-      </div>
-      <canvas id="hero-canvas" aria-label="An animated simulation: a price that moves only when a trade arrives, above a band showing the intensity of information flow, above a raster of individual arrival times."></canvas>
-      <figcaption>
-        A multiplicative cascade sets how intensely information is arriving; arrivals are
-        drawn against that intensity, and the price moves <em>only</em> when one lands. This is
-        the thesis in one picture — and it is running now, in your browser.
-      </figcaption>
-    </figure>
-  </section>
-
-  <!-- ──────────────────────── CHAPTERS ──────────────────────── -->
+  <!-- ════════════════ THE CHAPTERS, AS THE HERO ════════════════ -->
   <section id="chapters" class="chapters" aria-labelledby="chapters-h">
-    <div class="section-head">
-      <h2 id="chapters-h">The four chapters</h2>
-      <p>Two are live and interactive. Two are in preparation.</p>
+
+    <div class="chapters-intro">
+      <div class="intro-copy">
+        <p class="eyebrow">Université d'Orléans · Sciences Économiques · 2004</p>
+        <h1 id="chapters-h">Four chapters on how a currency price is made</h1>
+        <p class="lede">
+          Information that arrives unevenly, traders who disagree and change their minds,
+          and a trading time that is itself random. Each chapter is being rebuilt as a
+          model you can run — from the equations in the original manuscript, not from its
+          printed figures.
+        </p>
+        <p class="status-line">
+          <span class="dot"></span>Two laboratories are live. Two chapters are in preparation.
+        </p>
+      </div>
+
+      <!-- ───────────────────────────────────────────────────────────────
+           THE PRINTED COVER.
+
+           This is a typeset facsimile of the 2004 title page, standing in
+           until the photograph of the printed copy is added to the repo.
+           To use the photograph instead, drop it at site/assets/cover.jpg
+           and replace this whole <figure> with:
+
+             <figure class="cover">
+               <img src="./assets/cover.jpg" width="1500" height="2000"
+                    alt="The printed title page of the dissertation, Université
+                         d'Orléans, defended 29 November 2004.">
+               <figcaption>The printed copy · Université d'Orléans, 2004</figcaption>
+             </figure>
+           ─────────────────────────────────────────────────────────────── -->
+      <figure class="cover">
+        <div class="titlepage" aria-label="The dissertation's title page, 2004">
+          <p class="tp-univ">Université d'Orléans</p>
+          <p class="tp-head">Thèse<br>présentée<br>à l'Université d'Orléans<br>pour obtenir le grade de<br>Docteur de l'Université d'Orléans</p>
+          <p class="tp-disc">Discipline : <i>Sciences Économiques</i></p>
+          <p class="tp-par">par</p>
+          <p class="tp-name">Nicolas <b>Boitout</b></p>
+          <p class="tp-title">Modélisation de la dynamique des taux de change avec application aux marchés émergents</p>
+          <p class="tp-date">Soutenue publiquement le 29 novembre 2004</p>
+        </div>
+        <figcaption>The title page · defended 29 November 2004</figcaption>
+      </figure>
     </div>
 
     <ol class="cards">
@@ -84,9 +92,9 @@
         </div>
         <div class="card-body">
           <p class="card-num">Chapter One <span class="pill">Interactive</span></p>
-          <h3>
+          <h2>
             <a href="https://multifractal-volatility.vercel.app/">Towards a multifractal paradigm of stochastic volatility</a>
-          </h3>
+          </h2>
           <p class="card-text">
             Information does not arrive evenly, and almost every familiar feature of returns
             follows from that one assumption. Fat tails, volatility that clusters, memory that
@@ -116,9 +124,9 @@
         </div>
         <div class="card-body">
           <p class="card-num">Chapter Two <span class="pill">Interactive</span></p>
-          <h3>
+          <h2>
             <a href="https://phd-microsimulation.vercel.app/">Agent-based financial market simulation</a>
-          </h3>
+          </h2>
           <p class="card-text">
             A market made of people who disagree. Two chartist camps and a fundamentalist camp,
             each agent switching when someone else's strategy is doing better — and, unlike
@@ -142,7 +150,7 @@
       <li class="card pending">
         <div class="card-body">
           <p class="card-num">Chapter Three <span class="pill quiet">In preparation</span></p>
-          <h3>Empirical Study</h3>
+          <h2>Empirical Study</h2>
         </div>
       </li>
 
@@ -150,78 +158,109 @@
       <li class="card pending">
         <div class="card-body">
           <p class="card-num">Chapter Four <span class="pill quiet">In preparation</span></p>
-          <h3>Speculative Attacks on a Fixed Exchange Rate Market: a Microsimulation</h3>
+          <h2>Speculative Attacks on a Fixed Exchange Rate Market: a Microsimulation</h2>
         </div>
       </li>
 
     </ol>
   </section>
 
-  <!-- ───────────────────────── ABOUT ───────────────────────── -->
-  <section id="about" class="about" aria-labelledby="about-h">
+  <!-- ═══════════════════ WHY CRISES, THIS WAY ═══════════════════ -->
+  <!-- VOICE — this section is written in the first person, drawn from the
+       introduction of your own Chapter 2. Edit it until it sounds like you. -->
+  <section id="why" class="why" aria-labelledby="why-h">
     <div class="section-head">
-      <h2 id="about-h">The argument, end to end</h2>
+      <p class="eyebrow">The intuition</p>
+      <h2 id="why-h">Why I approached currency crises this way</h2>
     </div>
-    <div class="two-col">
+
+    <div class="why-layout">
       <div class="prose">
-        <p>
-          The dissertation starts from a single refusal: that a market can be described by one
-          representative investor trading on a regular clock. Everything after that is an attempt
-          to say what replaces it.
+        <p class="first">
+          The standard account never added up for me. If prices move because news arrives,
+          and news reaches everyone at once and is read in much the same way, then the
+          volatility we actually observe in currency markets is far too large. You can find
+          the intraday spikes around announcements — but they are a small part of the total.
+          Most of the movement was being produced by something other than public information.
         </p>
         <p>
-          <b>Chapter One</b> takes the Mixture of Distributions Hypothesis seriously and lets the
-          rate of information arrival vary. Volatility clusters, tails fatten, and persistence
-          turns out to depend on which power of returns you measure and at which horizon — a
-          multifractal signature rather than a single exponent.
+          The foreign exchange market makes the alternative hard to avoid. It is
+          decentralised: there is no tape of aggregate order flow, so what a trader learns
+          about everyone else, they learn from price and volume themselves. Other
+          participants are not noise around the fundamental — they <em>are</em> part of what
+          you are trading on. That is also why technical analysis dominates short-horizon
+          forecasting there, whatever one thinks of it.
         </p>
         <p>
-          <b>Chapter Two</b> asks where that uneven information flow comes from, and builds the
-          market that produces it: heterogeneous agents switching between chartist and
-          fundamentalist strategies, a market maker adjusting price to excess demand, and a
-          trading time that arrives in bursts instead of ticking uniformly.
+          So I stopped treating the representative investor on a regular clock as the
+          starting point. Take it away and you need to say what replaces it, which is the
+          whole dissertation: information that arrives in bursts, agents who revise their
+          method by watching what is working for other people, and a trading time that runs
+          fast and slow instead of ticking.
         </p>
         <p>
-          <b>Chapters Three and Four</b> carry the framework to data and then to stress: an
-          empirical study, and a microsimulation of speculative attacks on a fixed exchange rate —
-          the emerging-market application the title promises.
+          Crises are where this stops being a modelling preference. A fixed exchange rate
+          does not break because a fundamental crossed a threshold on a particular Tuesday.
+          It breaks because enough participants revise at once, each partly because the
+          others are revising — a herd that is individually rational and collectively
+          catastrophic. A representative agent cannot even state that problem. A population
+          that switches strategy, in a market where the only signal about everyone else is
+          the price, can.
         </p>
+        <p>
+          That is why the emerging-market application at the end is not an afterthought
+          bolted onto the theory. It is the case the theory was built for.
+        </p>
+
         <p class="aside">
-          <!-- BIO — replace this paragraph with your own words -->
-          <b>A note on the rebuilds.</b> Each laboratory is written from the chapter's own
-          equations, not from its published figures. Where the manuscript is ambiguous, silent,
-          or missing pages, the implementation says so on the page and names the reading it took.
-          Nothing is quietly corrected and nothing is modernised. The chapters are presented as
-          they were argued in 2004.
+          <b>A note on the rebuilds.</b> Each laboratory is written from its chapter's own
+          equations, not from its published figures. Where the manuscript is ambiguous,
+          silent, or missing pages, the implementation says so on the page and names the
+          reading it took. Nothing is quietly corrected and nothing is modernised.
         </p>
       </div>
 
-      <aside class="facts">
-        <h3>At a glance</h3>
-        <dl>
-          <div><dt>Degree</dt><dd>Docteur de l'Université d'Orléans</dd></div>
-          <div><dt>Discipline</dt><dd>Sciences Économiques</dd></div>
-          <div><dt>Defended</dt><dd>29 November 2004</dd></div>
-          <div><dt>Director</dt><dd>Prof. Cyrille Piatecki</dd></div>
-          <div><dt>Chapters</dt><dd>Four · two currently interactive</dd></div>
-        </dl>
-        <h3 class="pub-h">Publication</h3>
-        <p class="pub">
-          N. Boitout &amp; L. Ureche-Rangau, “Towards a Multifractal Paradigm of Stochastic
-          Volatility?”, <cite>International Journal of Theoretical and Applied Finance</cite>
-          <b>7</b>(7), 823–851, 2004.<br>
-          <a href="https://doi.org/10.1142/S0219024904002736">10.1142/S0219024904002736</a>
-        </p>
-        <h3 class="pub-h">Elsewhere</h3>
-        <p class="pub">
-          <a href="https://github.com/nboitout">github.com/nboitout</a>
-          <!-- CONTACT — add email / LinkedIn / ORCID here if you want them public -->
-        </p>
-      </aside>
+      <div class="why-side">
+        <figure class="hero-panel">
+          <div class="panel-head">
+            <span class="panel-title">The through-line · live</span>
+            <span class="panel-seed">seed 20041129</span>
+          </div>
+          <canvas id="hero-canvas" aria-label="An animated simulation: a price that moves only when a trade arrives, above a raster of individual arrival times, above a band showing the intensity of information flow."></canvas>
+          <figcaption>
+            A multiplicative cascade sets how intensely information is arriving; arrivals are
+            drawn against that intensity, and the price moves <em>only</em> when one lands.
+            Chapter One's cascade driving Chapter Two's random trading time — running now, in
+            your browser.
+          </figcaption>
+        </figure>
+
+        <aside class="facts">
+          <h3>At a glance</h3>
+          <dl>
+            <div><dt>Degree</dt><dd>Docteur de l'Université d'Orléans</dd></div>
+            <div><dt>Discipline</dt><dd>Sciences Économiques</dd></div>
+            <div><dt>Defended</dt><dd>29 November 2004</dd></div>
+            <div><dt>Director</dt><dd>Prof. Cyrille Piatecki</dd></div>
+          </dl>
+          <h3 class="pub-h">Publication</h3>
+          <p class="pub">
+            N. Boitout &amp; L. Ureche-Rangau, “Towards a Multifractal Paradigm of Stochastic
+            Volatility?”, <cite>International Journal of Theoretical and Applied Finance</cite>
+            <b>7</b>(7), 823–851, 2004.<br>
+            <a href="https://doi.org/10.1142/S0219024904002736">10.1142/S0219024904002736</a>
+          </p>
+          <h3 class="pub-h">Elsewhere</h3>
+          <p class="pub">
+            <a href="https://github.com/nboitout">github.com/nboitout</a>
+            <!-- CONTACT — add email / LinkedIn / ORCID here if you want them public -->
+          </p>
+        </aside>
+      </div>
     </div>
   </section>
 
-  <!-- ───────────────────────── DEFENCE ───────────────────────── -->
+  <!-- ═══════════════════════ DEFENCE ═══════════════════════ -->
   <section id="defence" class="defence" aria-labelledby="defence-h">
     <div class="section-head">
       <h2 id="defence-h">Defence and jury</h2>
