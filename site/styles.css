@@ -400,9 +400,15 @@ main[id], main section[id] { scroll-margin-top: 4.75rem; }
   transition: transform .42s cubic-bezier(.22, .61, .36, 1);
 }
 .carousel-track .slide { flex: 0 0 100%; min-width: 0; line-height: 0; }
+/* These are photographs OF prints, with the paper's own white border in frame,
+   and they are a mix of portrait and landscape. Cropping them to fill a fixed
+   box cost the portrait one its head and its feet, so the frame is a fixed 4:3
+   and the image is fitted inside it whole. The letterbox is the warm paper
+   ground, which reads as the print's mount rather than as a gap. */
 .carousel-track img {
-  display: block; width: 100%; height: 270px;
-  object-fit: cover; object-position: center;
+  display: block; width: 100%; height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: contain; object-position: center;
   background: var(--bg-sunk);
 }
 
