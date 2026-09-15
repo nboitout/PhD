@@ -15,11 +15,16 @@ the JPEG is missing). Nothing else needs to change.
 ## The photographs in the personal note
 
 `note-1.jpg`, `note-2.jpg` and `note-3.jpg` are the three prints shown in the
-carousel beside the note: two of Nicolas Boitout alone at work on the research,
-and one with Thierry Delahaut at Porquerolles in 2001.
+carousel beside the note, in that order: at work on the thesis, then with Thierry
+Delahaut at Porquerolles in 2001, then at work again among the printouts. The
+Porquerolles print is second rather than last because it is the one a visitor
+comes to the carousel for.
+
+The numbering is the slide order — `note-N` is slide N — so changing the order
+means renaming the files, not reordering the markup.
 
 All three are scaled so the long edge is 1600px and re-encoded at quality 82.
-`note-1` and `note-2` are otherwise untouched. `note-3` is cropped to the print
+`note-1` and `note-3` are otherwise untouched. `note-2` is cropped to the print
 itself — the hand holding it and the table behind it were in the original frame,
 which the other two did not have.
 

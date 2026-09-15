@@ -142,29 +142,39 @@ main[id], main section[id] { scroll-margin-top: 4.75rem; }
 
 /* ── chapters as the hero ───────────────────────────────── */
 
-.chapters { padding-block: clamp(1.8rem, 4vw, 3rem) clamp(3rem, 7vw, 4.5rem); }
+/* ── the opening: what this is ──────────────────────────── */
+
+.intro { padding-block: clamp(1.8rem, 4vw, 3rem) clamp(2.5rem, 6vw, 3.75rem); }
+
+/* ── the personal note ──────────────────────────────────── */
+
+.note { padding-block: clamp(2.75rem, 6vw, 4rem); border-top: 1px solid var(--rule); }
+.note .section-head h2 { margin-top: .5rem; }
+
+.note-layout { display: grid; gap: clamp(2rem, 5vw, 3.25rem); align-items: start; }
+.note-side { display: grid; gap: 1.25rem; }
+@media (min-width: 62rem) {
+  .note-layout { grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); }
+  /* The note is long and the photographs are short: rather than leave the
+     column beside it empty for most of the read, the prints stay in view. */
+  .note-side { position: sticky; top: 5.25rem; }
+}
+
+/* ── the chapters ───────────────────────────────────────── */
+
+.chapters { padding-block: clamp(2.75rem, 6vw, 4rem); border-top: 1px solid var(--rule); }
+.chapters .section-head h2 { margin-top: .5rem; }
 
 .chapters-intro {
   display: grid; gap: clamp(1.75rem, 4vw, 3rem);
   align-items: start;
   margin-bottom: clamp(1.75rem, 4vw, 2.75rem);
 }
-@media (min-width: 62rem) {
-  .chapters-intro { grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); }
-  /* The note is long and the two photographs are short. Rather than leave the
-     column beside it empty for most of the read, the paper stays in view. */
-  .intro-side { position: sticky; top: 5.25rem; }
+@media (min-width: 54rem) {
+  .chapters-intro { grid-template-columns: minmax(0, 1fr) auto; align-items: center; }
 }
 
-/* The printed title page and the photographs, stacked: the two pieces of paper
-   the note is about, beside the note itself. */
-.intro-side { display: grid; gap: 1.5rem; align-content: start; justify-items: stretch; }
-
-.intro-copy { max-width: 42rem; }
-.note-prose { margin-top: 1.3rem; }
-/* The note is the page's opening, so it carries the h1 and runs straight on
-   from it; there is no lede between the two. */
-.note-prose .first { margin-top: 0; }
+.intro-copy { max-width: 40rem; }
 .chapters-intro h1 {
   font-size: clamp(1.95rem, 4.4vw, 3.05rem);
   letter-spacing: -.022em;
@@ -176,7 +186,7 @@ main[id], main section[id] { scroll-margin-top: 4.75rem; }
 }
 .status-line {
   display: flex; align-items: center; gap: .5rem;
-  margin-bottom: 1.15rem; font-size: .82rem; color: var(--ink-mute);
+  margin: -.75rem 0 1.4rem; font-size: .82rem; color: var(--ink-mute);
 }
 .status-line .dot {
   width: 7px; height: 7px; border-radius: 50%; background: var(--optimist); flex: none;
@@ -232,7 +242,7 @@ main[id], main section[id] { scroll-margin-top: 4.75rem; }
 }
 .tp-date { margin-top: auto !important; font-size: .53rem; color: #3b3832; }
 
-@media (max-width: 62rem) {
+@media (max-width: 54rem) {
   .cover { justify-items: start; }
   .cover figcaption { text-align: left; }
 }

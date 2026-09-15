@@ -29,12 +29,15 @@ vercel.json       static hosting, no build, with a strict CSP
 
 The four chapters *are* the hero: the page opens on a short title block beside
 the dissertation's title page, and the chapter cards begin within the first
-The page opens on **A personal note, 23 years later** — the note written in
-September 2026 on returning to the manuscript — with the dissertation's printed
-title page and a carousel of photographs beside it. The chapter cards follow.
-Below them, **Why I approached currency crises this way** carries the intuition
-in the first person, with the live through-line panel and the publication details
-alongside. **Defence and jury** closes the page.
+The page opens by saying what it is: the dissertation's own title, where and when
+it was defended, and a photograph of the printed copy, so a visitor knows within a
+second that this is a doctoral thesis. **A personal note, 23 years later** follows
+— the note written in September 2026 on returning to the manuscript — with a
+carousel of three prints from the thesis years beside it. Then **Four chapters on
+how a currency price is made** and the chapter cards, which are what a visitor is
+meant to scroll to and click. Below them, **Why I approached currency crises this
+way** carries the intuition in the first person, with the live through-line panel
+and the publication details alongside. **Defence and jury** closes the page.
 
 ## Where the cards point
 
