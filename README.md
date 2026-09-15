@@ -29,8 +29,9 @@ vercel.json       static hosting, no build, with a strict CSP
 
 The four chapters *are* the hero: the page opens on a short title block beside
 the dissertation's title page, and the chapter cards begin within the first
-screen. Below them, **Why I approached currency crises this way** carries the
-intuition in the first person, with the live through-line panel and the
+screen. Below them, **A personal note, 23 years later** is the note written in
+September 2026 on returning to the manuscript, with a carousel of three
+photographs from the econophysics years, the live through-line panel and the
 publication details alongside. **Defence and jury** closes the page.
 
 ## Where the cards point
@@ -63,9 +64,12 @@ off as the real object. That swap lives in `main.js` rather than an inline
 
 ## Still to supply
 
-- `<!-- VOICE -->` in `site/index.html` marks the intuition section. It is written
-  in the first person, drawn from the introduction of Chapter 2, and is meant to
-  be edited until it sounds like you rather than like a summary of you.
+- `<!-- VOICE -->` in `site/index.html` marks the personal note. It is the one
+  section on the page that speaks in the present tense, and is meant to be edited
+  freely.
+- The three photographs themselves. `site/assets/README.md` says where they go and
+  which two captions are still blank; until the files are dropped in, the carousel
+  removes itself from the page.
 - `<!-- CONTACT -->` in the sidebar, where an email, LinkedIn or ORCID link would
   go if you want them public.
 

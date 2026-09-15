@@ -83,6 +83,129 @@
     if (img.complete && img.naturalWidth === 0) failed();
   })();
 
+  /* ── the photographs ───────────────────────────────────────
+
+     Three photographs from the econophysics years, shown one at a time.
+
+     The files are dropped in rather than committed with the markup, so every
+     slide is treated as optional: each image is tried as .jpg, then .jpeg,
+     then .png, and a slide whose file is missing removes itself. The figure
+     is revealed only once the survivors are known, so a photograph that was
+     never added leaves no gap and never renders as a broken image. If none of
+     the three are there, the carousel is removed from the page entirely.
+
+     The images are deliberately NOT lazy-loaded: the figure starts hidden, a
+     hidden element never enters the viewport, and a lazy image inside one
+     would therefore wait forever for a scroll that cannot happen.
+     ────────────────────────────────────────────────────────── */
+
+  (() => {
+    const fig = document.getElementById('photos');
+    const track = document.getElementById('carousel-track');
+    if (!fig || !track) return;
+
+    const dotsBox = document.getElementById('carousel-dots');
+    const capBox = document.getElementById('carousel-caption');
+    const prev = document.getElementById('carousel-prev');
+    const next = document.getElementById('carousel-next');
+
+    const EXT = ['.jpg', '.jpeg', '.png'];
+    const slides = Array.from(track.querySelectorAll('.slide'));
+    let pending = slides.length;
+    let live = [];
+    let at = 0;
+
+    if (!pending) { fig.remove(); return; }
+
+    /* ── the carousel proper, built once the survivors are known ── */
+
+    function show(n) {
+      at = (n + live.length) % live.length;
+      track.style.transform = `translateX(${-at * 100}%)`;
+      const img = live[at].querySelector('img');
+      if (capBox) capBox.textContent = img?.dataset.caption || '';
+      for (const [k, dot] of dots.entries()) {
+        dot.setAttribute('aria-current', k === at ? 'true' : 'false');
+        dot.tabIndex = k === at ? 0 : -1;
+      }
+      // Only the visible photograph is reachable by tab or read out in order.
+      for (const [k, s] of live.entries()) s.setAttribute('aria-hidden', k === at ? 'false' : 'true');
+    }
+
+    const dots = [];
+
+    function build() {
+      if (live.length === 1) fig.classList.add('solo');
+
+      if (dotsBox && live.length > 1) {
+        for (let k = 0; k < live.length; k++) {
+          const dot = document.createElement('button');
+          dot.type = 'button';
+          dot.setAttribute('aria-current', 'false');
+          dot.setAttribute('aria-label', `Photograph ${k + 1} of ${live.length}`);
+          dot.addEventListener('click', () => show(k));
+          dotsBox.append(dot);
+          dots.push(dot);
+        }
+      }
+
+      prev?.addEventListener('click', () => show(at - 1));
+      next?.addEventListener('click', () => show(at + 1));
+
+      fig.addEventListener('keydown', e => {
+        if (live.length < 2) return;
+        if (e.key === 'ArrowLeft') { show(at - 1); e.preventDefault(); }
+        if (e.key === 'ArrowRight') { show(at + 1); e.preventDefault(); }
+      });
+
+      // Swipe. Pointer events cover touch, pen and a dragged mouse alike.
+      let x0 = null;
+      track.addEventListener('pointerdown', e => { x0 = e.clientX; });
+      track.addEventListener('pointerup', e => {
+        if (x0 === null || live.length < 2) return;
+        const dx = e.clientX - x0;
+        x0 = null;
+        if (Math.abs(dx) > 40) show(at + (dx < 0 ? 1 : -1));
+      });
+      track.addEventListener('pointercancel', () => { x0 = null; });
+
+      show(0);
+    }
+
+    /* ── settling each slide ── */
+
+    function settle() {
+      if (--pending > 0) return;
+      live = Array.from(track.querySelectorAll('.slide'));
+      if (!live.length) { fig.remove(); return; }
+      build();
+      fig.hidden = false;
+    }
+
+    for (const slide of slides) {
+      const img = slide.querySelector('img');
+      if (!img) { slide.remove(); settle(); continue; }
+
+      const base = img.getAttribute('src').replace(/\.[a-z0-9]+$/i, '');
+      let tried = 0;
+      let done = false;
+
+      const ok = () => { if (done) return; done = true; settle(); };
+      const fail = () => {
+        if (done) return;
+        if (++tried < EXT.length) { img.src = base + EXT[tried]; return; }
+        done = true;
+        slide.remove();
+        settle();
+      };
+
+      img.addEventListener('load', ok);
+      img.addEventListener('error', fail);
+      // The script is deferred, so an image may already have settled by now.
+      if (img.complete) (img.naturalWidth ? ok : fail)();
+    }
+  })();
+
   /* ── colours, read from the stylesheet so the panels follow the theme ── */
 
   const palette = { stale: true, v: {} };

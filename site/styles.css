@@ -328,14 +328,14 @@ main[id], main section[id] { scroll-margin-top: 4.75rem; }
   .card.pending { flex-direction: row; align-items: center; }
 }
 
-/* ── why crises ─────────────────────────────────────────── */
+/* ── the personal note ──────────────────────────────────── */
 
-.why { padding-block: clamp(3rem, 7vw, 4.5rem); border-top: 1px solid var(--rule); }
-.why .section-head h2 { margin-top: .5rem; }
+.note { padding-block: clamp(3rem, 7vw, 4.5rem); border-top: 1px solid var(--rule); }
+.note .section-head h2 { margin-top: .5rem; }
 
-.why-layout { display: grid; gap: clamp(2rem, 5vw, 3.25rem); align-items: start; }
+.note-layout { display: grid; gap: clamp(2rem, 5vw, 3.25rem); align-items: start; }
 @media (min-width: 62rem) {
-  .why-layout { grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); }
+  .note-layout { grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); }
 }
 
 .prose { display: grid; gap: 1.05rem; max-width: 38rem; }
@@ -350,7 +350,101 @@ main[id], main section[id] { scroll-margin-top: 4.75rem; }
   font-size: .88rem !important; line-height: 1.65 !important;
 }
 
-.why-side { display: grid; gap: 1.25rem; }
+/* The two short lines that carry the note's rhythm. .pull is the beat the
+   whole piece turns on; .beat is the quieter one before the caveat. Both sit
+   on their own, so they get air above and below rather than a rule or a box. */
+.pull {
+  margin-block: .9rem;
+  font-family: var(--serif);
+  font-size: clamp(1.22rem, 2.4vw, 1.5rem) !important;
+  line-height: 1.34 !important;
+  letter-spacing: -.012em;
+  color: var(--ink) !important;
+  text-wrap: balance;
+}
+.beat {
+  font-family: var(--serif);
+  font-size: 1.12rem !important;
+  color: var(--ink) !important;
+  line-height: 1.45 !important;
+}
+.signoff {
+  margin-top: .8rem; padding-top: 1.1rem; border-top: 1px solid var(--rule);
+  font-size: .82rem !important; color: var(--ink-mute) !important;
+  letter-spacing: .04em;
+}
+
+.note-side { display: grid; gap: 1.25rem; }
+
+/* ── the photographs ────────────────────────────────────────
+   Three photographs from the econophysics years. The figure starts hidden and
+   main.js reveals it only once a file has actually decoded, so a missing
+   photograph leaves no gap and no broken image. One slide is shown at a time;
+   the track slides horizontally and the caption is swapped underneath it.
+   ─────────────────────────────────────────────────────────── */
+
+.carousel {
+  margin: 0;
+  background: var(--bg-raise);
+  border: 1px solid var(--rule);
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.carousel-frame { position: relative; background: var(--bg-sunk); }
+
+.carousel-track {
+  list-style: none; margin: 0; padding: 0;
+  display: flex;
+  transition: transform .42s cubic-bezier(.22, .61, .36, 1);
+}
+.carousel-track .slide { flex: 0 0 100%; min-width: 0; line-height: 0; }
+.carousel-track img {
+  display: block; width: 100%; height: 270px;
+  object-fit: cover; object-position: center;
+  background: var(--bg-sunk);
+}
+
+/* A photograph keeps its own light in both themes, like the title page does. */
+.carousel-nav {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  display: grid; place-items: center; width: 32px; height: 32px; padding: 0;
+  border: 1px solid rgba(255, 255, 255, .34); border-radius: 50%;
+  background: rgba(20, 19, 17, .46); color: #fff;
+  backdrop-filter: blur(6px);
+  cursor: pointer;
+  transition: background .16s ease, opacity .16s ease;
+}
+.carousel-nav:hover { background: rgba(20, 19, 17, .72); }
+.carousel-nav.prev { left: .6rem; }
+.carousel-nav.next { right: .6rem; }
+.carousel-nav[disabled] { opacity: .3; cursor: default; }
+/* A single photograph is not a carousel: the controls go away entirely. */
+.carousel.solo .carousel-nav, .carousel.solo .carousel-dots { display: none; }
+
+.carousel-dots {
+  display: flex; justify-content: center; gap: .4rem;
+  padding: .7rem 1rem .1rem;
+}
+.carousel-dots button {
+  width: 7px; height: 7px; padding: 0; border: 0; border-radius: 50%;
+  background: var(--rule-hard); cursor: pointer;
+  transition: background .16s ease, transform .16s ease;
+}
+.carousel-dots button[aria-current="true"] { background: var(--accent); transform: scale(1.25); }
+
+.carousel figcaption {
+  padding: .8rem 1rem 1rem;
+  font-size: .78rem; line-height: 1.55; color: var(--ink-mute);
+  text-align: center;
+  min-height: 1.2rem;      /* the box does not jump when a slide has no caption */
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .carousel-track { transition: none; }
+}
+
 
 .facts {
   padding: 1.5rem 1.5rem 1.6rem;

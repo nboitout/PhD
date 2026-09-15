@@ -26,7 +26,7 @@
   </a>
   <nav aria-label="Sections">
     <a href="#chapters">Chapters</a>
-    <a href="#why">Why crises</a>
+    <a href="#note">Personal note</a>
     <a href="#defence">Defence</a>
     <button type="button" id="theme" class="theme-toggle" aria-label="Switch to dark theme" title="Switch theme">
       <svg viewBox="0 0 20 20" width="17" height="17" aria-hidden="true"><path d="M16 12.2A7 7 0 0 1 7.8 4a6.4 6.4 0 1 0 8.2 8.2Z" fill="currentColor"/></svg>
@@ -191,62 +191,124 @@
     </ol>
   </section>
 
-  <!-- ═══════════════════ WHY CRISES, THIS WAY ═══════════════════ -->
-  <!-- VOICE — this section is written in the first person, drawn from the
-       introduction of your own Chapter 2. Edit it until it sounds like you. -->
-  <section id="why" class="why" aria-labelledby="why-h">
+  <!-- ═══════════════ A PERSONAL NOTE, 23 YEARS LATER ═══════════════ -->
+  <!-- VOICE — this section is Nicolas Boitout's own note, written in
+       September 2026 on returning to the 2004 manuscript. Edit it freely;
+       it is the one place on the page that speaks in the present tense. -->
+  <section id="note" class="note" aria-labelledby="note-h">
     <div class="section-head">
-      <p class="eyebrow">The intuition</p>
-      <h2 id="why-h">Why I approached currency crises this way</h2>
+      <p class="eyebrow">2003 · 2026</p>
+      <h2 id="note-h">A personal note, 23 years later</h2>
     </div>
 
-    <div class="why-layout">
+    <div class="note-layout">
       <div class="prose">
         <p class="first">
-          The standard account never added up for me. If prices move because news arrives,
-          and news reaches everyone at once and is read in much the same way, then the
-          volatility we actually observe in currency markets is far too large. You can find
-          the intraday spikes around announcements — but they are a small part of the total.
-          Most of the movement was being produced by something other than public information.
+          In September 2026, OpenAI announced a resolution to the Navier–Stokes
+          Millennium Problem. The news immediately took me back to my PhD.
         </p>
         <p>
-          The foreign exchange market makes the alternative hard to avoid. It is
-          decentralised: there is no tape of aggregate order flow, so what a trader learns
-          about everyone else, they learn from price and volume themselves. Other
-          participants are not noise around the fundamental — they <em>are</em> part of what
-          you are trading on. That is also why technical analysis dominates short-horizon
-          forecasting there, whatever one thinks of it.
+          More than twenty years ago, while doing my PhD in finance, I was working with a
+          research group composed mainly of physicists. They were exploring how ideas
+          developed to understand turbulence or earthquakes could be applied to financial
+          market crashes and volatility.
+        </p>
+        <p>This was completely new territory for me. Fascinating.</p>
+        <p>
+          When I returned to the thesis last week, I knew the digital files were lost. The
+          PDF was gone. The code was gone. All I had was the printed copy.
         </p>
         <p>
-          So I stopped treating the representative investor on a regular clock as the
-          starting point. Take it away and you need to say what replaces it, which is the
-          whole dissertation: information that arrives in bursts, agents who revise their
-          method by watching what is working for other people, and a trading time that runs
-          fast and slow instead of ticking.
+          I took photographs of every page and digitised the full document.
         </p>
         <p>
-          Crises are where this stops being a modelling preference. A fixed exchange rate
-          does not break because a fundamental crossed a threshold on a particular Tuesday.
-          It breaks because enough participants revise at once, each partly because the
-          others are revising — a herd that is individually rational and collectively
-          catastrophic. A representative agent cannot even state that problem. A population
-          that switches strategy, in a market where the only signal about everyone else is
-          the price, can.
+          I then gave the first chapter to GPT. In less than one minute per chapter, it
+          analysed research that had taken me four years to complete. Its conclusion was
+          reassuring: for work written more than two decades ago, it was not bad. Some
+          passages had aged surprisingly well.
         </p>
+
+        <p class="pull">One minute for a chapter. Four years for a thesis.</p>
+
+        <p>So I decided to put the work online.</p>
         <p>
-          That is why the emerging-market application at the end is not an afterthought
-          bolted onto the theory. It is the case the theory was built for.
+          With the help of coding agents, I rebuilt the models, tests and simulations as
+          interactive laboratories. A few hours later, experiments that had once existed
+          only as equations, tables and printed charts were running again in a browser.
         </p>
+
+        <p class="beat">The interface is new. The research is not.</p>
 
         <p class="aside">
-          <b>A note on the rebuilds.</b> Each laboratory is written from its chapter's own
-          equations, not from its published figures. Where the manuscript is ambiguous,
-          silent, or missing pages, the implementation says so on the page and names the
-          reading it took. Nothing is quietly corrected and nothing is modernised.
+          Each laboratory here remains deliberately faithful to the original equations and
+          assumptions. Where the manuscript is ambiguous or incomplete, the website says so.
+          Nothing is quietly corrected to make my younger self look right.
         </p>
+
+        <p>
+          This website is therefore not simply an archive. It is a conversation between
+          research conducted 23 years ago and tools that none of us could have imagined at
+          the time.
+        </p>
+        <p>
+          Rebuilding this work gave me a concrete glimpse of the acceleration now taking
+          place in research. Powerful AI systems radically compress the time needed between
+          an idea and a working experiment. Work that once required months or years can now
+          be reconstructed, tested and shared in hours.
+        </p>
+
+        <p class="signoff">Bucharest, 15 September 2026</p>
       </div>
 
-      <div class="why-side">
+      <div class="note-side">
+
+        <!-- ───────────────────────────────────────────────────────────────
+             THE PHOTOGRAPHS.
+
+             Three photographs from the econophysics years, shown as a
+             carousel. Drop the files into site/assets/ as note-1, note-2 and
+             note-3 — .jpg, .jpeg and .png are all tried, in that order, so the
+             extension does not matter.
+
+             TO EDIT: each slide's caption is its data-caption attribute and
+             its description for screen readers is its alt attribute. Slides 2
+             and 3 carry no caption yet — fill in data-caption and alt for them
+             and they will appear. A slide whose file is missing removes itself;
+             if none of the three load, the whole carousel disappears rather
+             than showing broken images.
+             ─────────────────────────────────────────────────────────────── -->
+        <figure class="carousel" id="photos" hidden>
+          <div class="carousel-frame">
+            <ul class="carousel-track" id="carousel-track">
+              <li class="slide">
+                <img src="./assets/note-1.jpg" decoding="async"
+                     data-caption="With Thierry Delahaut · Porquerolles, 2001 · CNRS, Groupe Économie et Physique"
+                     alt="With Thierry Delahaut at the CNRS econophysics summer school, Porquerolles, 2001.">
+              </li>
+              <li class="slide">
+                <img src="./assets/note-2.jpg" decoding="async"
+                     data-caption=""
+                     alt="A photograph from the econophysics years.">
+              </li>
+              <li class="slide">
+                <img src="./assets/note-3.jpg" decoding="async"
+                     data-caption=""
+                     alt="A photograph from the econophysics years.">
+              </li>
+            </ul>
+
+            <button type="button" class="carousel-nav prev" id="carousel-prev" aria-label="Previous photograph">
+              <svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><path d="M12.5 4 6.5 10l6 6" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <button type="button" class="carousel-nav next" id="carousel-next" aria-label="Next photograph">
+              <svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><path d="M7.5 4l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+          </div>
+
+          <div class="carousel-dots" id="carousel-dots" role="group" aria-label="Choose a photograph"></div>
+          <figcaption id="carousel-caption"></figcaption>
+        </figure>
+
         <figure class="hero-panel">
           <div class="panel-head">
             <span class="panel-title">The through-line · live</span>
