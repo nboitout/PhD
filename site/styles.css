@@ -160,6 +160,14 @@ main[id], main section[id] { scroll-margin-top: 4.75rem; }
   .note-side { position: sticky; top: 5.25rem; }
 }
 
+/* Below that the two columns become one and the photographs, being second in
+   the source, would land four screens down — past the end of the note on a
+   phone. They are the first thing anyone wants from a personal note, so on a
+   narrow screen they come before the prose rather than after it. */
+@media (max-width: 61.999rem) {
+  .note-side { order: -1; }
+}
+
 /* ── the chapters ───────────────────────────────────────── */
 
 .chapters { padding-block: clamp(2.75rem, 6vw, 4rem); border-top: 1px solid var(--rule); }

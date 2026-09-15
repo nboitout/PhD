@@ -38,6 +38,11 @@ The frame is a fixed 4:3 and each photograph is fitted inside it whole, on the
 warm paper ground, rather than cropped to fill — `note-1` is a portrait print and
 cropping cost it both the head and the feet.
 
+On a wide screen the carousel sits beside the note and stays in view as it is
+read. Below 62rem the two columns become one, and the carousel is ordered above
+the prose instead of below it: second in the source, it would otherwise land
+about four screens down on a phone, past the end of the note.
+
 To change one, overwrite the file here and put the original alongside the others.
 A slide whose file is missing removes itself, and if none are present the
 carousel disappears from the page rather than showing broken images. Each `src`
