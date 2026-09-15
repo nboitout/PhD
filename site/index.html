@@ -141,46 +141,46 @@
         <!-- ───────────────────────────────────────────────────────────────
              THE PHOTOGRAPHS.
 
-             Three photographs from the econophysics years, shown as a
-             carousel. Drop the files into site/assets/ as note-1, note-2 and
-             note-3 — .jpg, .jpeg and .png are all tried, in that order, so the
-             extension does not matter.
+             Three photographs from the thesis years. The first two are Nicolas
+             Boitout alone at work on the research; the third, with Thierry
+             Delahaut at Porquerolles in 2001, has not been uploaded yet — the
+             file that arrived under that name was a byte-for-byte duplicate of
+             the second photograph.
 
-             TO EDIT: each slide's caption is its data-caption attribute and
-             its description for screen readers is its alt attribute. Slides 2
-             and 3 carry no caption yet — fill in data-caption and alt for them
-             and they will appear. A slide whose file is missing removes itself;
-             if none of the three load, the whole carousel disappears rather
-             than showing broken images.
+             Its slide is left in place, captioned and ready: dropping the file
+             into site/assets/ as note-3.jpg is the whole of what remains. A
+             slide whose file is missing removes itself, so until then the
+             carousel simply shows two, and if none of the three load it
+             disappears rather than showing broken images. Each src is tried as
+             .jpg, then .jpeg, then .png, so the extension does not matter.
+
+             TO EDIT: a slide's caption is its data-caption attribute, and its
+             description for screen readers is its alt attribute.
              ─────────────────────────────────────────────────────────────── -->
         <figure class="carousel" id="photos" hidden>
           <div class="carousel-frame">
             <ul class="carousel-track" id="carousel-track">
               <li class="slide">
-              <img src="./assets/note-1.jpg" width="1200" height="1600" decoding="async"
-                     data-caption=""
-                     alt="A print from the thesis years: a young man in glasses and a striped
-                        jumper, sitting on a red sofa, reading a sheet of paper on his lap.">
+                <img src="./assets/note-1.jpg" width="1200" height="1600" decoding="async"
+                     data-caption="At work on the thesis"
+                     alt="A print from the thesis years: Nicolas Boitout, in glasses and a
+                          striped jumper, sitting on a red sofa and reading a sheet of paper
+                          on his lap.">
               </li>
               <li class="slide">
-              <img src="./assets/note-2.jpg" width="1600" height="1200" decoding="async"
+                <img src="./assets/note-2.jpg" width="1600" height="1200" decoding="async"
+                     data-caption="At work on the thesis, among the printouts"
+                     alt="A print from the thesis years: Nicolas Boitout reading a sheet of
+                          paper at a glass table in front of a brick fireplace, with books,
+                          notes and loose pages spread over the table and across the floor
+                          around him.">
+              </li>
+              <li class="slide">
+                <img src="./assets/note-3.jpg" decoding="async"
                      data-caption="With Thierry Delahaut · Porquerolles, 2001 · CNRS, Groupe Économie et Physique"
-                     alt="A print from the thesis years: a man reading a sheet of paper at a glass
-                        table in front of a brick fireplace, with books, notes and loose pages
-                        spread over the table and across the floor around him.">
+                     alt="With Thierry Delahaut at Porquerolles in 2001, at the CNRS
+                          econophysics group.">
               </li>
-              <!-- A THIRD PHOTOGRAPH. The file uploaded as "Photo 3-3" was a
-                   byte-for-byte duplicate of "Photo 2-3", so there is no third
-                   photograph yet. Drop the real one in as site/assets/note-3.jpg
-                   and uncomment this slide — nothing else needs to change. It is
-                   left commented rather than live so the page does not request a
-                   file that is not there on every visit.
-              <li class="slide">
-              <img src="./assets/note-3.jpg" decoding="async"
-                     data-caption="WRITE THE CAPTION HERE"
-                     alt="WRITE A DESCRIPTION OF THE PHOTOGRAPH HERE">
-              </li>
-              -->
             </ul>
 
             <button type="button" class="carousel-nav prev" id="carousel-prev" aria-label="Previous photograph">
