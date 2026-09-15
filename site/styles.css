@@ -379,17 +379,34 @@ main[id], main section[id] { scroll-margin-top: 4.75rem; }
   font-size: .88rem !important; line-height: 1.65 !important;
 }
 
-/* The two short lines that carry the note's rhythm. .pull is the beat the
-   whole piece turns on; .beat is the quieter one before the caveat. Both sit
-   on their own, so they get air above and below rather than a rule or a box. */
-.pull {
-  margin-block: .9rem;
+/* The line the note turns on. It is a comparison of two parties, so it is set
+   as one — each side labelled and on its own row — rather than as a sentence
+   where the reader has to work out which half belongs to whom. */
+.compare {
+  margin: .9rem 0;
+  display: grid; gap: .6rem;
+  padding-left: 1rem;
+  border-left: 2px solid var(--gold);
+}
+.compare > div {
+  display: grid; grid-template-columns: 7rem minmax(0, 1fr);
+  gap: .9rem; align-items: baseline;
+}
+.compare dt {
+  font-family: var(--sans); font-size: .7rem; font-weight: 650;
+  letter-spacing: .13em; text-transform: uppercase; color: var(--gold);
+}
+.compare dd {
+  margin: 0;
   font-family: var(--serif);
-  font-size: clamp(1.22rem, 2.4vw, 1.5rem) !important;
-  line-height: 1.34 !important;
-  letter-spacing: -.012em;
-  color: var(--ink) !important;
+  font-size: clamp(1.14rem, 2.2vw, 1.4rem);
+  line-height: 1.32; letter-spacing: -.012em;
+  color: var(--ink);
   text-wrap: balance;
+}
+/* Narrow: 7rem of label leaves too little for the line, so it goes above. */
+@media (max-width: 32rem) {
+  .compare > div { grid-template-columns: 1fr; gap: .1rem; }
 }
 .beat {
   font-family: var(--serif);
