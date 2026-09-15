@@ -14,28 +14,26 @@ the JPEG is missing). Nothing else needs to change.
 
 ## The photographs in the personal note
 
-Three photographs from the thesis years, shown as a carousel beside the note.
-`note-1.jpg` and `note-2.jpg` are Nicolas Boitout alone at work on the research.
-They are the supplied prints, scaled so the long edge is 1600px and re-encoded at
-quality 82; nothing is cropped. The full-resolution originals are kept under
-`source/photos/`, outside the deployed directory, exactly as the cover is.
+`note-1.jpg`, `note-2.jpg` and `note-3.jpg` are the three prints shown in the
+carousel beside the note: two of Nicolas Boitout alone at work on the research,
+and one with Thierry Delahaut at Porquerolles in 2001.
+
+All three are scaled so the long edge is 1600px and re-encoded at quality 82.
+`note-1` and `note-2` are otherwise untouched. `note-3` is cropped to the print
+itself — the hand holding it and the table behind it were in the original frame,
+which the other two did not have.
+
+The full-resolution originals are under `source/photos/`, outside the deployed
+directory, named `note-N-original.jpeg` for the slide each one feeds. They were
+uploaded under names that did not match their contents, which cost three rounds
+of upload to discover; naming them for their slides is what stops that
+recurring.
 
 The frame is a fixed 4:3 and each photograph is fitted inside it whole, on the
 warm paper ground, rather than cropped to fill — `note-1` is a portrait print and
 cropping cost it both the head and the feet.
 
-### Still to do: the third photograph
-
-The photograph with Thierry Delahaut has not arrived. The file uploaded as
-“Photo 3-3” is a byte-for-byte duplicate of “Photo 2-3”, and “Photo 2-3” itself is
-one of the two solo photographs despite the name it was uploaded under — so
-neither of the files under `source/photos/` is the Delahaut one.
-
-Its slide is already in `site/index.html`, captioned “With Thierry Delahaut ·
-Porquerolles, 2001 · CNRS, Groupe Économie et Physique”. **Dropping the file in
-here as `note-3.jpg` is the whole of what remains** — no markup to edit. Until
-then the slide removes itself and the carousel shows two photographs.
-
-A slide whose file is missing removes itself, and if none are present the carousel
-disappears from the page rather than showing broken images. Each `src` is tried as
-`.jpg`, then `.jpeg`, then `.png`.
+To change one, overwrite the file here and put the original alongside the others.
+A slide whose file is missing removes itself, and if none are present the
+carousel disappears from the page rather than showing broken images. Each `src`
+is tried as `.jpg`, then `.jpeg`, then `.png`.

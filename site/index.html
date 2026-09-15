@@ -141,18 +141,14 @@
         <!-- ───────────────────────────────────────────────────────────────
              THE PHOTOGRAPHS.
 
-             Three photographs from the thesis years. The first two are Nicolas
-             Boitout alone at work on the research; the third, with Thierry
-             Delahaut at Porquerolles in 2001, has not been uploaded yet — the
-             file that arrived under that name was a byte-for-byte duplicate of
-             the second photograph.
+             Three prints from the thesis years: two of Nicolas Boitout alone at
+             work on the research, and one with Thierry Delahaut at Porquerolles
+             in 2001. The full-resolution originals are under source/photos/,
+             outside the deployed directory, named for the slides they feed.
 
-             Its slide is left in place, captioned and ready: dropping the file
-             into site/assets/ as note-3.jpg is the whole of what remains. A
-             slide whose file is missing removes itself, so until then the
-             carousel simply shows two, and if none of the three load it
-             disappears rather than showing broken images. Each src is tried as
-             .jpg, then .jpeg, then .png, so the extension does not matter.
+             A slide whose file is missing removes itself, and if none load the
+             carousel disappears rather than showing broken images. Each src is
+             tried as .jpg, then .jpeg, then .png.
 
              TO EDIT: a slide's caption is its data-caption attribute, and its
              description for screen readers is its alt attribute.
@@ -176,10 +172,11 @@
                           around him.">
               </li>
               <li class="slide">
-                <img src="./assets/note-3.jpg" decoding="async"
+                <img src="./assets/note-3.jpg" width="1600" height="1095" decoding="async"
                      data-caption="With Thierry Delahaut · Porquerolles, 2001 · CNRS, Groupe Économie et Physique"
-                     alt="With Thierry Delahaut at Porquerolles in 2001, at the CNRS
-                          econophysics group.">
+                     alt="A print from the thesis years: Nicolas Boitout and Thierry Delahaut
+                          side by side on a quayside, the sea behind them and a moored line
+                          at the right.">
               </li>
             </ul>
 
