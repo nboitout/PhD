@@ -373,6 +373,22 @@ main[id], main section[id] { scroll-margin-top: 4.75rem; }
 .prose em { color: var(--ink); font-style: italic; }
 .prose .first { font-size: 1.08rem; color: var(--ink); }
 
+/* Lists inside the note, in the chapter cards' idiom: a small square mark
+   rather than a disc, so the two read as one family. The negative top margin
+   closes the prose's own row gap against the line that introduces the list. */
+.prose ul {
+  margin: -.5rem 0 0; padding: 0; list-style: none;
+  display: grid; gap: .45rem;
+}
+.prose ul li {
+  position: relative; padding-left: 1.15rem;
+  color: var(--ink-soft); font-size: 1rem; line-height: 1.6;
+}
+.prose ul li::before {
+  content: ""; position: absolute; left: 0; top: .62em;
+  width: 5px; height: 5px; border-radius: 1px; background: var(--gold);
+}
+
 .aside {
   margin-top: .6rem; padding: 1.1rem 1.25rem;
   background: var(--bg-sunk); border-left: 2px solid var(--gold); border-radius: 0 8px 8px 0;
