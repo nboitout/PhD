@@ -4,18 +4,18 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Nicolas Boitout — FX Markets Dynamics, a Doctoral Dissertation</title>
-<meta name="description" content="Four chapters on exchange rate dynamics and currency crises, from a 2004 doctoral dissertation — each one rebuilt as a model you can run in your browser.">
+<meta name="description" content="Four chapters on exchange rate dynamics and currency crises, from a 2004 doctoral dissertation — three of them rebuilt as interactive laboratories you can run in your browser: a multifractal cascade simulator, an agent-based FX market, and long-memory estimators on ten years of modern series.">
 <meta name="theme-color" content="#1d4e6b">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Exchange Rate Dynamics — Nicolas Boitout">
-<meta property="og:description" content="Four chapters on exchange rate dynamics and currency crises, each rebuilt as a model you can run in your browser.">
+<meta property="og:description" content="Four chapters on how a currency price is made. Three of them run in your browser: a cascade simulator, an agent-based market, and long-memory estimators on today's markets.">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%231d4e6b'/%3E%3Cg fill='none' stroke='%23fcfbf8' stroke-width='1.8' stroke-linecap='round'%3E%3Cpath d='M5 22h3v-4h5v7h4v-11h4v6h6'/%3E%3C/g%3E%3Cg fill='%23d8ad69'%3E%3Crect x='5' y='26' width='1.4' height='3'/%3E%3Crect x='8' y='26' width='1.4' height='3'/%3E%3Crect x='9.6' y='26' width='1.4' height='3'/%3E%3Crect x='15' y='26' width='1.4' height='3'/%3E%3Crect x='21' y='26' width='1.4' height='3'/%3E%3Crect x='22.6' y='26' width='1.4' height='3'/%3E%3Crect x='25' y='26' width='1.4' height='3'/%3E%3C/g%3E%3C/svg%3E">
 <link rel="stylesheet" href="./styles.css">
 <script src="./main.js" defer></script>
 </head>
 <body>
-<a class="skip" href="#chapters">Skip to the chapters</a>
+<a class="skip" href="#labs">Skip to the laboratories</a>
 
 <header class="masthead">
   <a class="brand" href="#top">
@@ -25,8 +25,8 @@
     <span><b>Nicolas Boitout</b><span class="brand-sep">/</span><span class="brand-tail">Doctoral dissertation</span></span>
   </a>
   <nav aria-label="Sections">
+    <a href="#labs">Laboratories</a>
     <a href="#note">Note</a>
-    <a href="#chapters">Chapters</a>
     <a href="#why">Why crises</a>
     <a href="#defence">Defence</a>
     <button type="button" id="theme" class="theme-toggle" aria-label="Switch to dark theme" title="Switch theme">
@@ -37,71 +37,234 @@
 
 <main id="top">
 
-  <!-- ════════════ WHAT THIS IS, BEFORE ANYTHING ELSE ════════════
-       A visitor has a second to work out what they have landed on. The
-       dissertation's own title, where and when it was defended, and a
-       photograph of the printed copy answer that before they scroll. -->
-  <section id="intro" class="intro" aria-labelledby="intro-h">
-    <div class="chapters-intro">
-      <div class="intro-copy">
-        <p class="eyebrow">Université d'Orléans/France · Sciences Économiques · 2004</p>
-        <h1 id="intro-h">Modelling exchange rate dynamics, with application to emerging markets</h1>
+  <!-- ════════════════════════ THE BENCH ════════════════════════
+       The first screen is an instrument, not a description. A visitor
+       who works in markets has their hands on the model before they
+       have finished reading the sentence next to it: the two dials
+       here are the dissertation's own two parameters.
+
+       The academic identity is carried by the eyebrow and the thesis
+       line, which is enough to say what this is; it no longer needs
+       a whole screen to do it. The photograph of the printed copy
+       now sits beside the intuition further down, next to the jury
+       it belongs with.
+       ─────────────────────────────────────────────────────────── -->
+  <section id="bench" class="bench" aria-labelledby="bench-h">
+    <div class="bench-layout">
+      <div class="bench-copy">
+        <p class="eyebrow">Université d'Orléans · Sciences Économiques · defended 29 November 2004</p>
+        <h1 id="bench-h">Four chapters on how a currency price is made.<br><em>Three of them run in your browser.</em></h1>
         <p class="lede">
-          A doctoral dissertation, defended on 29 November 2004. Its four chapters are
-          being rebuilt in Sept 2026, as labs you can run on your own -- directly from the original manuscript. No new research, no rework. 
+          A doctoral dissertation on exchange rate dynamics and currency crises,
+          rebuilt in September 2026 as laboratories you can actually operate —
+          the cascade simulator, the agent-based market, the estimators on
+          today's series. From the original manuscript. No new research, no rework.
+        </p>
+
+        <p class="cta-row">
+          <a class="cta" href="#labs">See the three laboratories<span aria-hidden="true"> ↓</span></a>
+          <a class="cta ghost" href="#note">How this got rebuilt</a>
         </p>
       </div>
 
-      <!-- ───────────────────────────────────────────────────────────────
-           THE PRINTED COVER.
+      <!-- The through-line panel. It used to sit in a sidebar five
+           screens down; it is the most persuasive object on the page,
+           so it opens the page instead — and now it takes input. -->
+      <figure class="hero-panel" id="bench-panel">
+        <div class="panel-head">
+          <span class="panel-title">The through-line · live</span>
+          <span class="panel-seed" id="hero-seed">seed 20041129</span>
+        </div>
+        <canvas id="hero-canvas" aria-label="An animated simulation: a price that moves only when a trade arrives, above a raster of individual arrival times, above a band showing the intensity of information flow."></canvas>
 
-           The photograph of Nicolas Boitout's own printed copy, cropped only
-           to remove the dark strip down the left edge of the original frame.
-           The full-resolution original is kept at source/cover-original.jpeg
-           and is not deployed.
-
-           If the file ever goes missing, main.js reveals the typeset facsimile
-           below instead of leaving a broken image, and retitles the caption.
-           ─────────────────────────────────────────────────────────────── -->
-      <figure class="cover">
-        <a href="./assets/cover.jpg" id="cover-link" title="Open the title page at full size">
-          <img id="cover-photo" src="./assets/cover.jpg" width="1136" height="1600"
-               alt="The printed title page of the dissertation: Thèse présentée à
-                    l'Université d'Orléans pour obtenir le grade de Docteur, discipline
-                    Sciences Économiques, par Nicolas Boitout — Modélisation de la
-                    dynamique des taux de change avec application aux marchés émergents,
-                    soutenue publiquement le 29 novembre 2004. The jury is listed at the foot
-                    of the page.">
-        </a>
-
-        <div class="titlepage" id="cover-fallback" hidden aria-label="The dissertation's title page, 2004">
-          <p class="tp-univ">Université d'Orléans</p>
-          <p class="tp-head">Thèse<br>présentée<br>à l'Université d'Orléans<br>pour obtenir le grade de<br>Docteur de l'Université d'Orléans</p>
-          <p class="tp-disc">Discipline : <i>Sciences Économiques</i></p>
-          <p class="tp-par">par</p>
-          <p class="tp-name">Nicolas <b>Boitout</b></p>
-          <p class="tp-title">Modélisation de la dynamique des taux de change avec application aux marchés émergents</p>
-          <p class="tp-date">Soutenue publiquement le 29 novembre 2004</p>
+        <div class="panel-controls">
+          <div class="ctrl">
+            <label for="hero-lambda">Intermittency <span class="sym">λ²</span></label>
+            <input type="range" id="hero-lambda" min="10" max="300" value="75" step="5"
+                   aria-describedby="hero-lambda-out">
+            <output id="hero-lambda-out" for="hero-lambda">0.075</output>
+          </div>
+          <div class="ctrl">
+            <label for="hero-flow">Information flow <span class="sym">K̄</span></label>
+            <input type="range" id="hero-flow" min="40" max="600" value="240" step="10"
+                   aria-describedby="hero-flow-out">
+            <output id="hero-flow-out" for="hero-flow">2.40</output>
+          </div>
+          <button type="button" class="reseed" id="hero-reseed">New draw</button>
         </div>
 
-        <figcaption id="cover-caption">The printed copy · defended 29 November 2004</figcaption>
+        <figcaption>
+          A multiplicative cascade sets how intensely information is arriving; arrivals are
+          drawn against that intensity, and the price moves <em>only</em> when one lands.
+          Chapter One's cascade driving Chapter Two's random trading time. Raise λ² and the
+          quiet stretches get quieter while the bursts get sharper — that is the whole
+          argument of the dissertation, in two dials.
+        </figcaption>
       </figure>
 
-      <!-- ───────────────────────────────────────────────────────────────
-           THE PHOTOGRAPHS.
+      <!-- The machinery, named. On a wide screen this sits under the copy in
+           the left column; in one column it falls after the panel, so a phone
+           reaches the instrument before the keyword strip rather than after. -->
+      <p class="machinery">
+        <span>Multiplicative cascades</span>
+        <span>Poisson arrivals in business time</span>
+        <span>Lux–Marchesi switching under random trading time</span>
+        <span>GPH &amp; local Whittle d̂(q)</span>
+        <span>Structure functions ζ(q)</span>
+      </p>
+    </div>
 
-           Three prints from the thesis years: two of Nicolas Boitout alone at
-           work on the research, and one with Thierry Delahaut at Porquerolles
-           in 2001. The full-resolution originals are under source/photos/,
-           outside the deployed directory, named for the slides they feed.
+    <ul class="bench-facts">
+      <li><b>3</b> laboratories live, 1 in preparation</li>
+      <li><b>0</b> dependencies, no build step, no network calls at runtime</li>
+      <li>Every figure regenerated from <b>one run at one fixed seed</b></li>
+      <li>Chapter 1 published in <cite>IJTAF</cite> <b>7</b>(7), 2004</li>
+    </ul>
+  </section>
 
-           A slide whose file is missing removes itself, and if none load the
-           carousel disappears rather than showing broken images. Each src is
-           tried as .jpg, then .jpeg, then .png.
+  <!-- ══════════════════ THE LABORATORIES ══════════════════
+       Each card shows the laboratory it links to, as a screenshot of
+       the running application, and says what a visitor can *do* in it
+       rather than what it contains. The screenshots are captured from
+       the deployed builds; see source/shots/ and README.md.
+       ─────────────────────────────────────────────────────── -->
+  <section id="labs" class="labs" aria-labelledby="labs-h">
+    <div class="section-head">
+      <p class="eyebrow">The work, as instruments</p>
+      <h2 id="labs-h">Three laboratories you can operate</h2>
+      <p>
+        Intermittent bursts of volatility, traders who speculate and keep changing their
+        minds, and the same long-memory estimators turned on ten years of modern markets.
+        Every one of them takes your input and re-runs in front of you.
+      </p>
+    </div>
 
-           TO EDIT: a slide's caption is its data-caption attribute, and its
-           description for screen readers is its alt attribute.
-           ─────────────────────────────────────────────────────────────── -->
+    <p class="status-line">
+      <span class="dot"></span>Three laboratories are live. Chapter Four is in preparation.
+    </p>
+
+    <ol class="cards" id="cards">
+
+      <!-- CHAPTER 1 -->
+      <li class="card live" style="--accent:#245ad6">
+        <a class="shot" href="https://multifractal-volatility.vercel.app/" tabindex="-1" aria-hidden="true">
+          <span class="shot-bar"><span class="shot-dots" aria-hidden="true"></span><span class="shot-url">multifractal-volatility.vercel.app</span></span>
+          <img src="./assets/lab-ch1.jpg" width="1240" height="620" loading="lazy" decoding="async" alt="">
+        </a>
+        <div class="card-body">
+          <p class="card-num">Chapter One <span class="pill">Live lab</span></p>
+          <h3>
+            <a href="https://multifractal-volatility.vercel.app/">Towards a multifractal paradigm of stochastic volatility</a>
+          </h3>
+          <p class="card-text">
+            Information does not arrive evenly, and almost every familiar feature of returns
+            follows from that one assumption: fat tails, volatility that clusters, memory that
+            changes with the power you measure and the horizon you use.
+          </p>
+          <p class="do-h">In the laboratory you can</p>
+          <ul class="do">
+            <li>Drag intermittency <b>λ²</b> and watch excess kurtosis climb on the live tiles</li>
+            <li>Stop the cascade partway down, and see which horizons were carrying the volatility</li>
+            <li>Switch between <b>six views</b> — cascade, information flow, returns, memory, scaling</li>
+            <li>Read the original chapter beside the simulator: forty equations, four tables</li>
+          </ul>
+          <p class="spec">9 controls · 6 views · 4,096 observations · seeded · Alcatel 1991–2001, as reported</p>
+          <p class="card-cite">
+            With Loredana Ureche-Rangau · <cite>International Journal of Theoretical and Applied Finance</cite>
+            7(7), 823–851, 2004 · <a href="https://doi.org/10.1142/S0219024904002736">DOI</a>
+          </p>
+          <p class="card-links">
+            <a class="go" href="https://multifractal-volatility.vercel.app/">Run the cascade simulator<span aria-hidden="true"> →</span></a>
+            <a class="src" href="https://github.com/nboitout/Multifractal_Volatility">Source</a>
+          </p>
+        </div>
+      </li>
+
+      <!-- CHAPTER 2 -->
+      <li class="card live" style="--accent:#1d4e6b">
+        <a class="shot" href="https://phd-microsimulation.vercel.app/" tabindex="-1" aria-hidden="true">
+          <span class="shot-bar"><span class="shot-dots" aria-hidden="true"></span><span class="shot-url">phd-microsimulation.vercel.app</span></span>
+          <img src="./assets/lab-ch2.jpg" width="1240" height="620" loading="lazy" decoding="async" alt="">
+        </a>
+        <div class="card-body">
+          <p class="card-num">Chapter Two <span class="pill">Live lab</span></p>
+          <h3>
+            <a href="https://phd-microsimulation.vercel.app/">Agent-based financial market simulation</a>
+          </h3>
+          <p class="card-text">
+            A market made of people who disagree. Two chartist camps and a fundamentalist camp,
+            each agent switching when someone else's strategy is doing better — and, unlike
+            almost every simulation of its day, trading time is random rather than a grid.
+          </p>
+          <p class="do-h">In the laboratory you can</p>
+          <ul class="do">
+            <li>Push the herding dial <b>α₁</b> up and watch the price detach from the fundamental</li>
+            <li>Send good or bad news into the crowd and watch the three camps change size</li>
+            <li>Race ten random clocks against the calendar grid — the chapter's core departure</li>
+            <li>Step the market maker one tick at a time, through ten events written out in full</li>
+          </ul>
+          <p class="spec">4 dials · 4 presets · 200 traders live · 2,500 simulated days at seed 20030601</p>
+          <p class="card-cite">With Thierry Delahaut · extends Lux &amp; Marchesi (1999, 2000) to random trading time</p>
+          <p class="card-links">
+            <a class="go" href="https://phd-microsimulation.vercel.app/">Run the market simulation<span aria-hidden="true"> →</span></a>
+            <a class="src" href="https://github.com/nboitout/PhD_Microsimulation">Source</a>
+          </p>
+        </div>
+      </li>
+
+      <!-- CHAPTER 3
+           This card's image is a screenshot of measured data, not a
+           seeded illustration. That distinction is why this chapter
+           never had an animated panel: a drawing beside measurement is
+           the one place on this page where the two could be confused.
+           A photograph of the real output does not have that problem. -->
+      <li class="card live" style="--accent:#6b46c1">
+        <a class="shot" href="https://ph-d-empirical-study.vercel.app/" tabindex="-1" aria-hidden="true">
+          <span class="shot-bar"><span class="shot-dots" aria-hidden="true"></span><span class="shot-url">ph-d-empirical-study.vercel.app</span></span>
+          <img src="./assets/lab-ch3.jpg" width="1240" height="620" loading="lazy" decoding="async" alt="">
+        </a>
+        <div class="card-body">
+          <p class="card-num">Chapter Three <span class="pill">Live lab</span></p>
+          <h3>
+            <a href="https://ph-d-empirical-study.vercel.app/">The same estimators, on today's markets</a>
+          </h3>
+          <p class="card-text">
+            Chapter One found persistence in volatility that falls away as the power measured
+            rises, while persistence in trading volume barely moves. This runs the same
+            estimators over ten years of markets that did not exist in that sample, or did
+            not trade in that form, and draws both curves on one axis.
+          </p>
+          <p class="do-h">In the laboratory you can</p>
+          <ul class="do">
+            <li>Switch between five daily series, 2016–2026: <b>MSFT, BTC, EUR/USD, US 10y, Brent</b></li>
+            <li>Read measured <b>d̂(q)</b> against Chapter One's Alcatel table, with a ±2 s.e. band</li>
+            <li>Change the definition of volatility — |r|, r², rolling σ — and watch the curve move</li>
+            <li>Compare GPH with local Whittle, and ζ(q) past the simulator's k = 64 ceiling</li>
+          </ul>
+          <p class="spec">5 series · 2016–2026 · GPH + local Whittle · q = 0.25…4 on the chapter's own grid</p>
+          <p class="card-cite">
+            Chapter Three of the dissertation, <cite>Empirical Study</cite> · estimators from
+            Chapter One · Table 1.4 transcribed as reported, never recomputed
+          </p>
+          <p class="card-links">
+            <a class="go" href="https://ph-d-empirical-study.vercel.app/">Run the empirical study<span aria-hidden="true"> →</span></a>
+            <a class="src" href="https://github.com/nboitout/PhD_Empirical_Study">Source</a>
+          </p>
+        </div>
+      </li>
+    </ol>
+
+    <!-- Chapter Four is not a laboratory yet, so it is not dressed as
+         one. A slim strip says what is coming without leaving a hole
+         in the grid where a third of the work appears to be missing. -->
+    <div class="pending-strip">
+      <p class="card-num">Chapter Four <span class="pill quiet">In preparation</span></p>
+      <h3>Speculative Attacks on a Fixed Exchange Rate Market: a Microsimulation</h3>
+      <p>
+        The case the other three chapters were built for: a fixed parity, a central bank
+        defending it, and a population of speculators who revise together. Being rebuilt
+        from the manuscript on the same terms as the rest.
+      </p>
     </div>
   </section>
 
@@ -175,22 +338,37 @@
         <p class="beat">The interface is new. The research is not.</p>
 
         <p class="aside">
-          Each lab here remains deliberately faithful to the original work. No rework. 
+          Each lab here remains deliberately faithful to the original work. No rework.
           Nothing is quietly corrected to make my younger self look smarter.
         </p>
 
         <p>
-          What I found fasctinating: Rebuilding this work in no time gave me a concrete example of the acceleration now taking
-          place in research. 
+          What I found fascinating: rebuilding this work in no time gave me a concrete example of the acceleration now taking
+          place in research.
           Powerful AI systems radically compress the time needed between
           an idea and a working experiment. Work that once required months or years can now
-          be reconstructed, tested and shared in hours. 
+          be reconstructed, tested and shared in hours.
         </p>
 
         <p class="signoff">Bucharest, 15 September 2026</p>
       </div>
 
       <div class="note-side">
+        <!-- ───────────────────────────────────────────────────────────────
+             THE PHOTOGRAPHS.
+
+             Three prints from the thesis years: two of Nicolas Boitout alone at
+             work on the research, and one with Thierry Delahaut at Porquerolles
+             in 2001. The full-resolution originals are under source/photos/,
+             outside the deployed directory, named for the slides they feed.
+
+             A slide whose file is missing removes itself, and if none load the
+             carousel disappears rather than showing broken images. Each src is
+             tried as .jpg, then .jpeg, then .png.
+
+             TO EDIT: a slide's caption is its data-caption attribute, and its
+             description for screen readers is its alt attribute.
+             ─────────────────────────────────────────────────────────────── -->
         <figure class="carousel" id="photos" hidden>
           <div class="carousel-frame">
             <ul class="carousel-track" id="carousel-track">
@@ -230,124 +408,7 @@
           <figcaption id="carousel-caption"></figcaption>
         </figure>
       </div>
-      </div>
     </div>
-  </section>
-
-  <!-- ════════════════════ THE FOUR CHAPTERS ════════════════════ -->
-  <section id="chapters" class="chapters" aria-labelledby="chapters-h">
-    <div class="section-head">
-      <p class="eyebrow">The work</p>
-      <h2 id="chapters-h">Four chapters to understand market activity and how a crash can happen</h2>
-      <p>
-        Intermittent burst of volatility, traders who speculate and change their minds,
-        and a speculative attack on a price level defended by a central bank. Open any chapter to run its model.
-      </p>
-    </div>
-
-    <p class="status-line">
-      <span class="dot"></span>Three labs are live. One chapter is in preparation.
-    </p>
-
-    <ol class="cards" id="cards">
-
-      <!-- CHAPTER 1 -->
-      <li class="card live" style="--accent:#245ad6">
-        <div class="card-figure">
-          <canvas id="ch1-canvas" aria-label="An animated volatility series alternating between quiet and active stretches."></canvas>
-        </div>
-        <div class="card-body">
-          <p class="card-num">Chapter One <span class="pill">Interactive</span></p>
-          <h2>
-            <a href="https://multifractal-volatility.vercel.app/">Towards a multifractal paradigm of stochastic volatility</a>
-          </h2>
-          <p class="card-text">
-            Information does not arrive evenly, and almost every familiar feature of returns
-            follows from that one assumption. Fat tails, volatility that clusters, memory that
-            changes with the power you measure and the horizon you use.
-          </p>
-          <ul class="card-meta">
-            <li>Cascade simulator: intermittency λ², depth, σ₀, seed</li>
-            <li>The original Alcatel study: 2,633 returns, 1991–2001, as reported</li>
-            <li>The full chapter text, forty equations, four tables</li>
-          </ul>
-          <p class="card-cite">
-            With Loredana Ureche-Rangau · <cite>International Journal of Theoretical and Applied Finance</cite>
-            7(7), 823–851, 2004 · <a href="https://doi.org/10.1142/S0219024904002736">DOI</a>
-          </p>
-          <p class="card-links">
-            <a class="go" href="https://multifractal-volatility.vercel.app/">Open the laboratory<span aria-hidden="true"> →</span></a>
-            <a class="src" href="https://github.com/nboitout/Multifractal_Volatility">Source</a>
-          </p>
-        </div>
-      </li>
-
-      <!-- CHAPTER 2 -->
-      <li class="card live" style="--accent:#1d4e6b">
-        <div class="card-figure">
-          <canvas id="ch2-canvas" aria-label="An animated band showing three groups of traders — optimistic chartists, pessimistic chartists and fundamentalists — changing size as they switch strategy."></canvas>
-        </div>
-        <div class="card-body">
-          <p class="card-num">Chapter Two <span class="pill">Interactive</span></p>
-          <h2>
-            <a href="https://phd-microsimulation.vercel.app/">Agent-based financial market simulation</a>
-          </h2>
-          <p class="card-text">
-            A market made of people who disagree. Two chartist camps and a fundamentalist camp,
-            each agent switching when someone else's strategy is doing better — and, unlike
-            almost every simulation of its day, trading time is random rather than a grid.
-          </p>
-          <ul class="card-meta">
-            <li>Live tape: every event as it happens, on one axis of simulated time</li>
-            <li>A playground where you move the model's own parameters</li>
-            <li>Re-implemented in 2026 from the chapter's equations</li>
-            <li>An explicit account of what worked and what did not</li>
-          </ul>
-          <p class="card-cite">With Thierry Delahaut · extends Lux &amp; Marchesi (1999, 2000) to random trading time</p>
-          <p class="card-links">
-            <a class="go" href="https://phd-microsimulation.vercel.app/">Open the simulation<span aria-hidden="true"> →</span></a>
-            <a class="src" href="https://github.com/nboitout/PhD_Microsimulation">Source</a>
-          </p>
-        </div>
-      </li>
-
-      <!-- CHAPTER 3 -->
-      <li class="card live" style="--accent:#6b46c1">
-        <div class="card-body">
-          <p class="card-num">Chapter Three <span class="pill">Interactive</span></p>
-          <h2>
-            <a href="https://ph-d-empirical-study.vercel.app/">Empirical Study</a>
-          </h2>
-          <p class="card-text">
-            Chapter 1 found persistence in volatility that falls away as the power measured
-            rises, while persistence in trading volume barely moves. This runs the same
-            estimators over ten years of markets that did not exist in that sample, or did
-            not trade in that form, and draws both curves on one axis.
-          </p>
-          <ul class="card-meta">
-            <li>Five daily series, 2016–2026: equity, crypto, FX, sovereign yield, crude</li>
-            <li>Each one in level, in returns, and under three definitions of volatility</li>
-            <li>GPH and local Whittle estimates of d̂(q), with a confidence band</li>
-            <li>Measured against Chapter 1's Table 1.4, never recomputed</li>
-            <li>Corrections offered only where they apply to the series</li>
-          </ul>
-          <p class="card-cite">Estimators from Chapter 1 · series imported from a daily market-data export</p>
-          <p class="card-links">
-            <a class="go" href="https://ph-d-empirical-study.vercel.app/">Open the study<span aria-hidden="true"> →</span></a>
-            <a class="src" href="https://github.com/nboitout/PhD_Empirical_Study">Source</a>
-          </p>
-        </div>
-      </li>
-
-      <!-- CHAPTER 4 -->
-      <li class="card pending">
-        <div class="card-body">
-          <p class="card-num">Chapter Four <span class="pill quiet">In preparation</span></p>
-          <h2>Speculative Attacks on a Fixed Exchange Rate Market: a Microsimulation</h2>
-        </div>
-      </li>
-
-    </ol>
   </section>
 
   <!-- ═══════════════════ WHY CRISES, THIS WAY ═══════════════════ -->
@@ -362,8 +423,8 @@
     <div class="why-layout">
       <div class="prose">
         <p class="first">
-          I started this research effort on currency crises with a first Dissertation done during my Master. Macroeconomics. 
-          Focus on the fundamentals behind these crises. Interesting, but I couldn't understand the timing of these crises. I quickly felt I was in a deadend. 
+          I started this research effort on currency crises with a first Dissertation done during my Master. Macroeconomics.
+          Focus on the fundamentals behind these crises. Interesting, but I couldn't understand the timing of these crises. I quickly felt I was in a deadend.
           I realized I needed to give up my focus on macroeconomics to understand what -- concretely -- was happening in the FX markets.
           I needed to understand how a financial market works, and why/how it can create some crashes.
           Market Efficiency: If prices move because news arrives,
@@ -409,18 +470,43 @@
       </div>
 
       <div class="why-side">
-        <figure class="hero-panel">
-          <div class="panel-head">
-            <span class="panel-title">The through-line · live</span>
-            <span class="panel-seed">seed 20041129</span>
+        <!-- ───────────────────────────────────────────────────────────────
+             THE PRINTED COVER.
+
+             The photograph of Nicolas Boitout's own printed copy, cropped only
+             to remove the dark strip down the left edge of the original frame.
+             The full-resolution original is kept at source/cover-original.jpeg
+             and is not deployed.
+
+             It sits here, beside the intuition and above the jury, rather than
+             in the opening: the first screen is now an instrument, and the
+             printed object belongs with the defence it was printed for.
+
+             If the file ever goes missing, main.js reveals the typeset facsimile
+             below instead of leaving a broken image, and retitles the caption.
+             ─────────────────────────────────────────────────────────────── -->
+        <figure class="cover">
+          <a href="./assets/cover.jpg" id="cover-link" title="Open the title page at full size">
+            <img id="cover-photo" src="./assets/cover.jpg" width="1136" height="1600" loading="lazy"
+                 alt="The printed title page of the dissertation: Thèse présentée à
+                      l'Université d'Orléans pour obtenir le grade de Docteur, discipline
+                      Sciences Économiques, par Nicolas Boitout — Modélisation de la
+                      dynamique des taux de change avec application aux marchés émergents,
+                      soutenue publiquement le 29 novembre 2004. The jury is listed at the foot
+                      of the page.">
+          </a>
+
+          <div class="titlepage" id="cover-fallback" hidden aria-label="The dissertation's title page, 2004">
+            <p class="tp-univ">Université d'Orléans</p>
+            <p class="tp-head">Thèse<br>présentée<br>à l'Université d'Orléans<br>pour obtenir le grade de<br>Docteur de l'Université d'Orléans</p>
+            <p class="tp-disc">Discipline : <i>Sciences Économiques</i></p>
+            <p class="tp-par">par</p>
+            <p class="tp-name">Nicolas <b>Boitout</b></p>
+            <p class="tp-title">Modélisation de la dynamique des taux de change avec application aux marchés émergents</p>
+            <p class="tp-date">Soutenue publiquement le 29 novembre 2004</p>
           </div>
-          <canvas id="hero-canvas" aria-label="An animated simulation: a price that moves only when a trade arrives, above a raster of individual arrival times, above a band showing the intensity of information flow."></canvas>
-          <figcaption>
-            A multiplicative cascade sets how intensely information is arriving; arrivals are
-            drawn against that intensity, and the price moves <em>only</em> when one lands.
-            Chapter One's cascade driving Chapter Two's random trading time — running now, in
-            your browser.
-          </figcaption>
+
+          <figcaption id="cover-caption">The printed copy · defended 29 November 2004</figcaption>
         </figure>
 
         <aside class="facts">
@@ -441,7 +527,12 @@
           <h3 class="pub-h">Elsewhere</h3>
           <p class="pub">
             <a href="https://github.com/nboitout">github.com/nboitout</a>
-            <!-- CONTACT — add email / LinkedIn / ORCID here if you want them public -->
+            <!-- CONTACT — the email and LinkedIn go here, one <a> each, once the
+                 addresses are supplied. The markup is ready:
+
+                 <br><a href="mailto:EMAIL">EMAIL</a>
+                 <br><a href="https://www.linkedin.com/in/HANDLE">linkedin.com/in/HANDLE</a>
+            -->
           </p>
         </aside>
       </div>
@@ -468,9 +559,10 @@
 
 <footer>
   <p>
-    The animations on this page are reduced illustrations, generated in your browser from a
-    fixed seed. The chapters' own figures come from their full models, in their own
-    repositories, where every number is reproducible.
+    The animation at the top of this page is a reduced illustration, generated in your browser
+    from a fixed seed. The screenshots below it are of the laboratories themselves. The
+    chapters' own figures come from their full models, in their own repositories, where every
+    number is reproducible.
   </p>
   <p class="colophon">
     <span>© Nicolas Boitout</span>

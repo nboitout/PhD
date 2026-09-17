@@ -1,13 +1,20 @@
 /* ============================================================
    Exchange Rate Dynamics — dissertation hub
-   Theme switch and the three live panels.
+   Theme switch, the photographs, and the opening panel.
 
-   The panels are deliberately small. They are reduced
-   illustrations of the two chapters' mechanisms, written from
-   the same equations but with tiny populations and short
-   windows, so that they cost nothing to run on a landing page.
-   They are not the chapters' published figures and no number
-   read off them means anything. That is stated on the page.
+   The panel is deliberately small. It is a reduced illustration
+   of the two chapters' shared mechanism — a cascade setting the
+   rate at which information arrives, and a price that moves only
+   on an arrival — written from the same equations but with a
+   short window, so that it costs nothing to run on a landing
+   page. It is not a published figure and no number read off it
+   means anything. That is stated on the page.
+
+   It does, however, take input: the two dials beneath it are the
+   chapter's own lambda-squared and the base arrival rate. Being
+   able to move them is the difference between a picture of a
+   model and the model, and that difference is the reason the
+   panel opens the page instead of sitting in a sidebar.
 
    No dependencies, no network, one animation frame loop.
    ============================================================ */
@@ -288,7 +295,7 @@
       // One still frame, pre-rolled far enough to be worth looking at.
       for (let i = 0; i < model.preroll; i++) model.step();
       resize();
-      return;
+      return panel;
     }
 
     for (let i = 0; i < model.preroll; i++) model.step();
@@ -300,6 +307,17 @@
     ).observe(canvas);
 
     panels.push(panel);
+    return panel;
+  }
+
+  /* A control changed. Under prefers-reduced-motion nothing is animating, so
+     the panel would keep showing the state before the change until something
+     else forced a repaint: advance it by hand and draw one new still. */
+  function nudge(panel, steps) {
+    if (!panel || !panel.w) return;
+    if (!REDUCED) return;                     // the frame loop will pick it up
+    for (let i = 0; i < steps; i++) panel.model.step();
+    panel.model.draw(panel, colours());
   }
 
   if (!REDUCED) {
@@ -332,11 +350,16 @@
      ============================================================ */
 
   const heroModel = (() => {
-    const DEPTH = 13, LAMBDA2 = 0.075, COLW = 2.4;
+    const DEPTH = 13, COLW = 2.4;
+    /* Both of these are under the visitor's hand. lambda2 is the chapter's
+       intermittency; flow is the base arrival rate K̄ that the cascade then
+       modulates. Everything else stays where the chapters put it. */
+    let lambda2 = 0.075;
+    let flow = 2.4;
     let cols = 260;                     // replaced by resize() with the real width
     let seed = 20041129;
     let rng = mulberry32(seed);
-    let sig = cascade(rng, DEPTH, LAMBDA2);
+    let sig = cascade(rng, DEPTH, lambda2);
     let k = 0;
 
     const col = [];          // { s: intensity, p: price, n: arrivals }
@@ -346,14 +369,14 @@
       if (k >= sig.length) {                       // a fresh tree, same construction
         seed = (seed + 7919) | 0;
         rng = mulberry32(seed);
-        sig = cascade(rng, DEPTH, LAMBDA2);
+        sig = cascade(rng, DEPTH, lambda2);
         k = 0;
       }
       const s = sig[k++];
       // Arrivals follow the intensity K = sigma^2. The cap matters: without it a
       // deep cascade spike drives exp(-rate) to zero and Knuth's sampler below
       // never terminates.
-      const rate = Math.min(12, 2.4 * s * s);
+      const rate = Math.min(12, flow * s * s);
       let n = 0;
       let L = Math.exp(-rate), q = rng();
       while (q > L && n < 40) { q *= rng(); n++; }
@@ -449,195 +472,77 @@
       ctx.globalAlpha = 1;
     }
 
-    return { step, draw, resize, preroll: 190 };
-  })();
-
-  /* ============================================================
-     CHAPTER 1 — quiet periods, active periods
-
-     The same cascade, shown the way the chapter shows it: as the
-     size of returns through time. Clustering is not imposed; it
-     is what a multiplicative tree looks like.
-     ============================================================ */
-
-  const ch1Model = (() => {
-    const DEPTH = 12, LAMBDA2 = 0.09, COLW = 2.2;
-    let cols = 190;
-    let seed = 2004;
-    let rng = mulberry32(seed);
-    let sig = cascade(rng, DEPTH, LAMBDA2);
-    let k = 0;
-    const bar = [];
-
-    function step() {
-      if (k >= sig.length) {
-        seed = (seed + 104729) | 0;
-        rng = mulberry32(seed);
-        sig = cascade(rng, DEPTH, LAMBDA2);
-        k = 0;
-      }
-      bar.push(Math.abs(sig[k++] * gauss(rng)));
-      while (bar.length > cols) bar.shift();
+    /* Changing lambda2 has to rebuild the tree, or nothing happens until the
+       current one is exhausted — up to a couple of thousand columns away. The
+       rebuild keeps the seed, so the same dial position always gives the same
+       draw, and the columns already on screen scroll off normally: the change
+       arrives as the series evolving rather than as a cut. */
+    function rebuild() {
+      rng = mulberry32(seed);
+      sig = cascade(rng, DEPTH, lambda2);
+      k = 0;
     }
 
-    function resize(panel) {
-      const want = Math.ceil(panel.w / COLW) + 2;
-      if (want === cols) return;
-      cols = want;
-      while (bar.length > cols) bar.shift();
-      while (bar.length < cols) step();
-    }
-
-    function draw(panel, c) {
-      const { ctx, w, h } = panel;
-      ctx.fillStyle = c['--bg-sunk'];
-      ctx.fillRect(0, 0, w, h);
-      const n = bar.length;
-      if (!n) return;
-
-      let max = 0;
-      for (const b of bar) if (b > max) max = b;
-      max = max || 1;
-
-      const mid = h - 10;
-      ctx.fillStyle = c['--accent'];
-      for (let i = 0; i < n; i++) {
-        const x = w - (n - 1 - i) * COLW;
-        const hgt = (bar[i] / max) * (h - 24);
-        ctx.globalAlpha = 0.35 + 0.65 * (bar[i] / max);
-        ctx.fillRect(px(x) - 0.5, mid - hgt, 1.3, hgt);
-      }
-      ctx.globalAlpha = 1;
-      ctx.strokeStyle = c['--rule'];
-      ctx.lineWidth = 1;
-      ctx.beginPath(); ctx.moveTo(0, px(mid)); ctx.lineTo(w, px(mid)); ctx.stroke();
-    }
-
-    return { step, draw, resize, preroll: 190 };
-  })();
-
-  /* ============================================================
-     CHAPTER 2 — a population that keeps changing its mind
-
-     A reduced form of the chapter's switching dynamics: two
-     chartist camps and a fundamentalist camp, with transition
-     rates exponential in the opinion index and in the momentum
-     each camp is currently earning, and a floor under every
-     share so the population cannot absorb into one strategy.
-     Small population, short window, illustrative only.
-     ============================================================ */
-
-  const ch2Model = (() => {
-    const COLW = 2.2;
-    let cols = 190;
-    // Tuned so the chartist camps actually swing and the price stays bounded.
-    // Left to itself the feedback optimists → excess demand → rising price →
-    // stronger momentum → more optimists absorbs the whole population; the
-    // signals are therefore bounded and the fundamentalists' pull grows with
-    // the distance from fundamental value, which is what stops it.
-    const P = {
-      dt: 0.10, v1: 0.55, v2: 0.30,   // switching speeds
-      a1: 0.6,  a2: 0.7,              // opinion index and momentum, inside U1
-      a3: 1.0,  a4: 0.9,              // chartist vs fundamentalist attractiveness
-      momScale: 0.006, gapScale: 0.05,
-      floor: 0.10,                    // the chapter's floor under every share
-      tc: 1.0, tf: 2.4, beta: 1.0,    // excess demand and the market maker
-      noise: 0.0035, fdrift: 0.0012
+    return {
+      step, draw, resize, preroll: 190,
+      setLambda2(v) { lambda2 = v; rebuild(); },
+      setFlow(v)    { flow = v; },
+      reseed()      { seed = (seed + 104729) | 0; rebuild(); return seed >>> 0; }
     };
-    const rng = mulberry32(20030601);
-
-    let no = 0.34, np = 0.30, nf = 0.36;   // optimists, pessimists, fundamentalists
-    let p = 100, F = 100, trend = 0;
-    const hist = [];
-
-    function step() {
-      const nc = no + np;
-      const x = nc > 1e-6 ? (no - np) / nc : 0;        // the opinion index
-      const gap = (F - p) / p;
-      const mom = Math.tanh(trend / P.momScale);       // bounded momentum signal
-      const dist = Math.tanh(Math.abs(gap) / P.gapScale);
-
-      // chartist ↔ chartist
-      const U1 = P.a1 * x + P.a2 * mom;
-      const rOP = P.v1 * nc * Math.exp(clamp(-U1, -2, 2));
-      const rPO = P.v1 * nc * Math.exp(clamp(U1, -2, 2));
-      // chartists ↔ fundamentalists: fundamentals win when price is far from F
-      const U2 = P.a3 * Math.abs(mom) - P.a4 * dist;
-      const rCF = P.v2 * Math.exp(clamp(-U2, -2, 2));
-      const rFC = P.v2 * Math.exp(clamp(U2, -2, 2));
-
-      const dOP = P.dt * (np * rPO - no * rOP);
-      const share = nc > 1e-6 ? no / nc : 0.5;
-      const cf = P.dt * (nc * rCF - nf * rFC);
-
-      no += dOP - cf * share;
-      np += -dOP - cf * (1 - share);
-      nf += cf;
-
-      if (!(isFinite(no) && isFinite(np) && isFinite(nf) && isFinite(p))) {
-        no = 0.34; np = 0.30; nf = 0.36; p = 100; F = 100; trend = 0;
-        return;
-      }
-
-      no = Math.max(P.floor, no); np = Math.max(P.floor, np); nf = Math.max(P.floor, nf);
-      const tot = no + np + nf;
-      no /= tot; np /= tot; nf /= tot;
-
-      // excess demand moves the price, exactly as the market maker does
-      const ed = P.tc * (no - np) + P.tf * nf * gap;
-      const dp = clamp(P.beta * ed * P.dt + P.noise * gauss(rng), -0.05, 0.05);
-      p *= Math.exp(dp);
-      trend = 0.85 * trend + 0.15 * dp;
-      F *= Math.exp(P.fdrift * gauss(rng));
-
-      hist.push([no, np, nf]);
-      while (hist.length > cols) hist.shift();
-    }
-
-    function resize(panel) {
-      const want = Math.ceil(panel.w / COLW) + 2;
-      if (want === cols) return;
-      cols = want;
-      while (hist.length > cols) hist.shift();
-      while (hist.length < cols) step();
-    }
-
-    function draw(panel, c) {
-      const { ctx, w, h } = panel;
-      ctx.fillStyle = c['--bg-sunk'];
-      ctx.fillRect(0, 0, w, h);
-      const n = hist.length;
-      if (n < 2) return;
-
-      // Full bleed: the three shares sum to one, so the stack is the panel.
-      const top = 0, band = h;
-      const x = i => w - (n - 1 - i) * COLW;
-
-      // stacked shares: optimists, pessimists, fundamentalists
-      const layers = [
-        [0, c['--optimist']],
-        [1, c['--pessimist']],
-        [2, c['--fundamentalist']]
-      ];
-      let base = new Float64Array(n);       // cumulative share below the current layer
-      for (const [idx, colour] of layers) {
-        ctx.beginPath();
-        for (let i = 0; i < n; i++) ctx.lineTo(x(i), top + band * base[i]);
-        for (let i = n - 1; i >= 0; i--) ctx.lineTo(x(i), top + band * (base[i] + hist[i][idx]));
-        ctx.closePath();
-        ctx.fillStyle = colour;
-        ctx.globalAlpha = 0.68;
-        ctx.fill();
-        ctx.globalAlpha = 1;
-        for (let i = 0; i < n; i++) base[i] += hist[i][idx];
-      }
-
-    }
-
-    return { step, draw, resize, preroll: 310 };
   })();
 
-  mount(document.getElementById('hero-canvas'), heroModel);
-  mount(document.getElementById('ch1-canvas'), ch1Model);
-  mount(document.getElementById('ch2-canvas'), ch2Model);
+  const heroPanel = mount(document.getElementById('hero-canvas'), heroModel);
+
+  /* ── the two dials ─────────────────────────────────────────
+
+     The opening panel takes input. The sliders carry integers because a
+     range input's value is a string and hundredths are easier to reason
+     about as whole numbers: lambda2 is thousandths, flow is hundredths.
+
+     If the canvas never mounted — no 2d context, or the element is gone —
+     the controls would be a row of dials wired to nothing, so they are
+     removed rather than left there inert.
+     ────────────────────────────────────────────────────────── */
+
+  (() => {
+    const box = document.getElementById('bench-panel');
+    const lam = document.getElementById('hero-lambda');
+    const flow = document.getElementById('hero-flow');
+    const reseed = document.getElementById('hero-reseed');
+    const lamOut = document.getElementById('hero-lambda-out');
+    const flowOut = document.getElementById('hero-flow-out');
+    const seedOut = document.getElementById('hero-seed');
+    const controls = box?.querySelector('.panel-controls');
+    if (!controls) return;
+
+    if (!heroPanel) { controls.remove(); return; }
+
+    const applyLambda = () => {
+      const v = Number(lam.value) / 1000;
+      if (lamOut) lamOut.textContent = v.toFixed(3);
+      heroModel.setLambda2(v);
+      nudge(heroPanel, 90);
+    };
+
+    const applyFlow = () => {
+      const v = Number(flow.value) / 100;
+      if (flowOut) flowOut.textContent = v.toFixed(2);
+      heroModel.setFlow(v);
+      nudge(heroPanel, 90);
+    };
+
+    lam?.addEventListener('input', applyLambda);
+    flow?.addEventListener('input', applyFlow);
+
+    reseed?.addEventListener('click', () => {
+      const s = heroModel.reseed();
+      if (seedOut) seedOut.textContent = `seed ${s}`;
+      nudge(heroPanel, 190);
+    });
+
+    // The markup's defaults and the model's defaults have to agree, and the
+    // browser may also have restored a slider position across a reload.
+    applyLambda();
+    applyFlow();
+  })();
 })();
