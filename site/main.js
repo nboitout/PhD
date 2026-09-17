@@ -401,8 +401,15 @@
       ctx.fillRect(0, 0, w, h);
       if (col.length < 2) return;
 
-      const priceH = h * 0.50, rasterY = priceH + 18, rasterH = 14;
-      const bandY = rasterY + rasterH + 34, bandH = h - bandY - 12;
+      /* The panel stretches to whatever height the column beside it needs, so
+         the three bands are proportions with limits rather than one fixed
+         split. Giving the intensity band the leftover height instead made it
+         grow faster than the price chart and take over the taller panel. */
+      const rasterH = 14;
+      const bandH = clamp(h * 0.20, 48, 120);
+      const priceH = h - bandH - rasterH - 64;      // 18 + 34 + 12 of gaps
+      const rasterY = priceH + 18;
+      const bandY = rasterY + rasterH + 34;
       const n = col.length;
       const x = i => w - (n - 1 - i) * COLW;
 

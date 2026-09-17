@@ -102,17 +102,97 @@
         </figcaption>
       </figure>
 
-      <!-- The machinery, named. On a wide screen this sits under the copy in
-           the left column; in one column it falls after the panel, so a phone
-           reaches the instrument before the keyword strip rather than after. -->
-      <p class="machinery">
-        <span>Multiplicative cascades</span>
-        <span>Poisson arrivals in business time</span>
-        <span>Lux–Marchesi switching under random trading time</span>
-        <span>GPH &amp; local Whittle d̂(q)</span>
-        <span>Structure functions ζ(q)</span>
-      </p>
+      <!-- ─────────────────────────────────────────────────────────────
+           THE ARTEFACTS.
+
+           The printed copy and three prints from the thesis years, in the
+           opening rather than buried: the object says "doctoral thesis" at a
+           glance for a visitor who reads nothing, and the photographs are the
+           first thing anyone who knows the author will reach for. Both are
+           clickable — the cover opens at full size, where the jury at the foot
+           of the page is legible, and the carousel steps, swipes and has dots.
+
+           Neither reserves layout space before it loads: the carousel starts
+           hidden and main.js reveals it only once a file has actually decoded,
+           so a photograph that was never added leaves no gap rather than an
+           empty box. The cost is that this row grows once, early, below the
+           headline — which is the right way round.
+           ───────────────────────────────────────────────────────────── -->
+      <div class="bench-artefacts">
+        <figure class="cover">
+          <a href="./assets/cover.jpg" id="cover-link" title="Open the title page at full size">
+            <img id="cover-photo" src="./assets/cover.jpg" width="1136" height="1600" loading="lazy"
+                 alt="The printed title page of the dissertation: Thèse présentée à
+                      l'Université d'Orléans pour obtenir le grade de Docteur, discipline
+                      Sciences Économiques, par Nicolas Boitout — Modélisation de la
+                      dynamique des taux de change avec application aux marchés émergents,
+                      soutenue publiquement le 29 novembre 2004. The jury is listed at the foot
+                      of the page.">
+          </a>
+
+          <div class="titlepage" id="cover-fallback" hidden aria-label="The dissertation's title page, 2004">
+            <p class="tp-univ">Université d'Orléans</p>
+            <p class="tp-head">Thèse<br>présentée<br>à l'Université d'Orléans<br>pour obtenir le grade de<br>Docteur de l'Université d'Orléans</p>
+            <p class="tp-disc">Discipline : <i>Sciences Économiques</i></p>
+            <p class="tp-par">par</p>
+            <p class="tp-name">Nicolas <b>Boitout</b></p>
+            <p class="tp-title">Modélisation de la dynamique des taux de change avec application aux marchés émergents</p>
+            <p class="tp-date">Soutenue publiquement le 29 novembre 2004</p>
+          </div>
+
+          <figcaption id="cover-caption">The printed copy · defended 29 November 2004</figcaption>
+        </figure>
+        <figure class="carousel" id="photos" hidden>
+          <div class="carousel-frame">
+            <ul class="carousel-track" id="carousel-track">
+              <li class="slide">
+                <img src="./assets/note-1.jpg" width="1200" height="1600" decoding="async"
+                     data-caption="At work on the thesis"
+                     alt="A print from the thesis years: Nicolas Boitout, in glasses and a
+                          striped jumper, sitting on a red sofa and reading a sheet of paper
+                          on his lap.">
+              </li>
+              <li class="slide">
+                <img src="./assets/note-2.jpg" width="1600" height="1095" decoding="async"
+                     data-caption="With Thierry Delahaut · Porquerolles, 2001 · CNRS, Groupe Économie et Physique"
+                     alt="A print from the thesis years: Nicolas Boitout and Thierry Delahaut
+                          side by side on a quayside, the sea behind them and a moored line
+                          at the right.">
+              </li>
+              <li class="slide">
+                <img src="./assets/note-3.jpg" width="1600" height="1200" decoding="async"
+                     data-caption="At work on the thesis, among the printouts"
+                     alt="A print from the thesis years: Nicolas Boitout reading a sheet of
+                          paper at a glass table in front of a brick fireplace, with books,
+                          notes and loose pages spread over the table and across the floor
+                          around him.">
+              </li>
+            </ul>
+
+            <button type="button" class="carousel-nav prev" id="carousel-prev" aria-label="Previous photograph">
+              <svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><path d="M12.5 4 6.5 10l6 6" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <button type="button" class="carousel-nav next" id="carousel-next" aria-label="Next photograph">
+              <svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><path d="M7.5 4l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+          </div>
+
+          <div class="carousel-dots" id="carousel-dots" role="group" aria-label="Choose a photograph"></div>
+          <figcaption id="carousel-caption"></figcaption>
+          </figure>
+      </div>
     </div>
+
+    <!-- The machinery, named, full width under the composition. A quant scans
+         for the instruments before reading a word; these used to be buried in
+         paragraph three of the intuition, four screens down. -->
+    <p class="machinery">
+      <span>Multiplicative cascades</span>
+      <span>Poisson arrivals in business time</span>
+      <span>Lux–Marchesi switching under random trading time</span>
+      <span>GPH &amp; local Whittle d̂(q)</span>
+      <span>Structure functions ζ(q)</span>
+    </p>
 
     <ul class="bench-facts">
       <li><b>3</b> laboratories live, 1 in preparation</li>
@@ -353,61 +433,6 @@
         <p class="signoff">Bucharest, 15 September 2026</p>
       </div>
 
-      <div class="note-side">
-        <!-- ───────────────────────────────────────────────────────────────
-             THE PHOTOGRAPHS.
-
-             Three prints from the thesis years: two of Nicolas Boitout alone at
-             work on the research, and one with Thierry Delahaut at Porquerolles
-             in 2001. The full-resolution originals are under source/photos/,
-             outside the deployed directory, named for the slides they feed.
-
-             A slide whose file is missing removes itself, and if none load the
-             carousel disappears rather than showing broken images. Each src is
-             tried as .jpg, then .jpeg, then .png.
-
-             TO EDIT: a slide's caption is its data-caption attribute, and its
-             description for screen readers is its alt attribute.
-             ─────────────────────────────────────────────────────────────── -->
-        <figure class="carousel" id="photos" hidden>
-          <div class="carousel-frame">
-            <ul class="carousel-track" id="carousel-track">
-              <li class="slide">
-                <img src="./assets/note-1.jpg" width="1200" height="1600" decoding="async"
-                     data-caption="At work on the thesis"
-                     alt="A print from the thesis years: Nicolas Boitout, in glasses and a
-                          striped jumper, sitting on a red sofa and reading a sheet of paper
-                          on his lap.">
-              </li>
-              <li class="slide">
-                <img src="./assets/note-2.jpg" width="1600" height="1095" decoding="async"
-                     data-caption="With Thierry Delahaut · Porquerolles, 2001 · CNRS, Groupe Économie et Physique"
-                     alt="A print from the thesis years: Nicolas Boitout and Thierry Delahaut
-                          side by side on a quayside, the sea behind them and a moored line
-                          at the right.">
-              </li>
-              <li class="slide">
-                <img src="./assets/note-3.jpg" width="1600" height="1200" decoding="async"
-                     data-caption="At work on the thesis, among the printouts"
-                     alt="A print from the thesis years: Nicolas Boitout reading a sheet of
-                          paper at a glass table in front of a brick fireplace, with books,
-                          notes and loose pages spread over the table and across the floor
-                          around him.">
-              </li>
-            </ul>
-
-            <button type="button" class="carousel-nav prev" id="carousel-prev" aria-label="Previous photograph">
-              <svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><path d="M12.5 4 6.5 10l6 6" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </button>
-            <button type="button" class="carousel-nav next" id="carousel-next" aria-label="Next photograph">
-              <svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><path d="M7.5 4l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </button>
-          </div>
-
-          <div class="carousel-dots" id="carousel-dots" role="group" aria-label="Choose a photograph"></div>
-          <figcaption id="carousel-caption"></figcaption>
-        </figure>
-      </div>
     </div>
   </section>
 
@@ -485,29 +510,6 @@
              If the file ever goes missing, main.js reveals the typeset facsimile
              below instead of leaving a broken image, and retitles the caption.
              ─────────────────────────────────────────────────────────────── -->
-        <figure class="cover">
-          <a href="./assets/cover.jpg" id="cover-link" title="Open the title page at full size">
-            <img id="cover-photo" src="./assets/cover.jpg" width="1136" height="1600" loading="lazy"
-                 alt="The printed title page of the dissertation: Thèse présentée à
-                      l'Université d'Orléans pour obtenir le grade de Docteur, discipline
-                      Sciences Économiques, par Nicolas Boitout — Modélisation de la
-                      dynamique des taux de change avec application aux marchés émergents,
-                      soutenue publiquement le 29 novembre 2004. The jury is listed at the foot
-                      of the page.">
-          </a>
-
-          <div class="titlepage" id="cover-fallback" hidden aria-label="The dissertation's title page, 2004">
-            <p class="tp-univ">Université d'Orléans</p>
-            <p class="tp-head">Thèse<br>présentée<br>à l'Université d'Orléans<br>pour obtenir le grade de<br>Docteur de l'Université d'Orléans</p>
-            <p class="tp-disc">Discipline : <i>Sciences Économiques</i></p>
-            <p class="tp-par">par</p>
-            <p class="tp-name">Nicolas <b>Boitout</b></p>
-            <p class="tp-title">Modélisation de la dynamique des taux de change avec application aux marchés émergents</p>
-            <p class="tp-date">Soutenue publiquement le 29 novembre 2004</p>
-          </div>
-
-          <figcaption id="cover-caption">The printed copy · defended 29 November 2004</figcaption>
-        </figure>
 
         <aside class="facts">
           <h3>At a glance</h3>

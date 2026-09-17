@@ -32,24 +32,33 @@ vercel.json       static hosting, no build, with a strict CSP
 The laboratories are the page. It opens on **the bench**: the dissertation's
 title and claim beside the through-line panel — Chapter 1's cascade driving
 Chapter 2's random trading time — with two of the model's own parameters under
-the visitor's hand. Then **Three laboratories you can operate**, the three
+the visitor's hand, and under the claim the two artefacts, the photograph of
+the printed copy and the carousel of prints from the thesis years. Both are
+things to click, and they are in the opening because a visitor who knows the
+author reaches for them before anything else. Then **Three laboratories you can
+operate**, the three
 chapter cards, each showing a screenshot of the application it links to and a
 list of what can be done in it. Chapter Four follows as a slim "in preparation"
 strip rather than a fourth, empty card.
 
 Below the laboratories, **A personal note, 23 years later** — the note written in
-September 2026 on returning to the manuscript — with a carousel of three prints
-from the thesis years. Then **Why I approached currency crises this way**, which
-carries the intuition in the first person, with the photograph of the printed
-copy and the publication details alongside. **Defence and jury** closes the page.
+September 2026 on returning to the manuscript — set as a single centred column,
+its photographs having moved up into the opening. Then **Why I approached
+currency crises this way**, which carries the intuition in the first person with
+the publication details alongside. **Defence and jury** closes the page.
 
 The order is deliberate and it was changed on purpose. The page used to open on
 the title block and the printed cover, then run 530 words of prose before the
 first chapter card; the first link into a laboratory sat 2,857px down on a
 desktop screen and 4,157px down on a phone — three and five screens
-respectively. It is now 1,175px and 2,133px, and the opening screen carries a
+respectively. It is now 1,458px and 2,688px, and the opening screen carries a
 working model rather than a picture of one. The page is taller than it was,
 because three screenshots were added to it.
+
+The artefacts cost the opening about 280px. Neither of them reserves layout
+space before it loads — the carousel is revealed by `main.js` only once a
+photograph has actually decoded, so a missing file leaves no gap — which means
+this row grows once, early, *below* the headline rather than around it.
 
 ## Where the cards point
 
@@ -134,6 +143,12 @@ A finite dyadic lognormal cascade sets the intensity of information arrival;
 arrivals are drawn as a Poisson count against that intensity, and the price moves
 only on an arrival. It is Chapter 1's cascade driving Chapter 2's random trading
 time, which is the through-line of the dissertation.
+
+The panel stretches to the height of the column beside it, and its canvas takes
+whatever height is left over, so the artefacts row costs the page far less than
+a band of its own would. Its three bands are proportions with limits rather than
+one fixed split: giving the intensity band the remainder instead made it grow
+faster than the price chart and take over the taller panel.
 
 Two of its parameters are exposed as sliders — the intermittency λ² and the base
 arrival rate K̄ — with a button that draws a new tree. Moving λ² rebuilds the

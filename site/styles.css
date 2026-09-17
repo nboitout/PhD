@@ -163,11 +163,47 @@ main[id], main section[id] { scroll-margin-top: 4.75rem; }
     grid-template-rows: auto auto;
     align-items: center;
     column-gap: clamp(1.75rem, 4vw, 3rem);
-    row-gap: 1.5rem;
+    row-gap: 1.75rem;
   }
-  .bench-copy  { grid-area: 1 / 1 / 2 / 2; align-self: end; }
-  .bench-layout .hero-panel { grid-area: 1 / 2 / 3 / 3; }
-  .machinery   { grid-area: 2 / 1 / 3 / 2; align-self: start; }
+  .bench-copy       { grid-area: 1 / 1 / 2 / 2; align-self: end; }
+  .bench-artefacts  { grid-area: 2 / 1 / 3 / 2; align-self: start; }
+  /* The panel runs the full height of the column beside it, so the artefacts
+     row costs the page far less than a band of its own would. */
+  .bench-layout .hero-panel { grid-area: 1 / 2 / 3 / 3; align-self: stretch; }
+}
+
+/* ── the artefacts in the opening ───────────────────────────
+   The printed copy and the prints from the thesis years. They sit in the
+   opening because they are what a visitor who knows the author reaches for
+   first, and because the object says "doctoral thesis" to everyone else
+   before a word is read. Both are things to click.
+
+   Neither reserves space before it loads — the carousel is revealed by
+   main.js only once a photograph has decoded — so this row grows once,
+   early, below the headline rather than around it.
+   ─────────────────────────────────────────────────────────── */
+
+.bench-artefacts {
+  display: grid; gap: 1.1rem;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: start;
+}
+/* Small enough to be a thumbnail of the object, big enough that the title
+   block on it is recognisably a title block. */
+.bench-artefacts .cover { justify-items: start; }
+.bench-artefacts .titlepage,
+.bench-artefacts .cover img { width: clamp(118px, 12.5vw, 154px); }
+.bench-artefacts .cover figcaption { text-align: left; max-width: 11rem; font-size: .67rem; }
+
+.bench-artefacts .carousel { min-width: 0; }
+.bench-artefacts .carousel figcaption { font-size: .72rem; padding: .65rem .8rem .8rem; }
+.bench-artefacts .carousel-dots { padding: .55rem 1rem .05rem; }
+
+/* One column below the hero's own breakpoint: the two sit side by side for
+   as long as the carousel stays wide enough to see a face in, and the cover
+   goes above it rather than squeezing it further. */
+@media (max-width: 34rem) {
+  .bench-artefacts { grid-template-columns: minmax(0, 1fr); }
 }
 
 .bench-copy { max-width: 40rem; min-width: 0; }
@@ -230,22 +266,15 @@ main[id], main section[id] { scroll-margin-top: 4.75rem; }
 .note { padding-block: clamp(2.75rem, 6vw, 4rem); border-top: 1px solid var(--rule); }
 .note .section-head h2 { margin-top: .5rem; }
 
+/* The photographs used to sit in a sticky column beside this note. They now
+   open the page, where the people who want them find them without scrolling
+   at all, so the note is a single column of prose — and a single column of
+   prose belongs on its own measure rather than shoved against the left edge
+   of a page that is twice as wide as it needs. */
 .note-layout { display: grid; gap: clamp(2rem, 5vw, 3.25rem); align-items: start; }
-.note-side { display: grid; gap: 1.25rem; }
-@media (min-width: 62rem) {
-  .note-layout { grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); }
-  /* The note is long and the photographs are short: rather than leave the
-     column beside it empty for most of the read, the prints stay in view. */
-  .note-side { position: sticky; top: 5.25rem; }
-}
-
-/* Below that the two columns become one and the photographs, being second in
-   the source, would land four screens down — past the end of the note on a
-   phone. They are the first thing anyone wants from a personal note, so on a
-   narrow screen they come before the prose rather than after it. */
-@media (max-width: 61.999rem) {
-  .note-side { order: -1; }
-}
+/* Heading and body share one measure so their left edges line up. */
+.note .section-head,
+.note .prose { max-width: 38rem; margin-inline: auto; }
 
 /* ── the laboratories ───────────────────────────────────── */
 
@@ -268,7 +297,9 @@ main[id], main section[id] { scroll-margin-top: 4.75rem; }
 }
 
 /* A document facsimile is a photograph of paper: it keeps its own ink and
-   ground in both themes rather than inverting with the page. */
+   ground in both themes rather than inverting with the page. The width here
+   is the standalone size; in the opening row .bench-artefacts takes it down
+   to a thumbnail. */
 .titlepage, .cover img {
   width: clamp(186px, 23vw, 236px);
   border: 1px solid rgba(29, 28, 25, .16);
@@ -317,14 +348,19 @@ main[id], main section[id] { scroll-margin-top: 4.75rem; }
 
 /* ── the live panel ─────────────────────────────────────── */
 
+/* A flex column so that, where the grid stretches the panel down the side of
+   the artefacts, the canvas takes the extra height instead of leaving a gap
+   under the caption. The ResizeObserver in main.js picks the new size up. */
 .hero-panel {
   margin: 0; min-width: 0;
+  display: flex; flex-direction: column;
   background: var(--bg-raise);
   border: 1px solid var(--rule);
   border-radius: 12px;
   box-shadow: var(--shadow);
   overflow: hidden;
 }
+.panel-head, .panel-controls, .hero-panel figcaption { flex: none; }
 .panel-head {
   display: flex; align-items: center; justify-content: space-between; gap: 1rem;
   padding: .7rem 1rem; border-bottom: 1px solid var(--rule); background: var(--bg-sunk);
@@ -336,7 +372,9 @@ main[id], main section[id] { scroll-margin-top: 4.75rem; }
   background: var(--optimist); margin-right: .55rem; vertical-align: middle;
 }
 .panel-seed { font-family: var(--mono); font-size: .7rem; color: var(--ink-mute); }
-#hero-canvas { display: block; width: 100%; height: 290px; }
+/* 290px is the floor and the whole height when the panel is not stretched;
+   in the two-column opening the flex column hands it whatever is left. */
+#hero-canvas { display: block; width: 100%; flex: 1 1 290px; min-height: 290px; max-height: 520px; }
 .hero-panel figcaption {
   padding: .9rem 1rem 1.05rem; border-top: 1px solid var(--rule);
   font-size: .8rem; line-height: 1.6; color: var(--ink-mute);
