@@ -17,10 +17,28 @@
    panel opens the page instead of sitting in a sidebar.
 
    No dependencies, no network, one animation frame loop.
+
+   This was site/main.js, a deferred <script> on a static page. It
+   is now started by <SiteRuntime> after hydration and returns a
+   teardown, because a client navigation to /admin unmounts the
+   page and the frame loop, the observers and the listeners would
+   otherwise outlive the DOM they were pointed at.
    ============================================================ */
 
-(() => {
+export function initSite() {
   'use strict';
+
+  const disposers = [];
+  /** addEventListener that remembers how to undo itself. */
+  const on = (target, type, fn, opts) => {
+    if (!target) return;
+    target.addEventListener(type, fn, opts);
+    disposers.push(() => target.removeEventListener(type, fn, opts));
+  };
+  const observe = (observer, node) => {
+    observer.observe(node);
+    disposers.push(() => observer.disconnect());
+  };
 
   /* ── theme ─────────────────────────────────────────────── */
 
@@ -43,14 +61,14 @@
     toggle.title = `Switch to ${next} theme`;
   };
 
-  toggle?.addEventListener('click', () => {
+  on(toggle, 'click', () => {
     root.dataset.theme = isDark() ? 'light' : 'dark';
     try { localStorage.setItem('phd-theme', root.dataset.theme); } catch { /* private mode */ }
     palette.stale = true;
     syncToggle();
   });
 
-  matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+  on(matchMedia('(prefers-color-scheme: dark)'), 'change', () => {
     palette.stale = true;
     syncToggle();
   });
@@ -76,17 +94,17 @@
     const failed = () => {
       if (!triedPng) {                       // one alternative extension, then give up
         triedPng = true;
-        img.src = './assets/cover.png';
-        if (link) link.href = './assets/cover.png';
+        img.src = '/assets/cover.png';
+        if (link) link.href = '/assets/cover.png';
         return;
       }
       (link || img).remove();
       fallback.hidden = false;
-      if (caption) caption.textContent = 'The title page \u00b7 defended 29 November 2004';
+      if (caption) caption.textContent = 'The title page · defended 29 November 2004';
     };
 
-    img.addEventListener('error', failed);
-    // The script is deferred, so the image may already have settled by now.
+    on(img, 'error', failed);
+    // React has already committed the <img>, so it may have settled by now.
     if (img.complete && img.naturalWidth === 0) failed();
   })();
 
@@ -150,16 +168,19 @@
           dot.type = 'button';
           dot.setAttribute('aria-current', 'false');
           dot.setAttribute('aria-label', `Photograph ${k + 1} of ${live.length}`);
-          dot.addEventListener('click', () => show(k));
+          on(dot, 'click', () => show(k));
           dotsBox.append(dot);
           dots.push(dot);
         }
+        // The dots are built here, not in the markup, so they are cleared on
+        // teardown rather than doubled up if the page is mounted again.
+        disposers.push(() => { dotsBox.replaceChildren(); });
       }
 
-      prev?.addEventListener('click', () => show(at - 1));
-      next?.addEventListener('click', () => show(at + 1));
+      on(prev, 'click', () => show(at - 1));
+      on(next, 'click', () => show(at + 1));
 
-      fig.addEventListener('keydown', e => {
+      on(fig, 'keydown', e => {
         if (live.length < 2) return;
         if (e.key === 'ArrowLeft') { show(at - 1); e.preventDefault(); }
         if (e.key === 'ArrowRight') { show(at + 1); e.preventDefault(); }
@@ -167,14 +188,14 @@
 
       // Swipe. Pointer events cover touch, pen and a dragged mouse alike.
       let x0 = null;
-      track.addEventListener('pointerdown', e => { x0 = e.clientX; });
-      track.addEventListener('pointerup', e => {
+      on(track, 'pointerdown', e => { x0 = e.clientX; });
+      on(track, 'pointerup', e => {
         if (x0 === null || live.length < 2) return;
         const dx = e.clientX - x0;
         x0 = null;
         if (Math.abs(dx) > 40) show(at + (dx < 0 ? 1 : -1));
       });
-      track.addEventListener('pointercancel', () => { x0 = null; });
+      on(track, 'pointercancel', () => { x0 = null; });
 
       show(0);
     }
@@ -206,9 +227,9 @@
         settle();
       };
 
-      img.addEventListener('load', ok);
-      img.addEventListener('error', fail);
-      // The script is deferred, so an image may already have settled by now.
+      on(img, 'load', ok);
+      on(img, 'error', fail);
+      // React has already committed the <img>, so it may have settled by now.
       if (img.complete) (img.naturalWidth ? ok : fail)();
     }
   })();
@@ -289,7 +310,7 @@
       model.draw(panel, colours());
     };
 
-    new ResizeObserver(resize).observe(canvas);
+    observe(new ResizeObserver(resize), canvas);
 
     if (REDUCED) {
       // One still frame, pre-rolled far enough to be worth looking at.
@@ -301,10 +322,13 @@
     for (let i = 0; i < model.preroll; i++) model.step();
     resize();
 
-    new IntersectionObserver(
-      ([e]) => { panel.visible = e.isIntersecting; },
-      { rootMargin: '80px' }
-    ).observe(canvas);
+    observe(
+      new IntersectionObserver(
+        ([e]) => { panel.visible = e.isIntersecting; },
+        { rootMargin: '80px' }
+      ),
+      canvas
+    );
 
     panels.push(panel);
     return panel;
@@ -322,8 +346,10 @@
 
   if (!REDUCED) {
     let last = 0;
+    let stopped = false;
     const FRAME = 1000 / 30;          // 30fps is plenty, and halves the battery cost
     requestAnimationFrame(function loop(t) {
+      if (stopped) return;
       requestAnimationFrame(loop);
       if (t - last < FRAME) return;
       last = t;
@@ -335,6 +361,7 @@
         p.model.draw(p, c);
       }
     });
+    disposers.push(() => { stopped = true; });
   }
 
   const px = v => Math.round(v) + 0.5;   // hairlines that stay hairlines
@@ -538,10 +565,10 @@
       nudge(heroPanel, 90);
     };
 
-    lam?.addEventListener('input', applyLambda);
-    flow?.addEventListener('input', applyFlow);
+    on(lam, 'input', applyLambda);
+    on(flow, 'input', applyFlow);
 
-    reseed?.addEventListener('click', () => {
+    on(reseed, 'click', () => {
       const s = heroModel.reseed();
       if (seedOut) seedOut.textContent = `seed ${s}`;
       nudge(heroPanel, 190);
@@ -552,4 +579,11 @@
     applyLambda();
     applyFlow();
   })();
-})();
+
+  return () => {
+    for (const dispose of disposers.splice(0)) {
+      try { dispose(); } catch { /* the node may already be gone */ }
+    }
+    panels.length = 0;
+  };
+}

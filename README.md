@@ -6,17 +6,37 @@ d'Orléans, Sciences Économiques, defended 29 November 2004). It introduces the
 four chapters and links each one to its own interactive laboratory. The three
 that are live are shown as the applications they are, not described.
 
-Plain HTML, CSS and JavaScript. No framework, no build step, no dependencies, no
-network requests at runtime — the same constraints the chapter sites are
-built under.
+A Next.js app on Vercel. The page itself is still the same plain markup, the
+same warm-paper stylesheet and the same dependency-free canvas script it always
+was — those were carried across unchanged. What the framework buys is the
+server runtime behind `/admin`: the visitor analytics and the dashboard that
+reads them (see `docs/admin-analytics-setup.md`). The page still fetches nothing
+at runtime beyond its own analytics beacon.
 
 ```
-site/index.html   the page
-site/styles.css   warm-paper palette, light and dark
-site/main.js      the theme switch, the photographs, the opening panel and its dials
-site/assets/      the printed cover, three prints, three laboratory screenshots
-vercel.json       static hosting, no build, with a strict CSP
+src/app/page.tsx          the page — the former site/index.html, as JSX
+src/app/globals.css       warm-paper palette, light and dark — unchanged
+src/lib/siteRuntime.js    the theme switch, the photographs, the opening panel and its dials
+src/app/admin/            the password-gated dashboard: Overview and Visits
+src/app/api/              visit / track beacons and the admin password check
+src/lib/                  Sheets read path, visit derivation, dwell, formatting
+public/assets/            the printed cover, three prints, three laboratory screenshots
+scripts/apps-script/      the Apps Script that writes rows into the Google Sheet
+vercel.json               framework nextjs, with a CSP
 ```
+
+## The admin dashboard
+
+`/admin` is password-gated (`ADMIN_PASSWORD`) and has two tabs — an **Overview**
+of qualified visits, countries, hours and traffic sources, and a **Visits**
+inspector with one row per visitor per day. The data is self-hosted in a Google
+Sheet you own; nothing is sent to a third-party analytics service. Signing into
+the admin marks your own browser as internal traffic, so your own browsing never
+lands in the sheet.
+
+Everything it needs is in **`docs/admin-analytics-setup.md`** — the Apps Script,
+the service account, the sheet share, the environment variables, and the
+mistakes that cost us an afternoon each.
 
 ## The chapters
 
@@ -65,12 +85,12 @@ this row grows once, early, *below* the headline rather than around it.
 Each live chapter card carries three links to its deployed laboratory — the
 screenshot, the heading and the "Run the …" link — and one `Source` link to its
 repository. If a laboratory moves, the three `href` values per chapter in
-`site/index.html`, plus the `.shot-url` label that names the host, are the whole
+`src/app/page.tsx`, plus the `.shot-url` label that names the host, are the whole
 change.
 
 ## The screenshots
 
-Each card shows the laboratory it links to. `site/assets/lab-ch1.jpg`,
+Each card shows the laboratory it links to. `public/assets/lab-ch1.jpg`,
 `lab-ch2.jpg` and `lab-ch3.jpg` are 1240×620 captures of the three applications,
 framed on the part of each one worth advertising: Chapter 1's controls beside the
 cascade tree, Chapter 2's four dials with the price and population panels, and
@@ -89,17 +109,17 @@ exists.
 
 ## The printed cover
 
-`site/assets/cover.jpg` is the photograph of the author's own printed copy. It is
+`public/assets/cover.jpg` is the photograph of the author's own printed copy. It is
 the supplied photograph, cropped only to remove the dark strip down the left edge
 of the original frame and scaled to a 1600px long edge — 1136×1600, 357 KB. The
 paper, the shadow and the angle it was shot at are left as they were. The
 full-resolution original is kept at `source/cover-original.jpeg`, outside the
-deployed directory.
+deployed tree.
 
 The photograph links to itself at full size, where the jury at the foot of the page
 is legible.
 
-Should the file ever go missing, `site/main.js` tries `cover.png` once and then
+Should the file ever go missing, `src/lib/siteRuntime.js` tries `cover.png` once and then
 reveals a **typeset facsimile** of the title page in its place, retitling the
 caption from “The printed copy” to “The title page” so a stand-in is never passed
 off as the real object. That swap lives in `main.js` rather than an inline
@@ -107,12 +127,12 @@ off as the real object. That swap lives in `main.js` rather than an inline
 
 ## Still to supply
 
-- `<!-- VOICE -->` in `site/index.html` marks the intuition section. It is written
+- The `VOICE` comment in `src/app/page.tsx` marks the intuition section. It is written
   in the first person, drawn from the introduction of Chapter 2, and is meant to
   be edited until it sounds like you rather than like a summary of you.
-- A caption for the first photograph, and a third photograph. `site/assets/README.md`
+- A caption for the first photograph, and a third photograph. `public/assets/README.md`
   says where both go.
-- `<!-- CONTACT -->` in the sidebar of the intuition section, where the email and
+- The `CONTACT` comment in the sidebar of the intuition section, where the email and
   LinkedIn links go. The markup is written out in the comment and needs only the
   addresses; until they are supplied the page offers no route to the author
   except GitHub, which is the one thing a reader who is convinced by the
@@ -121,18 +141,27 @@ off as the real object. That swap lives in `main.js` rather than an inline
 ## Run locally
 
 ```sh
-python -m http.server 8000 --bind 127.0.0.1 --directory site
+npm install
+npm run dev
 ```
 
-Then open <http://localhost:8000>. There is nothing to install and nothing to
-compile.
+Then open <http://localhost:3000>. Use `localhost`, not `127.0.0.1`: Next's dev
+server blocks its own scripts on the bare IP, and the page will not hydrate —
+the opening panel and the login form look dead. `npm run build && npm start`
+serves the production build instead, on the same port.
+
+For anything under `/admin`, copy `.env.example` to `.env.local` first and set at
+least `ADMIN_PASSWORD`. Without the Google variables the dashboard still renders;
+it shows the configuration error in place of the data.
 
 ## Deploy on Vercel
 
-Import the repository and accept `vercel.json`: framework none, no build command,
-no install command, output directory `site`. The configuration also sets a
-Content-Security-Policy that allows no external scripts, styles, fonts or network
-connections, which the page does not need.
+The repository is the Vercel project `ph-d` (<https://www.nicolas-boitout.phd>).
+`vercel.json` sets `"framework": "nextjs"` and a Content-Security-Policy that
+allows no external scripts, styles, fonts or connections — `connect-src 'self'`
+covers the analytics beacon, and `'unsafe-inline'` is there for the framework's
+own hydration and theme scripts. The environment variables the dashboard needs
+are listed in `docs/admin-analytics-setup.md`; changing one requires a redeploy.
 
 ## The opening panel
 
@@ -170,4 +199,4 @@ stops when it scrolls out of view or the tab is hidden.
 Two further panels — a Chapter 1 volatility series and a Chapter 2 population
 band — used to sit inside the chapter cards. The cards now carry screenshots of
 the laboratories instead, which say far more about them, so those two models were
-removed from `site/main.js`; they are in the history if they are ever wanted back.
+removed from the script (then `site/main.js`, now `src/lib/siteRuntime.js`); they are in the history if they are ever wanted back.
