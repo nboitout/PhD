@@ -29,14 +29,24 @@ pasting five values into Vercel.
 
 ### 1. The Google Sheet
 
-Create a spreadsheet — anything, an empty one is fine. The `Visits`, `Events`
-and `Leads` tabs are created with their headers on the first write, so you do
-not need to make them yourself.
+The sheet is **PhD Website Visits**:
 
-From its URL —
-`https://docs.google.com/spreadsheets/d/<THIS PART>/edit` — take the long id
-and keep it for `GOOGLE_SHEETS_ID`. (A full URL also works; the code extracts
-the id.)
+<https://docs.google.com/spreadsheets/d/1j_-YidhHUSZbg4Bd0FYbVsNIrfzajRwhd_Uy722FsFA/edit>
+
+```
+GOOGLE_SHEETS_ID=1j_-YidhHUSZbg4Bd0FYbVsNIrfzajRwhd_Uy722FsFA
+```
+
+That id is already filled in in `.env.example`. The `Visits`, `Events` and
+`Leads` tabs are created with their headers on the first write, so the empty
+`Sheet1` it currently holds is fine and can be left alone or deleted later.
+
+> **Check who the sheet is shared with.** It is currently readable by *anyone
+> with the link*. Every row it will collect — country, device, referer, dwell,
+> the anonymous `reader_id` of each visitor — would be readable by anyone who
+> ever sees that URL. Set General access back to **Restricted** before any real
+> traffic is recorded; the dashboard does not need link sharing, it reads the
+> sheet as the service account in step 3.
 
 ### 2. The Apps Script (the write path)
 
@@ -97,7 +107,7 @@ Set these in the `ph-d` project → Settings → Environment Variables, for
 | --- | --- |
 | `ADMIN_PASSWORD` | whatever should unlock `/admin` |
 | `APPS_SCRIPT_URL` | the `/exec` URL from step 2 |
-| `GOOGLE_SHEETS_ID` | the sheet id from step 1 |
+| `GOOGLE_SHEETS_ID` | `1j_-YidhHUSZbg4Bd0FYbVsNIrfzajRwhd_Uy722FsFA` |
 | `GOOGLE_SERVICE_ACCOUNT_EMAIL` | `client_email` from step 3 |
 | `GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY_BASE64` | base64 private key from step 3 |
 | `EXCLUDED_READER_IDS` | optional, comma-separated `reader_id` values to hide |
