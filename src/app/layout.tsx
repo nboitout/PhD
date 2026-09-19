@@ -1,6 +1,31 @@
 import type { Metadata, Viewport } from 'next';
+import { IBM_Plex_Mono, IBM_Plex_Sans, Instrument_Serif } from 'next/font/google';
 import VisitTracker from '@/components/VisitTracker';
 import './globals.css';
+
+/* Self-hosted by next/font, which matters: vercel.json's CSP allows
+   font-src 'self' only, so a Google Fonts <link> would be blocked. */
+const plexSans = IBM_Plex_Sans({
+  subsets: ['latin'],
+  variable: '--font-plex-sans',
+  weight: ['400', '500', '600'],
+  display: 'swap',
+});
+
+const plexMono = IBM_Plex_Mono({
+  subsets: ['latin'],
+  variable: '--font-plex-mono',
+  weight: ['400', '500'],
+  display: 'swap',
+});
+
+const instrumentSerif = Instrument_Serif({
+  subsets: ['latin'],
+  variable: '--font-instrument-serif',
+  weight: ['400'],
+  style: ['normal', 'italic'],
+  display: 'swap',
+});
 
 export const metadata: Metadata = {
   title: 'Nicolas Boitout — FX Markets Dynamics, a Doctoral Dissertation',
@@ -18,22 +43,12 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
-  themeColor: '#1d4e6b',
+  themeColor: '#0b0d10',
 };
-
-/**
- * The stored theme has to land on <html> before the first paint, or a reader
- * who chose dark gets a white flash while React hydrates. The static page got
- * this for free from a deferred script; here it takes four lines in <head>.
- */
-const THEME_BOOTSTRAP = `try{var t=localStorage.getItem('phd-theme');if(t==='dark'||t==='light')document.documentElement.dataset.theme=t}catch(e){}`;
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en">
-      <head>
-        <script dangerouslySetInnerHTML={{ __html: THEME_BOOTSTRAP }} />
-      </head>
+    <html lang="en" className={`${plexSans.variable} ${plexMono.variable} ${instrumentSerif.variable}`}>
       <body>
         {children}
         <VisitTracker />

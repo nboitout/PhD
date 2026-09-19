@@ -6,17 +6,24 @@ d'Orléans, Sciences Économiques, defended 29 November 2004). It introduces the
 four chapters and links each one to its own interactive laboratory. The three
 that are live are shown as the applications they are, not described.
 
-A Next.js app on Vercel. The page itself is still the same plain markup, the
-same warm-paper stylesheet and the same dependency-free canvas script it always
-was — those were carried across unchanged. What the framework buys is the
-server runtime behind `/admin`: the visitor analytics and the dashboard that
-reads them (see `docs/admin-analytics-setup.md`). The page still fetches nothing
-at runtime beyond its own analytics beacon.
+A Next.js app on Vercel. The design is **instrument dark**: a near-black ground,
+so the three running models read as instruments rather than as illustrations of
+a manuscript. The work is from 2004; the page is not, and nothing on it is
+antiqued. The server runtime also carries `/admin` — the visitor analytics and
+the dashboard that reads them (see `docs/admin-analytics-setup.md`). The page
+fetches nothing at runtime beyond its own analytics beacon.
+
+**Colour means quantity.** Signal gold is an arrival or an action, price cyan is
+a price, intensity teal is an intensity. Nothing is coloured decoratively, so a
+coloured line on this site always means something — the same rule the opening
+panel paints by. One display serif (Instrument Serif) carries the period against
+IBM Plex Sans and Mono for body and data, self-hosted by `next/font` because the
+deployed CSP allows `font-src 'self'` only.
 
 ```
-src/app/page.tsx          the page — the former site/index.html, as JSX
-src/app/globals.css       warm-paper palette, light and dark — unchanged
-src/lib/siteRuntime.js    the theme switch, the photographs, the opening panel and its dials
+src/app/page.tsx          the page
+src/app/globals.css       the instrument-dark system: tokens, then section by section
+src/lib/siteRuntime.js    the photographs, the opening panel and its dials
 src/app/admin/            the password-gated dashboard: Overview and Visits
 src/app/api/              visit / track beacons and the admin password check
 src/lib/                  Sheets read path, visit derivation, dwell, formatting
@@ -62,23 +69,30 @@ list of what can be done in it. Chapter Four follows as a slim "in preparation"
 strip rather than a fourth, empty card.
 
 Below the laboratories, **A personal note, 23 years later** — the note written in
-September 2026 on returning to the manuscript — set as a single centred column,
-its photographs having moved up into the opening. Then **Why I approached
-currency crises this way**, which carries the intuition in the first person with
-the publication details alongside. **Defence and jury** closes the page.
+September 2026 on returning to the manuscript — beside the carousel of prints
+from the thesis years and the one-minute-against-one-year pair. Then **Why I
+approached currency crises this way**, which carries the intuition in the first
+person. **Provenance** places the printed copy with the degree, the defence and
+the publication, and **Defence and jury** closes the page.
 
-The order is deliberate and it was changed on purpose. The page used to open on
-the title block and the printed cover, then run 530 words of prose before the
-first chapter card; the first link into a laboratory sat 2,857px down on a
-desktop screen and 4,157px down on a phone — three and five screens
-respectively. It is now 1,458px and 2,688px, and the opening screen carries a
-working model rather than a picture of one. The page is taller than it was,
-because three screenshots were added to it.
+The order is deliberate. The page opens on an instrument rather than a title
+block: a visitor who works in markets has their hands on the model before the
+first paragraph ends. The 2004 material — the note, the intuition, the printed
+copy, the jury — follows the laboratories rather than framing them.
 
-The artefacts cost the opening about 280px. Neither of them reserves layout
-space before it loads — the carousel is revealed by `main.js` only once a
-photograph has actually decoded, so a missing file leaves no gap — which means
-this row grows once, early, *below* the headline rather than around it.
+**The spine** is the one section with no equivalent in the printed work. The
+through-line used to live in a `figcaption` under the opening panel; it is the
+dissertation's actual argument, so it is drawn, and it is what gives Chapter
+Four a reason to be on the page rather than an apology for being missing.
+
+The carousel does not reserve layout space before it loads — `siteRuntime.js`
+reveals it only once a photograph has actually decoded, so a missing file leaves
+no gap rather than an empty box. The same goes for the printed cover, which
+falls back to a typeset facsimile of the title page.
+
+The page is **dark only**. There is no theme switch: the design is built on one
+ground, and a light variant would need its own data colours rather than a
+token swap.
 
 ## Where the cards point
 
@@ -103,9 +117,9 @@ would silently re-frame each one onto whatever happened to be at its top.
 
 To refresh one after a laboratory changes, serve that laboratory locally and
 capture a 1240×620 viewport scrolled to the same place. The three applications
-are light-themed only, so there is one capture each; in the dark theme the page
-takes them down with a `brightness` filter rather than pretending a dark variant
-exists.
+are light-themed only, so there is one capture each; the page takes them down
+with a `brightness` filter so they do not glare against the near-black ground,
+and restores them on hover, rather than pretending a dark variant exists.
 
 ## The printed cover
 
@@ -122,8 +136,9 @@ is legible.
 Should the file ever go missing, `src/lib/siteRuntime.js` tries `cover.png` once and then
 reveals a **typeset facsimile** of the title page in its place, retitling the
 caption from “The printed copy” to “The title page” so a stand-in is never passed
-off as the real object. That swap lives in `main.js` rather than an inline
-`onerror`, because the deployed Content-Security-Policy forbids inline handlers.
+off as the real object. That swap lives in `src/lib/siteRuntime.js` rather than
+an inline `onerror`, because the deployed Content-Security-Policy forbids inline
+handlers.
 
 ## Still to supply
 

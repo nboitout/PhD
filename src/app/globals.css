@@ -1,66 +1,71 @@
 /* ============================================================
    Exchange Rate Dynamics — dissertation hub
-   Warm paper, serif display, hairline rules. Light and dark.
-   The palette is Chapter 2's, so the hub reads as the parent
-   of both laboratories rather than a third visual language.
+   "Instrument dark": a near-black ground, so the running models
+   read as instruments rather than as illustrations of a
+   manuscript. The work is from 2004; the page is not.
+
+   Colour means quantity. Signal gold is an arrival or an action,
+   price cyan is a price, intensity teal is an intensity. Nothing
+   is coloured decoratively, so a coloured line always means
+   something.
+
+   One display serif (Instrument Serif) against an engineering
+   body and data face (IBM Plex Sans / Mono) — the manuscript and
+   the laboratories in the same typographic sentence.
    ============================================================ */
 
 :root {
-  color-scheme: light;
-
-  --bg:        #fcfbf8;
-  --bg-sunk:   #f5f2ea;
-  --bg-raise:  #ffffff;
-  --ink:       #1d1c19;
-  --ink-soft:  #4a4741;
-  --ink-mute:  #6f6b62;
-  --rule:      #e2ddd2;
-  --rule-hard: #c9c2b4;
-
-  --accent:    #1d4e6b;   /* the house blue; cards override it locally */
-  --gold:      #a07a3c;
-  --accent-wash: #eef3f6;
-
-  --optimist:      #2f8f7d;
-  --pessimist:     #c05a3e;
-  --fundamentalist:#77798a;
-
-  --serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, "Times New Roman", serif;
-  --sans:  ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  --mono:  ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
-
-  --page: 76rem;
-  --gutter: clamp(1rem, 4vw, 3rem);
-  --shadow: 0 1px 2px rgba(29, 28, 25, .04), 0 8px 24px rgba(29, 28, 25, .05);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    color-scheme: dark;
-    --bg: #121316; --bg-sunk: #1a1c20; --bg-raise: #1c1e22;
-    --ink: #e9e7e1; --ink-soft: #c3c0b8; --ink-mute: #948f86;
-    --rule: #2c2e33; --rule-hard: #454850;
-    --accent: #74b6d6; --gold: #d8ad69; --accent-wash: #1a242b;
-    --optimist: #52c2a8; --pessimist: #e8906f; --fundamentalist: #a5a8b5;
-    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.28);
-  }
-}
-
-:root[data-theme="dark"] {
   color-scheme: dark;
-  --bg: #121316; --bg-sunk: #1a1c20; --bg-raise: #1c1e22;
-  --ink: #e9e7e1; --ink-soft: #c3c0b8; --ink-mute: #948f86;
-  --rule: #2c2e33; --rule-hard: #454850;
-  --accent: #74b6d6; --gold: #d8ad69; --accent-wash: #1a242b;
-  --optimist: #52c2a8; --pessimist: #e8906f; --fundamentalist: #a5a8b5;
-  --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.28);
+
+  /* ground and surfaces */
+  --bg:        #0b0d10;
+  --bg-sunk:   #0f1216;
+  --bg-raise:  #13161b;
+  --panel-bg:  #0b0d10;   /* what the canvas paints itself */
+
+  /* ink */
+  --ink:       #f2f0ea;
+  --ink-soft:  #a8aeb8;
+  --ink-mute:  #848b96;
+  --ink-faint: #6e757f;
+
+  /* lines */
+  --rule:      #252a33;
+  --rule-soft: #1b1f26;
+  --rule-hard: #333944;
+
+  /* signal — the academic identity, and every call to action */
+  --accent:      #e0b15f;
+  --accent-hi:   #f0cb8e;
+  --accent-line: #3d3526;
+  --accent-wash: #16130d;
+  --gold:        #e0b15f;
+
+  /* data — reserved for quantities */
+  --data-price:     #6fb6d9;
+  --data-intensity: #5fc2a8;
+  --price-line:     #22323c;
+  --intensity-line: #23372f;
+  --intensity-wash: #101a17;
+
+  /* carried for the admin dashboard, which reads these tokens */
+  --optimist:       #5fc2a8;
+  --pessimist:      #e0785c;
+  --fundamentalist: #8e90a2;
+
+  --serif: var(--font-instrument-serif), Georgia, "Times New Roman", serif;
+  --sans:  var(--font-plex-sans), ui-sans-serif, system-ui, sans-serif;
+  --mono:  var(--font-plex-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --page: 75rem;
+  --gutter: clamp(1.25rem, 5vw, 7.5rem);
+  --shadow: 0 1px 2px rgba(0, 0, 0, .4), 0 12px 32px rgba(0, 0, 0, .3);
 }
 
 *, *::before, *::after { box-sizing: border-box; }
 
 /* The hidden attribute only sets display:none at user-agent weight, so any
-   component rule that sets its own display silently defeats it. .titlepage is
-   a flex column and did exactly that. */
+   component rule that sets its own display silently defeats it. */
 [hidden] { display: none !important; }
 
 body {
@@ -69,696 +74,524 @@ body {
   color: var(--ink);
   font-family: var(--sans);
   font-size: 16px;
-  line-height: 1.6;
+  line-height: 1.65;
   -webkit-font-smoothing: antialiased;
 }
 
-h1, h2, h3 { font-family: var(--serif); font-weight: 600; margin: 0; line-height: 1.14; letter-spacing: -.01em; }
+h1, h2, h3 {
+  font-family: var(--serif);
+  font-weight: 400;
+  margin: 0;
+  line-height: 1.08;
+  letter-spacing: -.012em;
+}
 p { margin: 0; }
-a { color: var(--accent); text-underline-offset: 3px; text-decoration-thickness: 1px; }
+em { font-style: italic; }
 cite { font-style: italic; }
 
-:where(a, button):focus-visible {
+a { color: var(--accent); text-underline-offset: 3px; text-decoration-thickness: 1px; }
+a:hover { color: var(--accent-hi); }
+
+:where(a, button, input, select):focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 3px;
-  border-radius: 2px;
+  border-radius: 3px;
 }
 
-.skip { position: absolute; left: 1rem; top: -4rem; z-index: 20; background: var(--bg-raise);
-        padding: .6rem 1rem; border: 1px solid var(--rule-hard); border-radius: 6px; }
+.skip {
+  position: absolute; left: 1rem; top: -5rem; z-index: 30;
+  background: var(--bg-raise); color: var(--ink);
+  padding: .7rem 1.1rem; border: 1px solid var(--rule-hard); border-radius: 8px;
+  text-decoration: none;
+}
 .skip:focus { top: 1rem; }
+
+/* ── shared idioms ──────────────────────────────────────── */
+
+.eyebrow {
+  font-family: var(--mono);
+  font-size: .69rem; font-weight: 500;
+  letter-spacing: .17em; text-transform: uppercase;
+  color: var(--accent);
+  margin: 0 0 .9rem;
+}
+.eyebrow.cool { color: var(--data-price); }
+
+.mono { font-family: var(--mono); }
+
+.chip {
+  display: inline-flex; align-items: center; gap: .5rem;
+  font-family: var(--mono); font-size: .69rem;
+  letter-spacing: .1em; text-transform: uppercase;
+  border-radius: 999px; padding: .42rem .85rem;
+  white-space: nowrap;
+}
+.chip.live {
+  color: var(--data-intensity);
+  border: 1px solid var(--intensity-line);
+  background: var(--intensity-wash);
+}
+.chip.soon {
+  color: var(--data-price);
+  border: 1px solid var(--price-line);
+}
+.chip .dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; flex: none; }
+
+.cta {
+  display: inline-flex; align-items: center; gap: .55rem;
+  min-height: 48px; padding: 0 1.4rem;
+  border-radius: 8px; border: 1px solid transparent;
+  background: var(--accent); color: #0b0d10;
+  font-size: .95rem; font-weight: 600; text-decoration: none;
+}
+.cta:hover { background: var(--accent-hi); color: #0b0d10; }
+.cta.ghost {
+  background: transparent; color: var(--ink);
+  border-color: var(--rule-hard); font-weight: 500;
+}
+.cta.ghost:hover { border-color: var(--ink-mute); color: var(--ink); }
+
+.go {
+  display: inline-flex; align-items: center; gap: .5rem;
+  font-size: .95rem; font-weight: 600; color: var(--accent); text-decoration: none;
+}
+.go:hover { text-decoration: underline; }
+.src { font-size: .875rem; color: var(--ink-mute); text-decoration: none; }
+.src:hover { color: var(--accent); }
+
+main { max-width: var(--page); margin-inline: auto; padding-inline: var(--gutter); }
+main[id], main section[id] { scroll-margin-top: 5.5rem; }
+
+.section-head { max-width: 42rem; }
+.section-head h2 { font-size: clamp(1.9rem, 3.6vw, 2.65rem); }
+.section-head > p { color: var(--ink-soft); margin-top: .85rem; font-size: 1rem; }
 
 /* ── masthead ───────────────────────────────────────────── */
 
 .masthead {
-  position: sticky; top: 0; z-index: 10;
-  display: flex; align-items: center; justify-content: space-between; gap: 1rem;
-  padding: .85rem var(--gutter);
-  background: color-mix(in srgb, var(--bg) 88%, transparent);
-  backdrop-filter: blur(10px);
+  position: sticky; top: 0; z-index: 20;
+  display: flex; align-items: center; justify-content: space-between; gap: 1.5rem;
+  height: 4.75rem; padding-inline: var(--gutter);
+  background: color-mix(in srgb, var(--bg) 86%, transparent);
+  backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--rule);
 }
-.brand { display: inline-flex; align-items: center; gap: .6rem; color: var(--ink);
-         text-decoration: none; font-size: .8rem; letter-spacing: .04em; }
+.brand {
+  display: inline-flex; align-items: center; gap: .75rem;
+  color: var(--ink); text-decoration: none;
+}
 .brand svg { color: var(--accent); flex: none; }
-.brand b { font-weight: 650; }
-.brand-sep { margin: 0 .5rem; color: var(--rule-hard); }
-.masthead nav { display: flex; align-items: center; gap: 1.4rem; }
+.brand b { font-size: .94rem; font-weight: 600; letter-spacing: -.01em; }
+.brand-sep { width: 1px; height: 1rem; background: var(--rule); }
+.brand-tail { font-size: .82rem; color: var(--ink-mute); }
+
+.masthead nav { display: flex; align-items: center; gap: 1.85rem; }
 .masthead nav a { color: var(--ink-soft); text-decoration: none; font-size: .875rem; }
-.masthead nav a:hover { color: var(--accent); }
-
-.theme-toggle {
-  display: grid; place-items: center; width: 32px; height: 32px; padding: 0;
-  border: 1px solid var(--rule); border-radius: 6px;
-  background: transparent; color: var(--ink-mute); cursor: pointer;
-}
-.theme-toggle:hover { color: var(--accent); border-color: var(--rule-hard); }
-
-/* Phone: the brand plus three links plus the toggle do not fit. The links are
-   anchors into a short page, so they lose nothing by going. */
-@media (max-width: 34rem) {
-  .masthead nav a { display: none; }
-  .masthead nav { gap: 0; }
-  .brand span { font-size: .8rem; }
-  .brand-sep, .brand span br + *, .brand-tail { display: none; }
+.masthead nav a:hover { color: var(--ink); }
+.era {
+  font-family: var(--mono); font-size: .69rem; letter-spacing: .08em;
+  color: var(--accent); border: 1px solid var(--accent-line);
+  border-radius: 999px; padding: .32rem .75rem; white-space: nowrap;
 }
 
-/* ── shared layout ──────────────────────────────────────── */
+/* ── the bench ──────────────────────────────────────────── */
 
-main { max-width: var(--page); margin-inline: auto; padding-inline: var(--gutter); }
-
-/* The masthead is sticky, so an anchor jump would otherwise land the heading
-   underneath it. */
-main[id], main section[id] { scroll-margin-top: 4.75rem; }
-
-.section-head { max-width: 44rem; margin-bottom: 2rem; }
-.section-head h2 { font-size: clamp(1.6rem, 3.2vw, 2.2rem); }
-.section-head p { color: var(--ink-mute); margin-top: .5rem; }
-
-.eyebrow {
-  font-family: var(--sans); font-size: .7rem; font-weight: 650;
-  letter-spacing: .13em; text-transform: uppercase; color: var(--gold);
-}
-
-/* ── the bench: the opening screen is an instrument ─────────
-   The page used to open on a title block and a photograph, and the
-   first live thing was five screens down. It now opens on the model
-   itself, with two of the dissertation's own parameters exposed, so
-   that someone who works in markets can act before they can read.
-   ─────────────────────────────────────────────────────────── */
-
-.bench { padding-block: clamp(1.8rem, 4vw, 3rem) clamp(2rem, 4vw, 2.75rem); }
-
-/* One column on a phone — copy, then the instrument, then the keywords — and
-   two on a wide screen, where the panel spans both rows beside them. The
-   source order is what a narrow screen gets, and it is the order that puts
-   the working model in front of a visitor soonest. */
+.bench { padding-top: clamp(2.75rem, 6vw, 4.75rem); }
 .bench-layout {
-  display: grid; gap: clamp(1.5rem, 3.5vw, 2.5rem);
-  align-items: center;
-}
-@media (min-width: 62rem) {
-  .bench-layout {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1.02fr);
-    grid-template-rows: auto auto;
-    align-items: center;
-    column-gap: clamp(1.75rem, 4vw, 3rem);
-    row-gap: 1.75rem;
-  }
-  .bench-copy       { grid-area: 1 / 1 / 2 / 2; align-self: end; }
-  .bench-artefacts  { grid-area: 2 / 1 / 3 / 2; align-self: start; }
-  /* The panel runs the full height of the column beside it, so the artefacts
-     row costs the page far less than a band of its own would. */
-  .bench-layout .hero-panel { grid-area: 1 / 2 / 3 / 3; align-self: stretch; }
-}
-
-/* ── the artefacts in the opening ───────────────────────────
-   The printed copy and the prints from the thesis years. They sit in the
-   opening because they are what a visitor who knows the author reaches for
-   first, and because the object says "doctoral thesis" to everyone else
-   before a word is read. Both are things to click.
-
-   Neither reserves space before it loads — the carousel is revealed by
-   main.js only once a photograph has decoded — so this row grows once,
-   early, below the headline rather than around it.
-   ─────────────────────────────────────────────────────────── */
-
-.bench-artefacts {
-  display: grid; gap: 1.1rem;
-  grid-template-columns: auto minmax(0, 1fr);
+  display: grid;
+  grid-template-columns: minmax(0, 560fr) minmax(0, 576fr);
+  gap: 4rem;
   align-items: start;
 }
-/* Small enough to be a thumbnail of the object, big enough that the title
-   block on it is recognisably a title block. */
-.bench-artefacts .cover { justify-items: start; }
-.bench-artefacts .titlepage,
-.bench-artefacts .cover img { width: clamp(118px, 12.5vw, 154px); }
-.bench-artefacts .cover figcaption { text-align: left; max-width: 11rem; font-size: .67rem; }
-
-.bench-artefacts .carousel { min-width: 0; }
-.bench-artefacts .carousel figcaption { font-size: .72rem; padding: .65rem .8rem .8rem; }
-.bench-artefacts .carousel-dots { padding: .55rem 1rem .05rem; }
-
-/* One column below the hero's own breakpoint: the two sit side by side for
-   as long as the carousel stays wide enough to see a face in, and the cover
-   goes above it rather than squeezing it further. */
-@media (max-width: 34rem) {
-  .bench-artefacts { grid-template-columns: minmax(0, 1fr); }
-}
-
-.bench-copy { max-width: 40rem; min-width: 0; }
-.bench-copy h1 {
-  font-size: clamp(1.85rem, 3.9vw, 2.75rem);
-  letter-spacing: -.022em;
-  margin: .75rem 0 0;
-  text-wrap: balance;
-}
-/* The second line is the claim the page is actually making, so it is
-   the line that carries the colour. */
-.bench-copy h1 em { font-style: normal; color: var(--accent); }
-
+.bench h1 { font-size: clamp(2.6rem, 5.4vw, 4.6rem); }
+.bench h1 em { display: block; color: var(--accent); }
 .lede {
-  margin-top: 1rem; color: var(--ink-soft);
-  font-size: clamp(.98rem, 1.4vw, 1.08rem); line-height: 1.66; max-width: 36rem;
+  margin-top: 1.85rem; font-size: 1.06rem; line-height: 1.65;
+  color: var(--ink-soft); max-width: 32rem;
+}
+.cta-row { display: flex; flex-wrap: wrap; gap: .85rem; margin-top: 2.35rem; }
+
+/* the instrument */
+.hero-panel {
+  margin: 0;
+  background: var(--bg-raise);
+  border: 1px solid var(--rule);
+  border-radius: 14px;
+  padding: 1.1rem 1.1rem 1rem;
+}
+.panel-head { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: .85rem; }
+.panel-title {
+  display: inline-flex; align-items: center; gap: .5rem;
+  font-family: var(--mono); font-size: .69rem; font-weight: 500;
+  letter-spacing: .13em; text-transform: uppercase; color: var(--ink);
+}
+.panel-title .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--data-intensity); }
+.panel-seed { font-family: var(--mono); font-size: .69rem; color: var(--ink-mute); }
+
+#hero-canvas {
+  display: block; width: 100%; height: 372px;
+  border-radius: 8px; background: var(--panel-bg);
 }
 
-.cta-row { display: flex; flex-wrap: wrap; gap: .7rem; margin-top: 1.5rem; }
-.cta {
-  display: inline-flex; align-items: center; gap: .4rem;
-  padding: .62rem 1.15rem; border-radius: 8px;
-  background: var(--accent); color: var(--bg-raise);
-  font-size: .9rem; font-weight: 600; text-decoration: none;
-  border: 1px solid transparent;
-  transition: filter .16s ease, transform .16s ease;
+.panel-controls {
+  display: flex; align-items: flex-end; gap: 1.25rem;
+  margin-top: 1.1rem; flex-wrap: wrap;
 }
-.cta:hover { filter: brightness(1.08); transform: translateY(-1px); }
-.cta.ghost {
-  background: transparent; color: var(--ink-soft);
-  border-color: var(--rule-hard);
+.ctrl { flex: 1 1 9rem; display: flex; flex-direction: column; gap: .45rem; }
+.ctrl label {
+  display: flex; justify-content: space-between; gap: .5rem;
+  font-family: var(--mono); font-size: .63rem;
+  letter-spacing: .11em; text-transform: uppercase; color: var(--ink-soft);
 }
-.cta.ghost:hover { color: var(--accent); border-color: var(--accent); filter: none; }
+.ctrl output { color: var(--accent); font-family: var(--mono); }
+.ctrl input[type="range"] { width: 100%; height: 20px; accent-color: var(--accent); cursor: pointer; }
+.reseed {
+  height: 34px; padding: 0 .95rem; border-radius: 7px;
+  border: 1px solid var(--rule-hard); background: transparent; color: var(--ink);
+  font-family: var(--sans); font-size: .82rem; font-weight: 500; cursor: pointer;
+}
+.reseed:hover { border-color: var(--ink-mute); }
 
-/* The machinery, named. A quant scans for the instruments before they
-   read a word of the prose; the page used to bury all of these in
-   paragraphs four screens down. */
+.hero-panel figcaption {
+  margin-top: .95rem; font-size: .82rem; line-height: 1.6; color: var(--ink-mute);
+}
+.hero-panel figcaption em { color: var(--ink-soft); }
+
+/* ── metrics ────────────────────────────────────────────── */
+
+.metrics {
+  display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1.5rem;
+  margin-top: clamp(2.75rem, 6vw, 4.5rem);
+  padding-block: 2rem;
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+}
+.metrics div { display: flex; flex-direction: column; gap: .35rem; }
+.metrics b { font-family: var(--serif); font-weight: 400; font-size: 2.4rem; line-height: 1; color: var(--ink); }
+.metrics span { font-size: .82rem; color: var(--ink-mute); line-height: 1.45; }
+
+/* ── the spine ──────────────────────────────────────────── */
+
+.spine { padding-top: clamp(3.5rem, 7vw, 5.25rem); }
+.spine-flow {
+  display: flex; align-items: stretch; gap: 0;
+  margin-top: 2.75rem;
+}
+.spine-flow .stage { flex: 1 1 0; min-width: 0; }
+.stage {
+  background: var(--bg-raise); border: 1px solid var(--rule);
+  border-radius: 12px; padding: 1.35rem 1.35rem 1.25rem;
+}
+.stage.terminal { border-color: #2f3a44; }
+.stage h3 { font-family: var(--sans); font-weight: 600; font-size: 1rem; margin-bottom: .35rem; letter-spacing: 0; }
+.stage p { font-size: .82rem; line-height: 1.6; color: var(--ink-mute); }
+.stage .step-label {
+  font-family: var(--mono); font-size: .63rem;
+  letter-spacing: .12em; text-transform: uppercase; color: var(--ink-mute);
+}
+.stage.terminal .step-label { color: var(--data-price); }
+.stage svg { display: block; margin: .85rem 0 .75rem; }
+.flow-arrow { flex: 0 0 3.25rem; display: grid; place-items: center; color: var(--rule-hard); }
+
 .machinery {
-  display: flex; flex-wrap: wrap; gap: .4rem;
-  margin-top: 1.6rem; padding-top: 1.35rem; border-top: 1px solid var(--rule);
+  display: flex; flex-wrap: wrap; gap: .45rem;
+  margin-top: 2rem; padding-top: 1.6rem; border-top: 1px solid var(--rule-soft);
 }
 .machinery span {
   font-family: var(--mono); font-size: .69rem; line-height: 1.5;
-  padding: .2rem .55rem; border-radius: 4px;
+  padding: .28rem .65rem; border-radius: 5px;
   background: var(--bg-sunk); color: var(--ink-mute);
   border: 1px solid var(--rule);
 }
 
-.bench-facts {
-  list-style: none; margin: clamp(1.75rem, 4vw, 2.5rem) 0 0; padding: 1rem 0 0;
-  border-top: 1px solid var(--rule);
-  display: grid; gap: .55rem 2rem;
-  font-size: .8rem; color: var(--ink-mute);
-}
-@media (min-width: 52rem) { .bench-facts { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
-.bench-facts b { color: var(--ink); font-weight: 650; }
+/* ── laboratories ───────────────────────────────────────── */
 
-/* ── the personal note ──────────────────────────────────── */
-
-.note { padding-block: clamp(2.75rem, 6vw, 4rem); border-top: 1px solid var(--rule); }
-.note .section-head h2 { margin-top: .5rem; }
-
-/* The photographs used to sit in a sticky column beside this note. They now
-   open the page, where the people who want them find them without scrolling
-   at all, so the note is a single column of prose — and a single column of
-   prose belongs on its own measure rather than shoved against the left edge
-   of a page that is twice as wide as it needs. */
-.note-layout { display: grid; gap: clamp(2rem, 5vw, 3.25rem); align-items: start; }
-/* Heading and body share one measure so their left edges line up. */
-.note .section-head,
-.note .prose { max-width: 38rem; margin-inline: auto; }
-
-/* ── the laboratories ───────────────────────────────────── */
-
-.labs { padding-block: clamp(2.75rem, 6vw, 4rem); border-top: 1px solid var(--rule); }
-.labs .section-head h2 { margin-top: .5rem; }
-
-.status-line {
-  display: flex; align-items: center; gap: .5rem;
-  margin: -.75rem 0 1.4rem; font-size: .82rem; color: var(--ink-mute);
-}
-.status-line .dot {
-  width: 7px; height: 7px; border-radius: 50%; background: var(--optimist); flex: none;
+.labs { padding-top: clamp(4rem, 8vw, 6rem); }
+.labs-head {
+  display: flex; align-items: flex-end; justify-content: space-between;
+  gap: 2.5rem; margin-bottom: 3.25rem; flex-wrap: wrap;
 }
 
-/* ── the printed title page ─────────────────────────────── */
-
-.cover { margin: 0; display: grid; justify-items: center; gap: .7rem; }
-.cover figcaption {
-  font-size: .72rem; color: var(--ink-mute); text-align: center; max-width: 17rem;
-}
-
-/* A document facsimile is a photograph of paper: it keeps its own ink and
-   ground in both themes rather than inverting with the page. The width here
-   is the standalone size; in the opening row .bench-artefacts takes it down
-   to a thumbnail. */
-.titlepage, .cover img {
-  width: clamp(186px, 23vw, 236px);
-  border: 1px solid rgba(29, 28, 25, .16);
-  border-radius: 2px;
-  box-shadow: 0 1px 2px rgba(29,28,25,.10), 0 14px 30px rgba(29,28,25,.14);
-  transform: rotate(-1.1deg);
-  transition: transform .3s ease;
-}
-.cover:hover .titlepage, .cover:hover img { transform: rotate(0deg); }
-.cover img { height: auto; display: block; background: var(--bg-sunk); }
-/* The photograph links to itself at full size, where the jury is legible. */
-.cover a { display: block; line-height: 0; border-radius: 2px; }
-.cover a:focus-visible { outline: 2px solid var(--accent); outline-offset: 6px; }
-
-.titlepage {
-  aspect-ratio: 1 / 1.414;
-  background: #f6f3ea;
-  color: #221f1b;
-  font-family: var(--serif);
-  padding: 7% 9%;
-  display: flex; flex-direction: column; align-items: center;
-  text-align: center; line-height: 1.42;
-  overflow: hidden;
-}
-.titlepage p { margin: 0; }
-.tp-univ {
-  font-family: var(--sans); font-size: .46rem; font-weight: 700;
-  letter-spacing: .14em; text-transform: uppercase; color: #4a4640;
-  padding-bottom: .35rem; border-bottom: 1.5px solid #221f1b;
-}
-.tp-head { margin-top: 13% !important; font-size: .6rem; text-transform: uppercase; letter-spacing: .04em; }
-.tp-disc { margin-top: 12% !important; font-size: .56rem; }
-.tp-par  { margin-top: .35rem !important; font-size: .56rem; }
-.tp-name { margin-top: .5rem !important; font-size: .72rem; letter-spacing: .01em; }
-.tp-name b { font-weight: 700; }
-.tp-title {
-  margin-top: 13% !important; font-size: .62rem; font-weight: 700;
-  text-transform: uppercase; letter-spacing: .005em; line-height: 1.34;
-}
-.tp-date { margin-top: auto !important; font-size: .53rem; color: #3b3832; }
-
-@media (max-width: 54rem) {
-  .cover { justify-items: start; }
-  .cover figcaption { text-align: left; }
-}
-
-/* ── the live panel ─────────────────────────────────────── */
-
-/* A flex column so that, where the grid stretches the panel down the side of
-   the artefacts, the canvas takes the extra height instead of leaving a gap
-   under the caption. The ResizeObserver in main.js picks the new size up. */
-.hero-panel {
-  margin: 0; min-width: 0;
-  display: flex; flex-direction: column;
-  background: var(--bg-raise);
-  border: 1px solid var(--rule);
-  border-radius: 12px;
-  box-shadow: var(--shadow);
-  overflow: hidden;
-}
-.panel-head, .panel-controls, .hero-panel figcaption { flex: none; }
-.panel-head {
-  display: flex; align-items: center; justify-content: space-between; gap: 1rem;
-  padding: .7rem 1rem; border-bottom: 1px solid var(--rule); background: var(--bg-sunk);
-}
-.panel-title { font-size: .72rem; font-weight: 650; letter-spacing: .1em;
-               text-transform: uppercase; color: var(--ink-mute); }
-.panel-title::before {
-  content: ""; display: inline-block; width: 6px; height: 6px; border-radius: 50%;
-  background: var(--optimist); margin-right: .55rem; vertical-align: middle;
-}
-.panel-seed { font-family: var(--mono); font-size: .7rem; color: var(--ink-mute); }
-/* 290px is the floor and the whole height when the panel is not stretched;
-   in the two-column opening the flex column hands it whatever is left. */
-#hero-canvas { display: block; width: 100%; flex: 1 1 290px; min-height: 290px; max-height: 520px; }
-.hero-panel figcaption {
-  padding: .9rem 1rem 1.05rem; border-top: 1px solid var(--rule);
-  font-size: .8rem; line-height: 1.6; color: var(--ink-mute);
-}
-
-/* ── the two dials on the opening panel ─────────────────────
-   λ² and the base arrival rate are the dissertation's own two
-   parameters. Exposing them is what turns the opening from a
-   picture of a model into the model.
-   ─────────────────────────────────────────────────────────── */
-
-.panel-controls {
-  display: flex; align-items: flex-end; flex-wrap: wrap; gap: 1rem;
-  padding: .85rem 1rem .95rem;
-  border-top: 1px solid var(--rule);
-  background: var(--bg-sunk);
-}
-/* Two rows: the label and its live value share the first, the track has the
-   second to itself. The rows are declared rather than left to auto-placement,
-   because the output comes last in source order — it follows the input it
-   describes — and would otherwise be placed on a third row of its own. */
-.ctrl {
-  flex: 1 1 8.5rem; min-width: 0;
-  display: grid; grid-template-columns: 1fr auto; grid-template-rows: auto auto;
-  gap: .3rem .5rem; align-items: baseline;
-}
-.ctrl label {
-  grid-area: 1 / 1; font-size: .7rem; font-weight: 650;
-  letter-spacing: .07em; text-transform: uppercase; color: var(--ink-mute);
-}
-.ctrl label .sym { font-family: var(--mono); text-transform: none; letter-spacing: 0; }
-.ctrl output {
-  grid-area: 1 / 2; font-family: var(--mono); font-size: .72rem;
-  color: var(--accent); font-weight: 600;
-}
-.ctrl input[type="range"] {
-  grid-area: 2 / 1 / 3 / 3; width: 100%; margin: 0; accent-color: var(--accent);
-  height: 1.15rem; cursor: pointer;
-}
-.reseed {
-  flex: 0 0 auto; padding: .38rem .8rem;
-  font-family: var(--sans); font-size: .74rem; font-weight: 600;
-  color: var(--ink-soft); background: var(--bg-raise);
-  border: 1px solid var(--rule-hard); border-radius: 6px; cursor: pointer;
-  transition: color .16s ease, border-color .16s ease;
-}
-.reseed:hover { color: var(--accent); border-color: var(--accent); }
-
-/* ── chapter cards ──────────────────────────────────────── */
-
-.cards { list-style: none; margin: 0; padding: 0; display: grid; gap: 1.5rem; }
-@media (min-width: 58rem) { .cards { grid-template-columns: 1fr 1fr; } }
-
+.cards { list-style: none; margin: 0; padding: 0; }
 .card {
-  display: flex; flex-direction: column; min-width: 0;
-  background: var(--bg-raise);
-  border: 1px solid var(--rule);
-  border-radius: 12px;
-  overflow: hidden;
+  display: grid; grid-template-columns: minmax(0, 636fr) minmax(0, 508fr);
+  gap: 3.5rem; align-items: center;
+  padding-block: 3.5rem;
+  border-bottom: 1px solid var(--rule-soft);
 }
-.card.live {
-  box-shadow: var(--shadow);
-  transition: border-color .16s ease, transform .16s ease;
-}
-.card.live:hover { border-color: color-mix(in srgb, var(--accent) 45%, var(--rule)); transform: translateY(-2px); }
-
-/* ── the screenshot ─────────────────────────────────────────
-   The single change that stops the laboratories from hiding. Each
-   card shows the application it links to, under a browser bar that
-   names where the link goes, so a visitor can see the sliders, the
-   tabs and the charts before deciding whether to click.
-
-   The image is cropped to its top: a screenshot scaled to fit would
-   be unreadable at card width, whereas the top strip keeps the
-   controls and the first chart at legible size.
-   ─────────────────────────────────────────────────────────── */
+.card:first-child { padding-top: 0; }
+.card:last-child { border-bottom: 0; }
+.card.flip .shot { order: 2; }
 
 .shot {
-  display: block; position: relative;
-  border-bottom: 1px solid var(--rule);
-  background: var(--bg-sunk);
+  display: block; border-radius: 12px; overflow: hidden;
+  border: 1px solid var(--rule); background: var(--bg-raise);
   text-decoration: none;
-  overflow: hidden;
 }
 .shot-bar {
-  display: flex; align-items: center; gap: .55rem;
-  padding: .42rem .7rem;
-  background: var(--bg-sunk); border-bottom: 1px solid var(--rule);
+  display: flex; align-items: center; gap: .75rem;
+  height: 34px; padding-inline: .9rem; border-bottom: 1px solid var(--rule);
 }
-.shot-dots {
-  flex: none; width: 30px; height: 7px;
-  background:
-    radial-gradient(circle 3.5px at 3.5px 3.5px,  var(--rule-hard) 98%, transparent) 0 0/11px 7px no-repeat,
-    radial-gradient(circle 3.5px at 3.5px 3.5px,  var(--rule-hard) 98%, transparent) 11px 0/11px 7px no-repeat,
-    radial-gradient(circle 3.5px at 3.5px 3.5px,  var(--rule-hard) 98%, transparent) 22px 0/11px 7px no-repeat;
-}
-.shot-url {
-  font-family: var(--mono); font-size: .66rem; color: var(--ink-mute);
-  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-}
-/* The whole frame is shown, never a crop. Each capture is already framed on
-   the part of its laboratory worth advertising — the dials, the tabs, the
-   estimator chart — and cropping it again in CSS would silently re-frame it
-   onto whatever happened to be at the top. */
+.shot-dots { display: flex; gap: 5px; }
+.shot-dots i { width: 7px; height: 7px; border-radius: 50%; background: var(--rule-hard); }
+.shot-url { font-family: var(--mono); font-size: .69rem; color: var(--ink-mute); }
 .shot img {
   display: block; width: 100%; height: auto;
-  aspect-ratio: 1240 / 620;
-  object-fit: cover; object-position: left top;
+  /* The three applications are light-themed. Shown at full brightness on this
+     ground they glare, so they are taken down a little — and brought back up
+     on hover, because the screenshot is also the link. */
+  filter: brightness(.9) saturate(.96);
+  transition: filter .2s ease;
 }
-:root[data-theme="dark"] .shot img { filter: brightness(.86) contrast(1.02); }
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) .shot img { filter: brightness(.86) contrast(1.02); }
-}
-.card.live:hover .shot img { filter: none; }
-
-.card-body { padding: 1.35rem 1.35rem 1.5rem; display: flex; flex-direction: column; gap: .7rem; flex: 1; }
+.shot:hover img, .shot:focus-visible img { filter: none; }
 
 .card-num {
-  display: flex; align-items: center; gap: .6rem; flex-wrap: wrap;
-  font-size: .7rem; font-weight: 650; letter-spacing: .13em;
-  text-transform: uppercase; color: var(--ink-mute);
+  display: flex; align-items: center; gap: .75rem; margin-bottom: .75rem;
+  font-family: var(--mono); font-size: .69rem;
+  letter-spacing: .13em; text-transform: uppercase; color: var(--ink-mute);
 }
 .pill {
-  font-size: .62rem; letter-spacing: .09em; padding: .16rem .5rem; border-radius: 999px;
-  background: var(--accent-wash); color: var(--accent);
-  border: 1px solid color-mix(in srgb, var(--accent) 28%, transparent);
+  font-family: var(--mono); font-size: .63rem; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--data-intensity); border: 1px solid var(--intensity-line);
+  border-radius: 4px; padding: .18rem .5rem;
 }
-.pill.quiet { background: transparent; color: var(--ink-mute); border-color: var(--rule); }
+.pill.quiet { color: var(--data-price); border-color: var(--price-line); }
 
-.card h3 { font-size: 1.42rem; line-height: 1.2; }
-.card h3 a { color: var(--ink); text-decoration: none; }
-.card h3 a:hover { color: var(--accent); text-decoration: underline; }
+.card-body h3 { font-size: clamp(1.45rem, 2.4vw, 2rem); margin-bottom: .85rem; }
+.card-body h3 a { color: var(--ink); text-decoration: none; }
+.card-body h3 a:hover { color: var(--accent); }
+.card-text { font-size: .95rem; line-height: 1.65; color: var(--ink-soft); margin-bottom: 1.25rem; }
 
-.card-text { color: var(--ink-soft); font-size: .93rem; line-height: 1.64; }
+.do { list-style: none; margin: 0 0 1.35rem; padding: 0; display: flex; flex-direction: column; gap: .55rem; }
+.do li { position: relative; padding-left: 1.4rem; font-size: .875rem; line-height: 1.5; color: var(--ink-soft); }
+.do li::before { content: "→"; position: absolute; left: 0; top: 0; color: var(--accent); }
+.do b { color: var(--ink); font-weight: 600; }
 
-/* ── what you can do, not what is inside ────────────────────
-   The cards used to list contents — "the full chapter text, forty
-   equations, four tables" — which reads as a bibliography. These are
-   verbs, because the thing being advertised is an instrument.
-   ─────────────────────────────────────────────────────────── */
-
-.do-h {
-  margin-top: .15rem;
-  font-size: .68rem; font-weight: 650; letter-spacing: .12em;
-  text-transform: uppercase; color: var(--accent);
-}
-.do { margin: -.2rem 0 0; padding: 0; list-style: none; display: grid; gap: .38rem; }
-.do li {
-  position: relative; padding-left: 1.05rem;
-  font-size: .85rem; line-height: 1.52; color: var(--ink-soft);
-}
-.do li b { color: var(--ink); font-weight: 650; }
-.do li::before {
-  content: ""; position: absolute; left: 0; top: .5em;
-  width: 0; height: 0;
-  border-left: 5px solid var(--accent);
-  border-top: 3.5px solid transparent;
-  border-bottom: 3.5px solid transparent;
-  opacity: .8;
-}
-
-/* The specification line. Quants read this before the prose. */
 .spec {
-  margin-top: .15rem; padding: .5rem .7rem;
-  background: var(--bg-sunk); border-radius: 6px;
-  font-family: var(--mono); font-size: .68rem; line-height: 1.55;
-  color: var(--ink-mute);
+  font-family: var(--mono); font-size: .69rem; line-height: 1.6;
+  color: var(--ink-faint); margin-bottom: 1.35rem;
 }
+.card-links { display: flex; align-items: center; gap: 1.4rem; flex-wrap: wrap; }
 
-.card-cite {
-  margin-top: auto; padding-top: .85rem; border-top: 1px solid var(--rule);
-  font-size: .78rem; line-height: 1.55; color: var(--ink-mute);
-}
-.card-links { display: flex; align-items: center; gap: 1.1rem; flex-wrap: wrap; }
-.go { font-size: .9rem; font-weight: 600; color: var(--accent); text-decoration: none; }
-.go:hover { text-decoration: underline; }
-.src { font-size: .8rem; color: var(--ink-mute); text-decoration: none; }
-.src:hover { color: var(--accent); }
-
-/* Chapter Four has no laboratory yet, so it is not dressed as one. As a
-   fourth card in the grid it read as a hole where a quarter of the work
-   should be; as a strip under the three it reads as what comes next. */
 .pending-strip {
-  margin-top: 1.5rem; padding: 1.35rem 1.5rem 1.5rem;
-  border: 1px dashed var(--rule-hard); border-radius: 12px;
-  display: grid; gap: .5rem;
+  display: flex; align-items: center; gap: 2rem; flex-wrap: wrap;
+  margin-top: 3.5rem;
+  background: var(--bg-sunk); border: 1px solid var(--rule);
+  border-left: 2px solid var(--data-price); border-radius: 10px;
+  padding: 1.75rem 2rem;
 }
-.pending-strip h3 { font-size: 1.15rem; color: var(--ink-soft); font-weight: 600; }
-.pending-strip p { font-size: .86rem; line-height: 1.6; color: var(--ink-mute); max-width: 46rem; }
+.pending-strip > div { flex: 1 1 22rem; }
+.pending-strip h3 { font-size: 1.5rem; margin-bottom: .4rem; }
+.pending-strip p { font-size: .875rem; line-height: 1.6; color: var(--ink-mute); }
+.pending-strip .status { font-family: var(--mono); font-size: .69rem; color: var(--ink-faint); flex: none; }
+
+/* ── the note ───────────────────────────────────────────── */
+
+.note { padding-top: clamp(4rem, 8vw, 6.5rem); }
+.note-shell {
+  background: var(--bg-sunk); border: 1px solid var(--rule); border-radius: 16px;
+  padding: clamp(1.75rem, 4vw, 3.5rem);
+  display: grid; grid-template-columns: minmax(0, 420fr) minmax(0, 620fr);
+  gap: 3.5rem; align-items: start;
+}
+
+.carousel { margin: 0; }
+.carousel-frame { position: relative; overflow: hidden; border-radius: 10px; }
+.carousel-track {
+  list-style: none; margin: 0; padding: 0; display: flex;
+  transition: transform .42s cubic-bezier(.4, 0, .2, 1);
+}
+@media (prefers-reduced-motion: reduce) { .carousel-track { transition: none; } }
+.slide { flex: 0 0 100%; }
+.slide img { display: block; width: 100%; height: 300px; object-fit: cover; }
+
+.carousel-nav {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  width: 34px; height: 34px; display: grid; place-items: center;
+  border-radius: 50%; border: 1px solid var(--rule-hard);
+  background: color-mix(in srgb, var(--bg) 80%, transparent);
+  backdrop-filter: blur(6px);
+  color: var(--ink); cursor: pointer;
+}
+.carousel-nav:hover { border-color: var(--ink-mute); }
+.carousel-nav.prev { left: .6rem; }
+.carousel-nav.next { right: .6rem; }
+.carousel.solo .carousel-nav, .carousel.solo .carousel-dots { display: none; }
+
+.carousel-dots { display: flex; justify-content: center; gap: .4rem; margin-top: .7rem; }
+.carousel-dots button {
+  width: 6px; height: 6px; padding: 0; border-radius: 50%;
+  border: 0; background: var(--rule-hard); cursor: pointer;
+}
+.carousel-dots button[aria-current="true"] { background: var(--accent); }
+
+.carousel figcaption {
+  margin-top: .7rem; font-family: var(--mono);
+  font-size: .69rem; line-height: 1.6; color: var(--ink-faint);
+}
+
+.compare { display: flex; gap: .85rem; margin: 2.1rem 0 0; }
+.compare > div {
+  flex: 1 1 0; background: var(--bg-raise); border: 1px solid var(--rule);
+  border-radius: 10px; padding: 1.1rem;
+}
+.compare dt {
+  font-family: var(--mono); font-size: .63rem;
+  letter-spacing: .11em; text-transform: uppercase; color: var(--ink-mute);
+  margin-bottom: .5rem;
+}
+.compare dd { margin: 0; }
+.compare dd b {
+  display: block; font-family: var(--serif); font-weight: 400;
+  font-size: 1.85rem; line-height: 1; color: var(--ink);
+}
+.compare div:first-child dd b { color: var(--accent); }
+.compare dd span { display: block; margin-top: .35rem; font-size: .82rem; color: var(--ink-mute); }
+
+.prose p { font-size: 1rem; line-height: 1.78; color: var(--ink-soft); }
+.prose p + p { margin-top: 1.1rem; }
+.prose ul { margin: 1.1rem 0; padding-left: 1.2rem; color: var(--ink-soft); }
+.prose li + li { margin-top: .35rem; }
+.prose h2 { margin-bottom: 1.6rem; font-size: clamp(1.9rem, 3.6vw, 2.65rem); }
+
+.prose .eyebrow {
+  font-family: var(--mono); font-size: .69rem; font-weight: 500;
+  letter-spacing: .17em; text-transform: uppercase; color: var(--accent);
+}
+.prose .eyebrow.cool { color: var(--data-price); }
+.prose .beat {
+  margin: 1.9rem 0; padding-left: 1.6rem; border-left: 2px solid var(--accent);
+  font-family: var(--serif); font-size: clamp(1.5rem, 3vw, 2.1rem);
+  line-height: 1.22; color: var(--ink);
+}
+.prose .signoff { margin-top: 1.6rem; font-family: var(--mono); font-size: .76rem; color: var(--ink-faint); }
+.prose .aside {
+  margin-top: 1.6rem; padding: 1.1rem 1.25rem;
+  background: var(--bg-raise); border: 1px solid var(--rule); border-radius: 10px;
+  font-size: .9rem; line-height: 1.7; color: var(--ink-mute);
+}
+.prose .aside b { color: var(--ink); }
 
 /* ── why crises ─────────────────────────────────────────── */
 
-.why { padding-block: clamp(3rem, 7vw, 4.5rem); border-top: 1px solid var(--rule); }
-.why .section-head h2 { margin-top: .5rem; }
-
-.why-layout { display: grid; gap: clamp(2rem, 5vw, 3.25rem); align-items: start; }
-@media (min-width: 62rem) {
-  .why-layout { grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); }
+.why { padding-top: clamp(4rem, 8vw, 6.5rem); }
+.why-layout {
+  display: grid; grid-template-columns: minmax(0, 1fr) 20rem;
+  gap: 4rem; align-items: start; margin-top: 2.5rem;
 }
-
-.prose { display: grid; gap: 1.05rem; max-width: 38rem; }
-.prose p { color: var(--ink-soft); font-size: 1rem; line-height: 1.74; }
-.prose b { color: var(--ink); font-weight: 650; }
-.prose em { color: var(--ink); font-style: italic; }
-.prose .first { font-size: 1.08rem; color: var(--ink); }
-
-/* Lists inside the note, in the chapter cards' idiom: a small square mark
-   rather than a disc, so the two read as one family. The negative top margin
-   closes the prose's own row gap against the line that introduces the list. */
-.prose ul {
-  margin: -.5rem 0 0; padding: 0; list-style: none;
-  display: grid; gap: .45rem;
-}
-.prose ul li {
-  position: relative; padding-left: 1.15rem;
-  color: var(--ink-soft); font-size: 1rem; line-height: 1.6;
-}
-.prose ul li::before {
-  content: ""; position: absolute; left: 0; top: .62em;
-  width: 5px; height: 5px; border-radius: 1px; background: var(--gold);
-}
-
-.aside {
-  margin-top: .6rem; padding: 1.1rem 1.25rem;
-  background: var(--bg-sunk); border-left: 2px solid var(--gold); border-radius: 0 8px 8px 0;
-  font-size: .88rem !important; line-height: 1.65 !important;
-}
-
-/* The line the note turns on. It is a comparison of two parties, so it is set
-   as one — each side labelled and on its own row — rather than as a sentence
-   where the reader has to work out which half belongs to whom. */
-.compare {
-  margin: .9rem 0;
-  display: grid; gap: .6rem;
-  padding-left: 1rem;
-  border-left: 2px solid var(--gold);
-}
-.compare > div {
-  display: grid; grid-template-columns: 7rem minmax(0, 1fr);
-  gap: .9rem; align-items: baseline;
-}
-.compare dt {
-  font-family: var(--sans); font-size: .7rem; font-weight: 650;
-  letter-spacing: .13em; text-transform: uppercase; color: var(--gold);
-}
-.compare dd {
-  margin: 0;
-  font-family: var(--serif);
-  font-size: clamp(1.14rem, 2.2vw, 1.4rem);
-  line-height: 1.32; letter-spacing: -.012em;
-  color: var(--ink);
-  text-wrap: balance;
-}
-/* Narrow: 7rem of label leaves too little for the line, so it goes above. */
-@media (max-width: 32rem) {
-  .compare > div { grid-template-columns: 1fr; gap: .1rem; }
-}
-.beat {
-  font-family: var(--serif);
-  font-size: 1.12rem !important;
-  color: var(--ink) !important;
-  line-height: 1.45 !important;
-}
-.signoff {
-  margin-top: .8rem; padding-top: 1.1rem; border-top: 1px solid var(--rule);
-  font-size: .82rem !important; color: var(--ink-mute) !important;
-  letter-spacing: .04em;
-}
-
-.why-side { display: grid; gap: 1.25rem; }
-
-/* ── the photographs ────────────────────────────────────────
-   Three photographs from the econophysics years. The figure starts hidden and
-   main.js reveals it only once a file has actually decoded, so a missing
-   photograph leaves no gap and no broken image. One slide is shown at a time;
-   the track slides horizontally and the caption is swapped underneath it.
-   ─────────────────────────────────────────────────────────── */
-
-.carousel {
-  margin: 0;
-  background: var(--bg-raise);
-  border: 1px solid var(--rule);
-  border-radius: 12px;
-  box-shadow: var(--shadow);
-  overflow: hidden;
-}
-
-.carousel-frame { position: relative; background: var(--bg-sunk); }
-
-.carousel-track {
-  list-style: none; margin: 0; padding: 0;
-  display: flex;
-  transition: transform .42s cubic-bezier(.22, .61, .36, 1);
-}
-.carousel-track .slide { flex: 0 0 100%; min-width: 0; line-height: 0; }
-/* These are photographs OF prints, with the paper's own white border in frame,
-   and they are a mix of portrait and landscape. Cropping them to fill a fixed
-   box cost the portrait one its head and its feet, so the frame is a fixed 4:3
-   and the image is fitted inside it whole. The letterbox is the warm paper
-   ground, which reads as the print's mount rather than as a gap. */
-.carousel-track img {
-  display: block; width: 100%; height: auto;
-  aspect-ratio: 4 / 3;
-  object-fit: contain; object-position: center;
-  background: var(--bg-sunk);
-}
-
-/* A photograph keeps its own light in both themes, like the title page does. */
-.carousel-nav {
-  position: absolute; top: 50%; transform: translateY(-50%);
-  display: grid; place-items: center; width: 32px; height: 32px; padding: 0;
-  border: 1px solid rgba(255, 255, 255, .34); border-radius: 50%;
-  background: rgba(20, 19, 17, .46); color: #fff;
-  backdrop-filter: blur(6px);
-  cursor: pointer;
-  transition: background .16s ease, opacity .16s ease;
-}
-.carousel-nav:hover { background: rgba(20, 19, 17, .72); }
-.carousel-nav.prev { left: .6rem; }
-.carousel-nav.next { right: .6rem; }
-.carousel-nav[disabled] { opacity: .3; cursor: default; }
-/* A single photograph is not a carousel: the controls go away entirely. */
-.carousel.solo .carousel-nav, .carousel.solo .carousel-dots { display: none; }
-
-.carousel-dots {
-  display: flex; justify-content: center; gap: .4rem;
-  padding: .7rem 1rem .1rem;
-}
-.carousel-dots button {
-  width: 7px; height: 7px; padding: 0; border: 0; border-radius: 50%;
-  background: var(--rule-hard); cursor: pointer;
-  transition: background .16s ease, transform .16s ease;
-}
-.carousel-dots button[aria-current="true"] { background: var(--accent); transform: scale(1.25); }
-
-.carousel figcaption {
-  padding: .8rem 1rem 1rem;
-  font-size: .78rem; line-height: 1.55; color: var(--ink-mute);
-  text-align: center;
-  min-height: 1.2rem;      /* the box does not jump when a slide has no caption */
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .carousel-track { transition: none; }
-}
-
-
 .facts {
-  padding: 1.5rem 1.5rem 1.6rem;
-  background: var(--bg-raise); border: 1px solid var(--rule); border-radius: 12px;
+  background: var(--bg-raise); border: 1px solid var(--rule);
+  border-radius: 12px; padding: 1.6rem;
 }
-.facts h3 { font-size: .72rem; font-family: var(--sans); font-weight: 650;
-            letter-spacing: .13em; text-transform: uppercase; color: var(--ink-mute); }
-.facts .pub-h { margin-top: 1.6rem; }
-.facts dl { margin: 1rem 0 0; display: grid; gap: .7rem; }
-.facts dl > div { display: grid; grid-template-columns: 6.5rem minmax(0, 1fr); gap: .75rem; }
-.facts dt { font-size: .78rem; color: var(--ink-mute); }
-.facts dd { margin: 0; font-size: .86rem; color: var(--ink); }
-.pub { margin-top: .8rem; font-size: .84rem; line-height: 1.6; color: var(--ink-soft); }
+.facts h3 {
+  font-family: var(--mono); font-size: .63rem; font-weight: 500;
+  letter-spacing: .13em; text-transform: uppercase; color: var(--ink-mute);
+  margin-bottom: .9rem;
+}
+.facts h3.pub-h { margin-top: 1.6rem; padding-top: 1.35rem; border-top: 1px solid var(--rule); }
+.facts dl { margin: 0; display: flex; flex-direction: column; gap: .8rem; }
+.facts dt { font-family: var(--mono); font-size: .63rem; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-faint); }
+.facts dd { margin: .2rem 0 0; font-size: .92rem; line-height: 1.45; color: var(--ink); }
+.facts .pub { font-size: .875rem; line-height: 1.6; color: var(--ink-soft); }
+.facts .pub b { color: var(--ink); }
+.facts .pub cite { color: var(--ink); }
+
+/* ── provenance ─────────────────────────────────────────── */
+
+.provenance {
+  padding-top: clamp(4rem, 8vw, 6.5rem);
+  display: grid; grid-template-columns: 17rem minmax(0, 1fr); gap: 4rem; align-items: start;
+}
+.cover { margin: 0; }
+.cover img, .titlepage {
+  display: block; width: 100%; border-radius: 10px; border: 1px solid var(--rule);
+}
+.cover img { height: auto; }
+.cover figcaption { margin-top: .7rem; font-family: var(--mono); font-size: .69rem; color: var(--ink-faint); }
+
+/* The typeset facsimile, revealed only if the photograph is missing. */
+.titlepage {
+  background: var(--bg-raise); padding: 1.6rem 1.35rem; text-align: center;
+  font-family: var(--serif); color: var(--ink-soft);
+  display: flex; flex-direction: column; gap: .6rem;
+}
+.titlepage .tp-univ { font-size: .82rem; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-mute); }
+.titlepage .tp-head { font-size: .95rem; line-height: 1.5; }
+.titlepage .tp-name { font-size: 1.15rem; color: var(--ink); }
+.titlepage .tp-title { font-size: 1rem; line-height: 1.4; color: var(--ink); }
+.titlepage .tp-disc, .titlepage .tp-par, .titlepage .tp-date { font-size: .82rem; color: var(--ink-mute); }
+
+.prov-grid {
+  display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1.75rem;
+  margin-top: 2.25rem; padding-top: 1.75rem; border-top: 1px solid var(--rule);
+}
+.prov-grid dt { font-family: var(--mono); font-size: .63rem; letter-spacing: .11em; text-transform: uppercase; color: var(--ink-mute); margin-bottom: .45rem; }
+.prov-grid dd { margin: 0; font-size: .92rem; line-height: 1.45; color: var(--ink); }
+.prov-pub { margin-top: 1.75rem; padding-top: 1.75rem; border-top: 1px solid var(--rule); }
+.prov-pub p { font-size: .92rem; line-height: 1.6; color: var(--ink-soft); }
+.prov-pub b, .prov-pub cite { color: var(--ink); }
 
 /* ── defence ────────────────────────────────────────────── */
 
-.defence { padding-block: clamp(3rem, 7vw, 4.5rem); border-top: 1px solid var(--rule); }
-.jury { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; }
-@media (min-width: 46rem) { .jury { grid-template-columns: 1fr 1fr; column-gap: 2.5rem; } }
-.jury li {
-  display: grid; gap: .15rem; padding: .85rem 0; border-top: 1px solid var(--rule);
+.defence { padding-top: clamp(4rem, 8vw, 6.5rem); }
+.defence-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 2rem; flex-wrap: wrap; margin-bottom: 2.25rem; }
+.defence-head p { font-family: var(--mono); font-size: .76rem; color: var(--ink-mute); }
+.jury {
+  list-style: none; margin: 0; padding: 0;
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px;
+  background: var(--rule); border: 1px solid var(--rule);
+  border-radius: 12px; overflow: hidden;
 }
-.jury b { font-family: var(--serif); font-size: 1.02rem; font-weight: 600; }
-.jury span { font-size: .82rem; color: var(--ink-mute); }
+.jury li { background: var(--bg-sunk); padding: 1.5rem 1.6rem; }
+.jury b { display: block; font-family: var(--serif); font-weight: 400; font-size: 1.32rem; color: var(--ink); margin-bottom: .35rem; }
+.jury span { font-size: .82rem; line-height: 1.55; color: var(--ink-mute); }
+.jury i { color: var(--ink-soft); }
 
 /* ── footer ─────────────────────────────────────────────── */
 
 footer {
-  border-top: 1px solid var(--rule);
-  padding: 2rem var(--gutter) 2.5rem;
-  max-width: var(--page); margin-inline: auto;
+  max-width: var(--page); margin-inline: auto; padding-inline: var(--gutter);
+  padding-top: clamp(3.5rem, 7vw, 5rem); padding-bottom: 3rem;
 }
-footer p { font-size: .8rem; line-height: 1.65; color: var(--ink-mute); max-width: 44rem; }
-.colophon {
-  display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap;
-  margin-top: 1.25rem; padding-top: 1.25rem; border-top: 1px solid var(--rule);
+footer > div {
+  padding-top: 2.5rem; border-top: 1px solid var(--rule);
+  display: flex; justify-content: space-between; align-items: flex-start; gap: 4rem; flex-wrap: wrap;
 }
-.colophon a { color: var(--ink-mute); }
+footer p { font-size: .82rem; line-height: 1.7; color: var(--ink-faint); max-width: 44rem; }
+.colophon { display: flex; gap: 1.75rem; flex: none; }
+.colophon span { font-size: .82rem; color: var(--ink-faint); }
+.colophon a { font-size: .82rem; color: var(--ink-soft); text-decoration: none; }
+.colophon a:hover { color: var(--accent); }
+
+/* ── narrower screens ───────────────────────────────────── */
+
+@media (max-width: 68rem) {
+  .bench-layout { grid-template-columns: minmax(0, 1fr); gap: 2.75rem; }
+  .spine-flow { flex-wrap: wrap; gap: 1rem; }
+  .spine-flow .stage { flex: 1 1 16rem; }
+  .flow-arrow { display: none; }
+  .card, .card.flip { grid-template-columns: minmax(0, 1fr); gap: 2rem; }
+  .card.flip .shot { order: 0; }
+  .note-shell { grid-template-columns: minmax(0, 1fr); gap: 2.5rem; }
+  .why-layout { grid-template-columns: minmax(0, 1fr); gap: 2.5rem; }
+  .provenance { grid-template-columns: minmax(0, 1fr); gap: 2.5rem; }
+  .cover { max-width: 17rem; }
+  .jury { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 44rem) {
+  .masthead nav a { display: none; }
+  .masthead nav { gap: .75rem; }
+  .brand-sep, .brand-tail { display: none; }
+  .metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.35rem 1rem; }
+  .spine-flow .stage { flex: 1 1 100%; }
+  .prov-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .jury { grid-template-columns: minmax(0, 1fr); }
+  .compare { flex-direction: column; }
+  #hero-canvas { height: 240px; }
+  .slide img { height: 220px; }
+  .cta { width: 100%; justify-content: center; }
+}
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .001ms !important; transition-duration: .001ms !important; }

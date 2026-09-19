@@ -16,6 +16,10 @@
    model and the model, and that difference is the reason the
    panel opens the page instead of sitting in a sidebar.
 
+   The panel paints itself in the site's data colours: the price in
+   --data-price, arrivals in --accent, the intensity band in
+   --data-intensity. Colour means quantity here as everywhere else.
+
    No dependencies, no network, one animation frame loop.
 
    This was site/main.js, a deferred <script> on a static page. It
@@ -40,39 +44,7 @@ export function initSite() {
     disposers.push(() => observer.disconnect());
   };
 
-  /* ── theme ─────────────────────────────────────────────── */
-
   const root = document.documentElement;
-  const toggle = document.getElementById('theme');
-
-  const stored = (() => {
-    try { return localStorage.getItem('phd-theme'); } catch { return null; }
-  })();
-  if (stored === 'dark' || stored === 'light') root.dataset.theme = stored;
-
-  const isDark = () =>
-    root.dataset.theme === 'dark' ||
-    (!root.dataset.theme && matchMedia('(prefers-color-scheme: dark)').matches);
-
-  const syncToggle = () => {
-    if (!toggle) return;
-    const next = isDark() ? 'light' : 'dark';
-    toggle.setAttribute('aria-label', `Switch to ${next} theme`);
-    toggle.title = `Switch to ${next} theme`;
-  };
-
-  on(toggle, 'click', () => {
-    root.dataset.theme = isDark() ? 'light' : 'dark';
-    try { localStorage.setItem('phd-theme', root.dataset.theme); } catch { /* private mode */ }
-    palette.stale = true;
-    syncToggle();
-  });
-
-  on(matchMedia('(prefers-color-scheme: dark)'), 'change', () => {
-    palette.stale = true;
-    syncToggle();
-  });
-  syncToggle();
 
   /* ── the printed cover ─────────────────────────────────────
 
@@ -237,8 +209,8 @@ export function initSite() {
   /* ── colours, read from the stylesheet so the panels follow the theme ── */
 
   const palette = { stale: true, v: {} };
-  const NAMES = ['--ink', '--ink-mute', '--rule', '--accent', '--gold',
-                 '--optimist', '--pessimist', '--fundamentalist', '--bg-sunk', '--bg-raise'];
+  const NAMES = ['--ink', '--ink-mute', '--rule', '--rule-soft', '--accent',
+                 '--data-price', '--data-intensity', '--panel-bg'];
 
   function colours() {
     if (palette.stale) {
@@ -424,7 +396,7 @@ export function initSite() {
 
     function draw(panel, c) {
       const { ctx, w, h } = panel;
-      ctx.fillStyle = c['--bg-raise'];
+      ctx.fillStyle = c['--panel-bg'];
       ctx.fillRect(0, 0, w, h);
       if (col.length < 2) return;
 
@@ -458,13 +430,13 @@ export function initSite() {
         ctx.lineTo(x(i), py(col[i - 1].p));
         ctx.lineTo(x(i), py(col[i].p));
       }
-      ctx.strokeStyle = c['--accent'];
-      ctx.lineWidth = 1.6;
+      ctx.strokeStyle = c['--data-price'];
+      ctx.lineWidth = 1.7;
       ctx.lineJoin = 'round';
       ctx.stroke();
 
       // the arrivals themselves, one mark each
-      ctx.fillStyle = c['--gold'];
+      ctx.fillStyle = c['--accent'];
       for (let i = 0; i < n; i++) {
         const d = col[i];
         if (!d.n) continue;
@@ -483,12 +455,12 @@ export function initSite() {
       }
       ctx.lineTo(x(n - 1), bandY + bandH);
       ctx.closePath();
-      ctx.fillStyle = c['--optimist'];
-      ctx.globalAlpha = 0.17;
+      ctx.fillStyle = c['--data-intensity'];
+      ctx.globalAlpha = 0.16;
       ctx.fill();
       ctx.globalAlpha = 1;
-      ctx.strokeStyle = c['--optimist'];
-      ctx.lineWidth = 1;
+      ctx.strokeStyle = c['--data-intensity'];
+      ctx.lineWidth = 1.2;
       ctx.stroke();
 
       // hairline rules and labels
@@ -498,7 +470,7 @@ export function initSite() {
         ctx.beginPath(); ctx.moveTo(0, px(y)); ctx.lineTo(w, px(y)); ctx.stroke();
       }
       ctx.fillStyle = c['--ink-mute'];
-      ctx.font = '600 9px ui-sans-serif, system-ui, sans-serif';
+      ctx.font = '500 9px ui-monospace, SFMono-Regular, Menlo, monospace';
       ctx.globalAlpha = 0.8;
       ctx.fillText('PRICE', 9, 15);
       ctx.fillText('ARRIVALS', 9, rasterY - 5);
