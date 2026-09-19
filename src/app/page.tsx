@@ -1,4 +1,5 @@
 import SiteRuntime from '@/components/SiteRuntime';
+import { references } from '@/lib/bibliography';
 
 /**
  * The dissertation hub.
@@ -8,6 +9,11 @@ import SiteRuntime from '@/components/SiteRuntime';
  * laboratories as full-width rows. The 2004 material — the note, the
  * intuition, the printed copy, the jury — follows it rather than framing it.
  */
+const refCount = references.length;
+const doiCount = references.filter((ref) => ref.doi).length;
+const refYears = references.map((ref) => Number(ref.y.slice(0, 4)));
+const refSpan = `${Math.min(...refYears)} → ${Math.max(...refYears)}`;
+
 export default function Home() {
   return (
     <>
@@ -27,6 +33,7 @@ export default function Home() {
           <a href="#spine">Mechanism</a>
           <a href="#note">Note</a>
           <a href="#defence">Defence</a>
+          <a href="/bibliography">Bibliography</a>
           <span className="era">2004 → 2026</span>
         </nav>
       </header>
@@ -572,6 +579,37 @@ export default function Home() {
                 <a href="https://doi.org/10.1142/S0219024904002736">10.1142/S0219024904002736</a>
               </p>
             </div>
+          </div>
+        </section>
+
+        {/* ═══════════════════════ THE LIBRARY ═══════════════════════
+            The reference list is not decoration on a hub about running
+            models: it is what the models were derived from. It gets a door
+            here and a room of its own at /bibliography.
+            ──────────────────────────────────────────────────────────── */}
+        <section id="library" className="library" aria-labelledby="library-h">
+          <div className="section-head">
+            <p className="eyebrow">Bibliography</p>
+            <h2 id="library-h">What it was built on</h2>
+            <p>
+              The manuscript&apos;s own reference list, restandardized to APA 7th and repaired
+              where the printed copy was damaged. Working papers that were later published carry
+              their final journal; every DOI that exists resolves. Nothing has been added to it.
+            </p>
+          </div>
+
+          <div className="library-row">
+            <dl className="library-facts">
+              <div><dt>References</dt><dd>{refCount}</dd></div>
+              <div><dt>DOIs resolved</dt><dd>{doiCount}</dd></div>
+              <div><dt>Span</dt><dd>{refSpan}</dd></div>
+            </dl>
+            <a className="cta" href="/bibliography">
+              Search the bibliography
+              <svg viewBox="0 0 24 24" aria-hidden="true" width="16" height="16">
+                <path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </a>
           </div>
         </section>
 

@@ -22,6 +22,8 @@ deployed CSP allows `font-src 'self'` only.
 
 ```
 src/app/page.tsx          the page
+src/app/bibliography/     the 353 references, searchable, at /bibliography
+src/lib/bibliography.ts   those references as data: authors, year, container, DOI
 src/app/globals.css       the instrument-dark system: tokens, then section by section
 src/lib/siteRuntime.js    the photographs, the opening panel and its dials
 src/app/admin/            the password-gated dashboard: Overview and Visits
@@ -44,6 +46,22 @@ lands in the sheet.
 Everything it needs is in **`docs/admin-analytics-setup.md`** — the Apps Script,
 the service account, the sheet share, the environment variables, and the
 mistakes that cost us an afternoon each.
+
+## The bibliography
+
+`/bibliography` is the manuscript's own reference list — 353 entries, alphabetical
+by first author — restandardized to APA 7th and repaired where the printed copy
+was damaged. Working papers that were later published carry their final journal
+and volume; 290 of the entries resolve to a DOI, and the 63 that do not are
+working papers, conference papers and unpublished manuscripts, cited as the
+manuscript cited them. Nothing absent from the 2004 list was added.
+
+The entries live in `src/lib/bibliography.ts` as data, not markup: `r` is
+everything after the year, and a pair of asterisks in it marks italics —
+`renderSegments` is the only thing that reads them, so no markup is injected into
+the page. The whole list renders on the server, so it is readable and indexable
+with JavaScript off; the search box narrows markup that is already there.
+Numbering is stable, and each entry is its own anchor (`/bibliography#ref-41`).
 
 ## The chapters
 
