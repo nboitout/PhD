@@ -163,6 +163,13 @@ covers the analytics beacon, and `'unsafe-inline'` is there for the framework's
 own hydration and theme scripts. The environment variables the dashboard needs
 are listed in `docs/admin-analytics-setup.md`; changing one requires a redeploy.
 
+The project's **Output Directory** must be left unset. It was pinned to `site`
+while this was a static deployment, and `vercel.json` no longer says anything
+about it, so the first deployment after the migration built `next build`
+correctly and then failed with `NEXT_OUTPUT_DIR_MISSING` looking for a `site/`
+that no longer exists. The override has been cleared in the project settings,
+and the project's framework is now `nextjs` there as well as in `vercel.json`.
+
 ## The opening panel
 
 The page animates one small model on a `<canvas>`, seeded so that every visitor
